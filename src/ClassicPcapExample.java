@@ -68,28 +68,29 @@ public class ClassicPcapExample {
 
             public void nextPacket(PcapPacket packet, String user) {
 //                Http http = new Http();
-                Tcp tcp = new Tcp();
+//                Tcp tcp = new Tcp();
 //                Udp udp = new Udp();
-                Ip4 ip4 = new Ip4();
+//                Ip4 ip4 = new Ip4();
 //                Icmp icmp = new Icmp();
 //                Ip6 ip6 = new Ip6();
-                if (packet.hasHeader(tcp) && packet.hasHeader(ip4)) {
-                    if (((ip4.source()[0] == -64 && ip4.source()[1] == -88 && ip4.source()[2] == 0 && ip4.source()[3] == 6) && (ip4.destination()[0] == -64 && ip4.destination()[1] == -88 && ip4.destination()[2] == 0 && ip4.destination()[3] == 24)) ||
-                            ((ip4.source()[0] == -64 && ip4.source()[1] == -88 && ip4.source()[2] == 0 && ip4.source()[3] == 24) && (ip4.destination()[0] == -64 && ip4.destination()[1] == -88 && ip4.destination()[2] == 0 && ip4.destination()[3] == 6))) {
-//                        System.out.printf("Received packet at %s caplen=%-4d len=%-4d %s\n",
-//                                new Date(packet.getCaptureHeader().timestampInMillis()),
-//                                packet.getCaptureHeader().caplen(),  // Length actually captured
-//                                packet.getCaptureHeader().wirelen(), // Original length
-//                                user                                 // User supplied object
-//                        );
-                        if (packet.toHexdump().contains("USER") || packet.toHexdump().contains("PASS")) {
-                            System.out.println(packet.toHexdump());
-                            String content = packet.toHexdump();
-                            String[] s = content.split("\\*");
-                            System.out.println(s[s.length - 1]);
-                        }
-                    }
-                }
+//                if (packet.hasHeader(tcp) && packet.hasHeader(ip4)) {
+//                    if (((ip4.source()[0] == -64 && ip4.source()[1] == -88 && ip4.source()[2] == 0 && ip4.source()[3] == 6) && (ip4.destination()[0] == -64 && ip4.destination()[1] == -88 && ip4.destination()[2] == 0 && ip4.destination()[3] == 24)) ||
+//                            ((ip4.source()[0] == -64 && ip4.source()[1] == -88 && ip4.source()[2] == 0 && ip4.source()[3] == 24) && (ip4.destination()[0] == -64 && ip4.destination()[1] == -88 && ip4.destination()[2] == 0 && ip4.destination()[3] == 6))) {
+////                        System.out.printf("Received packet at %s caplen=%-4d len=%-4d %s\n",
+////                                new Date(packet.getCaptureHeader().timestampInMillis()),
+////                                packet.getCaptureHeader().caplen(),  // Length actually captured
+////                                packet.getCaptureHeader().wirelen(), // Original length
+////                                user                                 // User supplied object
+////                        );
+//                        if (packet.toHexdump().contains("USER") || packet.toHexdump().contains("PASS")) {
+//                            System.out.println(packet.toHexdump());
+//                            String content = packet.toHexdump();
+//                            String[] s = content.split("\\*");
+//                            System.out.println(s[s.length - 1]);
+//                        }
+//                    }
+//                }
+                System.out.println(packet.toHexdump());
             }
         };
 

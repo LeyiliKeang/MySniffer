@@ -113,7 +113,7 @@ public class MainFrame extends JFrame {
                             System.out.printf("#%d: %s [%s]\n", i++, device.getName(), description);
                         }
 
-                        PcapIf device = alldevs.get(0); // We know we have atleast 1 device
+                        PcapIf device = alldevs.get(5); // We know we have atleast 1 device
                         System.out
                                 .printf("\nChoosing '%s' on your behalf:\n",
                                         (device.getDescription() != null) ? device.getDescription()

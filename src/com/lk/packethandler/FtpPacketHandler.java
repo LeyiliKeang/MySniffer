@@ -32,7 +32,7 @@ public class FtpPacketHandler<T> implements PcapPacketHandler<T> {
             byte[] sipBytes = null;
             if (sourceIp != null) {
                 sipBytes = new byte[4];
-                String[] sip = sourceIp.split("\\.");
+                String[] sip = sourceIp.split(".");
                 for (int j = 0; j < sip.length; j++) {
                     int i = Integer.parseInt(sip[j]);
                     if (i > 127) {
@@ -60,6 +60,7 @@ public class FtpPacketHandler<T> implements PcapPacketHandler<T> {
                 if ((Arrays.equals(ip4.source(), sipBytes) && Arrays.equals(ip4.destination(), dipBytes))
                         || (Arrays.equals(ip4.destination(), sipBytes) && Arrays.equals(ip4.source(), dipBytes))) {
                     System.out.println(packet.toHexdump());
+                    System.out.println(packet.toString());
                     EventQueue.invokeLater(new Runnable() {
                         @Override
                         public void run() {
