@@ -23,7 +23,7 @@ public class CaptureService {
                         pcapPacket.getCaptureHeader().wirelen(),
                         pcapPacket.getCaptureHeader().wirelen(),
                         o);
-                PacketUtils.map.put(PacketUtils.count, pcapPacket);
+                PacketUtils.allMap.put(PacketUtils.count, pcapPacket);
                 defaultTableModel.addRow(new Object[]{++PacketUtils.count, "192.168", "80", "172.16", "8080", "666", pcapPacket.getPacketWirelen()});
             }
         };

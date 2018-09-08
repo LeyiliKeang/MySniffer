@@ -54,7 +54,9 @@
                             <preferred-size width="125" height="25"/>
                           </grid>
                         </constraints>
-                        <properties/>
+                        <properties>
+                          <requestFocusEnabled value="false"/>
+                        </properties>
                       </component>
                     </children>
                   </grid>
@@ -81,6 +83,7 @@
                           </grid>
                         </constraints>
                         <properties>
+                          <requestFocusEnabled value="false"/>
                           <text value=""/>
                         </properties>
                       </component>
@@ -101,6 +104,7 @@
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
+                      <focusable value="false"/>
                       <text value="捕获"/>
                     </properties>
                   </component>
@@ -109,6 +113,7 @@
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
+                      <focusable value="false"/>
                       <text value="停止"/>
                     </properties>
                   </component>
@@ -144,7 +149,9 @@
                             <preferred-size width="125" height="25"/>
                           </grid>
                         </constraints>
-                        <properties/>
+                        <properties>
+                          <requestFocusEnabled value="false"/>
+                        </properties>
                       </component>
                     </children>
                   </grid>
@@ -170,7 +177,9 @@
                             <preferred-size width="125" height="25"/>
                           </grid>
                         </constraints>
-                        <properties/>
+                        <properties>
+                          <requestFocusEnabled value="false"/>
+                        </properties>
                       </component>
                     </children>
                   </grid>
@@ -185,6 +194,9 @@
               </grid>
             </constraints>
             <properties>
+              <continuousLayout value="true"/>
+              <focusCycleRoot value="false"/>
+              <focusTraversalPolicyProvider value="false"/>
               <orientation value="0"/>
             </properties>
             <border type="none"/>
@@ -208,7 +220,10 @@
                     <children>
                       <component id="8c3b8" class="javax.swing.JTable" binding="packetTable">
                         <constraints/>
-                        <properties/>
+                        <properties>
+                          <font size="12"/>
+                          <rowHeight value="20"/>
+                        </properties>
                       </component>
                     </children>
                   </scrollpane>
@@ -219,7 +234,9 @@
                 <constraints>
                   <splitpane position="right"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <minimumSize width="52" height="24"/>
+                </properties>
                 <border type="none"/>
                 <children>
                   <tabbedpane id="f79b4">
@@ -228,7 +245,10 @@
                         <preferred-size width="200" height="200"/>
                       </grid>
                     </constraints>
-                    <properties/>
+                    <properties>
+                      <focusTraversalPolicyProvider value="true"/>
+                      <verifyInputWhenFocusTarget value="true"/>
+                    </properties>
                     <border type="none"/>
                     <children>
                       <grid id="929c3" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -248,7 +268,12 @@
                             <children>
                               <component id="2883" class="javax.swing.JTextArea" binding="toHexdumpTextArea">
                                 <constraints/>
-                                <properties/>
+                                <properties>
+                                  <editable value="false"/>
+                                  <focusCycleRoot value="false"/>
+                                  <focusTraversalPolicyProvider value="false"/>
+                                  <minimumSize width="0" height="0"/>
+                                </properties>
                               </component>
                             </children>
                           </scrollpane>
@@ -271,7 +296,10 @@
                             <children>
                               <component id="ddad6" class="javax.swing.JTextArea" binding="toStringTextArea">
                                 <constraints/>
-                                <properties/>
+                                <properties>
+                                  <editable value="false"/>
+                                  <minimumSize width="0" height="0"/>
+                                </properties>
                               </component>
                             </children>
                           </scrollpane>

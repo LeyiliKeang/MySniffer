@@ -11,12 +11,23 @@ import java.util.Map;
  */
 public class PacketUtils {
 
+    /**
+     * 每次抓包的序号标记
+     */
     public static Integer count = 0;
 
-    public static Map<Integer, PcapPacket> map = new HashMap<Integer, PcapPacket>();
+    /**
+     * 存储所有包
+     */
+    public static Map<Integer, PcapPacket> allMap = new HashMap<Integer, PcapPacket>();
+
+    /**
+     * 存储不同协议的包，用于对协议分类查看
+     */
+    public static Map<String, Map<Integer, PcapPacket>> diffMap = new HashMap<String, Map<Integer, PcapPacket>>();
 
     public static void clear() {
         count = 0;
-        map.clear();
+        allMap.clear();
     }
 }

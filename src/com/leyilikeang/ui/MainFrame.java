@@ -43,15 +43,14 @@ public class MainFrame {
         defaultTableModel.setColumnIdentifiers(new Object[]{"序号", "源地址", "目的地址", "源端口", "目的端口", "协议", "长度"});
         packetTable.setModel(defaultTableModel);
         packetTable.getTableHeader().setReorderingAllowed(false);
-        packetTable.getTableHeader().setFont(new Font("宋体", 0, 16));
         packetTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         packetTableScrollPane.setViewportView(packetTable);
         packetTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 int index = packetTable.getSelectedRow();
-                final String hexdump = PacketUtils.map.get(index).toHexdump();
-                final String toString = PacketUtils.map.get(index).toString();
+                final String hexdump = PacketUtils.allMap.get(index).toHexdump();
+                final String toString = PacketUtils.allMap.get(index).toString();
                 EventQueue.invokeLater(new Runnable() {
                     @Override
                     public void run() {
