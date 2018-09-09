@@ -31,9 +31,6 @@ public class PcapUtils {
 
     public static void useDev() {
         PcapIf device = alldevs.get(index);
-        System.out.printf("\nChoosing '%s' on your behalf:\n",
-                (device.getDescription() != null) ? device.getDescription()
-                        : device.getName());
 
         int snaplen = 64 * 1024;
         int flags = Pcap.MODE_PROMISCUOUS;

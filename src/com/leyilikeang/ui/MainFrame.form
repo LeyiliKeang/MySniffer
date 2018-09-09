@@ -55,7 +55,7 @@
                           </grid>
                         </constraints>
                         <properties>
-                          <requestFocusEnabled value="false"/>
+                          <requestFocusEnabled value="true"/>
                         </properties>
                       </component>
                     </children>
@@ -83,7 +83,7 @@
                           </grid>
                         </constraints>
                         <properties>
-                          <requestFocusEnabled value="false"/>
+                          <requestFocusEnabled value="true"/>
                           <text value=""/>
                         </properties>
                       </component>
@@ -150,7 +150,7 @@
                           </grid>
                         </constraints>
                         <properties>
-                          <requestFocusEnabled value="false"/>
+                          <requestFocusEnabled value="true"/>
                         </properties>
                       </component>
                     </children>
@@ -178,7 +178,7 @@
                           </grid>
                         </constraints>
                         <properties>
-                          <requestFocusEnabled value="false"/>
+                          <requestFocusEnabled value="true"/>
                         </properties>
                       </component>
                     </children>
@@ -221,7 +221,7 @@
                       <component id="8c3b8" class="javax.swing.JTable" binding="packetTable">
                         <constraints/>
                         <properties>
-                          <font size="12"/>
+                          <font size="14"/>
                           <rowHeight value="20"/>
                         </properties>
                       </component>

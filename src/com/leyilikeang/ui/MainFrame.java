@@ -40,7 +40,7 @@ public class MainFrame {
 
     public MainFrame() {
         stopButton.setEnabled(false);
-        defaultTableModel.setColumnIdentifiers(new Object[]{"序号", "源地址", "目的地址", "源端口", "目的端口", "协议", "长度"});
+        defaultTableModel.setColumnIdentifiers(new Object[]{"序号", "源地址", "源端口", "目的地址", "目的端口", "协议", "长度"});
         packetTable.setModel(defaultTableModel);
         packetTable.getTableHeader().setReorderingAllowed(false);
         packetTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -48,7 +48,7 @@ public class MainFrame {
         packetTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                int index = packetTable.getSelectedRow();
+                Integer index = Integer.parseInt(packetTable.getValueAt(packetTable.getSelectedRow(), 0).toString());
                 final String hexdump = PacketUtils.allMap.get(index).toHexdump();
                 final String toString = PacketUtils.allMap.get(index).toString();
                 EventQueue.invokeLater(new Runnable() {
