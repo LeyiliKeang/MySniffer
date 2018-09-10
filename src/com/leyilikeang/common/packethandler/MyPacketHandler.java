@@ -63,6 +63,7 @@ public class MyPacketHandler<T> implements JPacketHandler<T> {
                 String destinationIp = FormatUtils.ip(ip4.destination());
                 if (jPacket.hasHeader(icmp)) {
                     PacketUtils.icmpMap.put(PacketUtils.count, jPacket);
+                    defaultTableModel.addRow(new Object[]{PacketUtils.count, sourceIp, null, destinationIp, null, "ICMP", jPacket.getPacketWirelen()});
                 } else if (jPacket.hasHeader(tcp)) {
                     int sourcePort = tcp.source();
                     int destinationPort = tcp.destination();
