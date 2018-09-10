@@ -28,6 +28,9 @@ public class MainFrame {
     private JButton captureButton;
     private JButton stopButton;
     private JScrollPane packetTableScrollPane;
+    private JButton fileButton;
+    private JButton lookOverButton;
+    private JButton toolButton;
 
     private CaptureService captureService = new CaptureService();
 
@@ -88,6 +91,122 @@ public class MainFrame {
                 captureService.stop();
             }
         });
+
+        // 设置快捷键为 Alt + F
+        fileButton.setMnemonic('F');
+        // 按下Alt键时第四个字符带有下划线
+        fileButton.setDisplayedMnemonicIndex(3);
+        fileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JPopupMenu popupMenu = new JPopupMenu();
+
+                JMenuItem openMenuItem = new JMenuItem("打开");
+                // 设置快捷键为 Ctrl + O
+                openMenuItem.setAccelerator(KeyStroke.getKeyStroke("control O"));
+                openMenuItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("打开");
+                    }
+                });
+                popupMenu.add(openMenuItem);
+
+                JMenuItem saveMenuItem = new JMenuItem("另存为");
+                saveMenuItem.setAccelerator(KeyStroke.getKeyStroke("control S"));
+                saveMenuItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("另存为");
+                    }
+                });
+                popupMenu.add(saveMenuItem);
+
+                JMenuItem selectSaveMenuItem = new JMenuItem("选择另存为");
+                selectSaveMenuItem.setAccelerator(KeyStroke.getKeyStroke("control shift S"));
+                selectSaveMenuItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("选择另存为");
+                    }
+                });
+                popupMenu.add(selectSaveMenuItem);
+
+                JMenuItem exitMenuItem = new JMenuItem("退出");
+                exitMenuItem.setAccelerator(KeyStroke.getKeyStroke("control Q"));
+                exitMenuItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.exit(0);
+                    }
+                });
+                popupMenu.add(exitMenuItem);
+                popupMenu.show(fileButton, 0, fileButton.getHeight());
+            }
+        });
+
+        lookOverButton.setMnemonic('L');
+        lookOverButton.setDisplayedMnemonicIndex(3);
+        lookOverButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JPopupMenu popupMenu = new JPopupMenu();
+
+                JMenuItem jumpToMenuItem = new JMenuItem("跳转");
+                jumpToMenuItem.setAccelerator(KeyStroke.getKeyStroke("control J"));
+                jumpToMenuItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("跳转");
+                    }
+                });
+                popupMenu.add(jumpToMenuItem);
+
+                JMenuItem statisticsMenuItem = new JMenuItem("统计");
+                statisticsMenuItem.setAccelerator(KeyStroke.getKeyStroke("control S"));
+                statisticsMenuItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("统计");
+                    }
+                });
+                popupMenu.add(statisticsMenuItem);
+
+                popupMenu.show(lookOverButton, 0, lookOverButton.getHeight());
+            }
+        });
+
+        toolButton.setMnemonic('T');
+        toolButton.setDisplayedMnemonicIndex(3);
+        toolButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JPopupMenu popupMenu = new JPopupMenu();
+
+                JMenuItem scanMenuItem = new JMenuItem("扫描");
+                scanMenuItem.setAccelerator(KeyStroke.getKeyStroke("control S"));
+                scanMenuItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("扫描");
+                    }
+                });
+                popupMenu.add(scanMenuItem);
+
+                JMenuItem arpMenuItem = new JMenuItem("ARP欺骗");
+                arpMenuItem.setAccelerator(KeyStroke.getKeyStroke("control A"));
+                arpMenuItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("ARP欺骗");
+                    }
+                });
+                popupMenu.add(arpMenuItem);
+
+                popupMenu.show(toolButton, 0, toolButton.getHeight());
+            }
+        });
+
     }
 
     public JPanel getContentPane() {
