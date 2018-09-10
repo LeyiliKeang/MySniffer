@@ -1,6 +1,8 @@
 package com.lk.packethandler;
 
 import com.lk.Tools;
+import org.jnetpcap.Pcap;
+import org.jnetpcap.PcapIf;
 import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.packet.PcapPacketHandler;
 import org.jnetpcap.protocol.network.Ip4;
@@ -8,6 +10,7 @@ import org.jnetpcap.protocol.tcpip.Tcp;
 
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,7 +48,7 @@ public class FtpPacketHandler<T> implements PcapPacketHandler<T> {
             byte[] dipBytes = null;
             if (destinationIp != null) {
                 dipBytes = new byte[4];
-                String[] dip = destinationIp.split("\\.");
+                String[] dip = destinationIp.split(".");
                 for (int j = 0; j < dip.length; j++) {
                     int i = Integer.parseInt(dip[j]);
                     if (i > 127) {
@@ -148,6 +151,31 @@ public class FtpPacketHandler<T> implements PcapPacketHandler<T> {
                         } else {
                             defaultTableModel.addRow(new Object[]{packetList.size(), source, destination, tcp.source(), tcp.destination(), protocol, packet.getPacketWirelen()});
                         }
+
+                        List<PcapIf> alldevs = new ArrayList<PcapIf>(); // Will be filled with NICs
+                        StringBuilder errbuf = new StringBuilder(); // For any error msgs
+
+                        int r = Pcap.findAllDevs(alldevs, errbuf);
+                        if (r == Pcap.NOT_OK || alldevs.isEmpty()) {
+                            System.err.printf("Can't read list of devices, error is %s", errbuf.toString());
+                            return;
+                        }
+                        PcapIf device = alldevs.get(5); // We know we have atleast 1 device
+
+                        int snaplen = 64 * 1024; // Capture all packets, no trucation
+                        int flags = Pcap.MODE_PROMISCUOUS; // capture all packets
+                        int timeout = 10 * 1000; // 10 seconds in millis
+                        final Pcap pcap = Pcap.openLive(device.getName(), snaplen, flags, timeout, errbuf);
+                        // 转发
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                PcapPacket pcapPacket = new PcapPacket(packet);
+
+                                pcap.sendPacket(pcapPacket);
+                            }
+                        }).start();
                     }
                 });
             }
