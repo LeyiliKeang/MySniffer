@@ -40,8 +40,8 @@ public class HttpPacketHandler<T> implements JPacketHandler<T> {
             EventQueue.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    PacketUtils.allMap.put(PacketUtils.count, jPacket);
-                    defaultTableModel.addRow(new Object[]{++PacketUtils.count, sourceIp, sourcePort, destinationIp, destinationPort, "http", jPacket.getPacketWirelen()});
+                    PacketUtils.allMap.put(PacketUtils.allCount, jPacket);
+                    defaultTableModel.addRow(new Object[]{++PacketUtils.allCount, sourceIp, sourcePort, destinationIp, destinationPort, "http", jPacket.getPacketWirelen()});
                 }
             });
         }
