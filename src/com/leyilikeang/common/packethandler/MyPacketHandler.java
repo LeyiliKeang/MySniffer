@@ -61,11 +61,10 @@ public class MyPacketHandler<T> implements JPacketHandler<T> {
             String destinationMac = FormatUtils.mac(ethernet.destination());
             if (jPacket.hasHeader(arp)) {
                 PacketUtils.arpCount++;
+                PacketUtils.arpMap.put(PacketUtils.arpCount, jPacket);
                 if (type == null) {
-                    PacketUtils.arpMap.put(PacketUtils.allCount, jPacket);
                     defaultTableModel.addRow(new Object[]{PacketUtils.allCount, sourceMac, null, destinationMac, null, "ARP", jPacket.getPacketWirelen()});
                 } else if ("ARP".equals(type)) {
-                    PacketUtils.arpMap.put(PacketUtils.arpCount, jPacket);
                     defaultTableModel.addRow(new Object[]{PacketUtils.arpCount, sourceMac, null, destinationMac, null, "ARP", jPacket.getPacketWirelen()});
                 }
             }
@@ -74,11 +73,10 @@ public class MyPacketHandler<T> implements JPacketHandler<T> {
                 String destinationIp = FormatUtils.ip(ip4.destination());
                 if (jPacket.hasHeader(icmp)) {
                     PacketUtils.icmpCount++;
+                    PacketUtils.icmpMap.put(PacketUtils.icmpCount, jPacket);
                     if (type == null) {
-                        PacketUtils.icmpMap.put(PacketUtils.allCount, jPacket);
                         defaultTableModel.addRow(new Object[]{PacketUtils.allCount, sourceIp, null, destinationIp, null, "ICMP", jPacket.getPacketWirelen()});
                     } else if ("ICMP".equals(type)) {
-                        PacketUtils.icmpMap.put(PacketUtils.icmpCount, jPacket);
                         defaultTableModel.addRow(new Object[]{PacketUtils.icmpCount, sourceIp, null, destinationIp, null, "ICMP", jPacket.getPacketWirelen()});
                     }
                 } else if (jPacket.hasHeader(tcp)) {
@@ -86,20 +84,18 @@ public class MyPacketHandler<T> implements JPacketHandler<T> {
                     int destinationPort = tcp.destination();
                     if (jPacket.hasHeader(http)) {
                         PacketUtils.httpCount++;
+                        PacketUtils.httpMap.put(PacketUtils.httpCount, jPacket);
                         if (type == null) {
-                            PacketUtils.httpMap.put(PacketUtils.allCount, jPacket);
                             defaultTableModel.addRow(new Object[]{PacketUtils.allCount, sourceIp, sourcePort, destinationIp, destinationPort, "HTTP", jPacket.getPacketWirelen()});
                         } else if ("HTTP".equals(type)) {
-                            PacketUtils.httpMap.put(PacketUtils.httpCount, jPacket);
                             defaultTableModel.addRow(new Object[]{PacketUtils.httpCount, sourceIp, sourcePort, destinationIp, destinationPort, "HTTP", jPacket.getPacketWirelen()});
                         }
                     } else {
                         PacketUtils.tcpCount++;
+                        PacketUtils.tcpMap.put(PacketUtils.tcpCount, jPacket);
                         if (type == null) {
-                            PacketUtils.tcpMap.put(PacketUtils.allCount, jPacket);
                             defaultTableModel.addRow(new Object[]{PacketUtils.allCount, sourceIp, sourcePort, destinationIp, destinationPort, "TCP", jPacket.getPacketWirelen()});
                         } else if ("TCP".equals(type)) {
-                            PacketUtils.tcpMap.put(PacketUtils.tcpCount, jPacket);
                             defaultTableModel.addRow(new Object[]{PacketUtils.tcpCount, sourceIp, sourcePort, destinationIp, destinationPort, "TCP", jPacket.getPacketWirelen()});
                         }
                     }
@@ -108,29 +104,26 @@ public class MyPacketHandler<T> implements JPacketHandler<T> {
                     int destinationPort = udp.destination();
                     if (jPacket.hasHeader(sip)) {
                         PacketUtils.sipCount++;
+                        PacketUtils.sipMap.put(PacketUtils.sipCount, jPacket);
                         if (type == null) {
-                            PacketUtils.sipMap.put(PacketUtils.allCount, jPacket);
                             defaultTableModel.addRow(new Object[]{PacketUtils.allCount, sourceIp, sourcePort, destinationIp, destinationPort, "SIP", jPacket.getPacketWirelen()});
                         } else if ("SIP".equals(type)) {
-                            PacketUtils.sipMap.put(PacketUtils.sipCount, jPacket);
                             defaultTableModel.addRow(new Object[]{PacketUtils.sipCount, sourceIp, sourcePort, destinationIp, destinationPort, "SIP", jPacket.getPacketWirelen()});
                         }
                     } else if (jPacket.hasHeader(sdp)) {
                         PacketUtils.sdpCount++;
+                        PacketUtils.sdpMap.put(PacketUtils.sdpCount, jPacket);
                         if (type == null) {
-                            PacketUtils.sdpMap.put(PacketUtils.allCount, jPacket);
                             defaultTableModel.addRow(new Object[]{PacketUtils.allCount, sourceIp, sourcePort, destinationIp, destinationPort, "SDP", jPacket.getPacketWirelen()});
                         } else if ("SDP".equals(type)) {
-                            PacketUtils.sdpMap.put(PacketUtils.sdpCount, jPacket);
                             defaultTableModel.addRow(new Object[]{PacketUtils.sdpCount, sourceIp, sourcePort, destinationIp, destinationPort, "SDP", jPacket.getPacketWirelen()});
                         }
                     } else {
                         PacketUtils.udpCount++;
+                        PacketUtils.udpMap.put(PacketUtils.udpCount, jPacket);
                         if (type == null) {
-                            PacketUtils.udpMap.put(PacketUtils.allCount, jPacket);
                             defaultTableModel.addRow(new Object[]{PacketUtils.allCount, sourceIp, sourcePort, destinationIp, destinationPort, "UDP", jPacket.getPacketWirelen()});
                         } else if ("UDP".equals(type)) {
-                            PacketUtils.udpMap.put(PacketUtils.udpCount, jPacket);
                             defaultTableModel.addRow(new Object[]{PacketUtils.udpCount, sourceIp, sourcePort, destinationIp, destinationPort, "UDP", jPacket.getPacketWirelen()});
                         }
                     }
