@@ -19,9 +19,9 @@ public class DevsFrame {
     private JComboBox devsComboBox;
     private JButton useDevButton;
 
-    private JFrame devsFrame;
+    private Window devsFrame;
 
-    public DevsFrame(JFrame devsFrame) {
+    public DevsFrame(Window devsFrame) {
         this();
         this.devsFrame = devsFrame;
     }
@@ -34,9 +34,9 @@ public class DevsFrame {
         useDevButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                PcapUtils.index = devsComboBox.getSelectedIndex();
-                PcapUtils.useDev();
-                if (devsFrame != null) {
+                if (PcapUtils.index == null) {
+                    PcapUtils.index = devsComboBox.getSelectedIndex();
+                    PcapUtils.useDev();
                     EventQueue.invokeLater(new Runnable() {
                         @Override
                         public void run() {
@@ -49,6 +49,10 @@ public class DevsFrame {
                             mainFrame.setVisible(true);
                         }
                     });
+                } else {
+                    PcapUtils.index = devsComboBox.getSelectedIndex();
+                    PcapUtils.useDev();
+                    devsFrame.setVisible(false);
                 }
             }
         });

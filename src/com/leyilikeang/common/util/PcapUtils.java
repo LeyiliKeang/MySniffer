@@ -13,7 +13,7 @@ import java.util.List;
 public class PcapUtils {
 
     public static Pcap pcap;
-    public static int index;
+    public static Integer index;
     private static List<PcapIf> alldevs;
     private static StringBuilder errbuf = new StringBuilder();
 

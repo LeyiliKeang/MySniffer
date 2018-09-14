@@ -4,6 +4,7 @@ import com.leyilikeang.ui.DevsFrame;
 import com.sun.org.apache.bcel.internal.generic.POP;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -88,7 +89,7 @@ public class MenuUtils {
         return popupMenu;
     }
 
-    public static JPopupMenu getCapMenu(final JFrame frame) {
+    public static JPopupMenu getCapMenu(final Window frame) {
         JPopupMenu popupMenu = new JPopupMenu();
 
         JMenuItem ruleMenuItem = new JMenuItem("规则");
@@ -96,8 +97,8 @@ public class MenuUtils {
         ruleMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JDialog dialog = new JDialog(frame, true);
-                dialog.setContentPane(new DevsFrame().getContentPane());
+                JDialog dialog = new JDialog((JFrame) frame, true);
+                dialog.setContentPane(new DevsFrame(dialog).getContentPane());
                 dialog.pack();
                 dialog.setLocationRelativeTo(frame);
                 dialog.setVisible(true);

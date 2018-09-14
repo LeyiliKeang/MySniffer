@@ -1,6 +1,7 @@
 package com.leyilikeang.service;
 
 import com.leyilikeang.common.packethandler.MyPacketHandler;
+import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.common.util.PcapUtils;
 
 import javax.swing.table.DefaultTableModel;
@@ -11,9 +12,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CaptureService {
 
-    public void capture(final DefaultTableModel defaultTableModel) {
-        defaultTableModel.setRowCount(0);
-
+    public void capture(DefaultTableModel defaultTableModel) {
         final MyPacketHandler packetHandler = new MyPacketHandler(defaultTableModel);
 
         new Thread(new Runnable() {
