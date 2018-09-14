@@ -26,12 +26,12 @@ public class Run {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                JFrame frame = new JFrame("DevsFrame");
-                frame.setContentPane(new DevsFrame(frame).getContentPane());
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.pack();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
+                JFrame devsFrame = new JFrame("DevsFrame");
+                devsFrame.setContentPane(new DevsFrame(devsFrame).getContentPane());
+                devsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                devsFrame.pack();
+                devsFrame.setLocationRelativeTo(null);
+                devsFrame.setVisible(true);
             }
         });
     }

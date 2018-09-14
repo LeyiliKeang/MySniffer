@@ -96,10 +96,10 @@ public class MenuUtils {
         ruleMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JDialog dialog = new JDialog(frame);
+                JDialog dialog = new JDialog(frame, true);
                 dialog.setContentPane(new DevsFrame().getContentPane());
                 dialog.pack();
-                dialog.setLocationRelativeTo(null);
+                dialog.setLocationRelativeTo(frame);
                 dialog.setVisible(true);
             }
         });

@@ -34,6 +34,8 @@ public class MainFrame {
     private JButton toolButton;
     private JButton capButton;
 
+    private JFrame mainFrame;
+
     private CaptureService captureService = new CaptureService();
 
     private DefaultTableModel defaultTableModel = new DefaultTableModel() {
@@ -43,7 +45,12 @@ public class MainFrame {
         }
     };
 
-    public MainFrame(final JFrame frame) {
+    public MainFrame(JFrame mainFrame) {
+        this();
+        this.mainFrame = mainFrame;
+    }
+
+    public MainFrame() {
         stopButton.setEnabled(false);
         defaultTableModel.setColumnIdentifiers(new Object[]{"序号", "源地址", "源端口", "目的地址", "目的端口", "协议", "长度"});
         packetTable.setModel(defaultTableModel);
@@ -121,7 +128,7 @@ public class MainFrame {
         capButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JPopupMenu capMenu = MenuUtils.getCapMenu(frame);
+                JPopupMenu capMenu = MenuUtils.getCapMenu(mainFrame);
                 capMenu.show(capButton, 0, capButton.getHeight());
             }
         });

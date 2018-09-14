@@ -19,9 +19,14 @@ public class DevsFrame {
     private JComboBox devsComboBox;
     private JButton useDevButton;
 
-    public DevsFrame(){}
+    private JFrame devsFrame;
 
-    public DevsFrame(final JFrame jFrame) {
+    public DevsFrame(JFrame devsFrame) {
+        this();
+        this.devsFrame = devsFrame;
+    }
+
+    public DevsFrame() {
         final List<PcapIf> devs = PcapUtils.getAllDevs();
         for (PcapIf dev : devs) {
             devsComboBox.addItem(dev.getDescription() + "[" + dev.getName() + "]");
@@ -31,18 +36,20 @@ public class DevsFrame {
             public void actionPerformed(ActionEvent e) {
                 PcapUtils.index = devsComboBox.getSelectedIndex();
                 PcapUtils.useDev();
-                EventQueue.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        JFrame frame = new JFrame("MySniffer");
-                        frame.setContentPane(new MainFrame(frame).getContentPane());
-                        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                        frame.pack();
-                        frame.setLocationRelativeTo(null);
-                        jFrame.setVisible(false);
-                        frame.setVisible(true);
-                    }
-                });
+                if (devsFrame != null) {
+                    EventQueue.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            JFrame mainFrame = new JFrame("MySniffer");
+                            mainFrame.setContentPane(new MainFrame(mainFrame).getContentPane());
+                            mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            mainFrame.pack();
+                            mainFrame.setLocationRelativeTo(null);
+                            devsFrame.setVisible(false);
+                            mainFrame.setVisible(true);
+                        }
+                    });
+                }
             }
         });
     }
