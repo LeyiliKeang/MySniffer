@@ -1,5 +1,6 @@
 package com.leyilikeang.common.util;
 
+import com.leyilikeang.ui.DevsFrame;
 import com.sun.org.apache.bcel.internal.generic.POP;
 
 import javax.swing.*;
@@ -84,6 +85,25 @@ public class MenuUtils {
             }
         });
         popupMenu.add(statisticsMenuItem);
+        return popupMenu;
+    }
+
+    public static JPopupMenu getCapMenu(final JFrame frame) {
+        JPopupMenu popupMenu = new JPopupMenu();
+
+        JMenuItem ruleMenuItem = new JMenuItem("规则");
+        ruleMenuItem.setAccelerator(KeyStroke.getKeyStroke("control R"));
+        ruleMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JDialog dialog = new JDialog(frame);
+                dialog.setContentPane(new DevsFrame().getContentPane());
+                dialog.pack();
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
+            }
+        });
+        popupMenu.add(ruleMenuItem);
         return popupMenu;
     }
 

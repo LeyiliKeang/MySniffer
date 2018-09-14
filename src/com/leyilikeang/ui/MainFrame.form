@@ -339,6 +339,13 @@
                   <text value="查看(L)"/>
                 </properties>
               </component>
+              <component id="59f18" class="javax.swing.JButton" binding="capButton">
+                <constraints/>
+                <properties>
+                  <focusable value="false"/>
+                  <text value="捕获(C)"/>
+                </properties>
+              </component>
               <component id="8813" class="javax.swing.JButton" binding="toolButton">
                 <constraints/>
                 <properties>

@@ -32,6 +32,7 @@ public class MainFrame {
     private JButton fileButton;
     private JButton lookOverButton;
     private JButton toolButton;
+    private JButton capButton;
 
     private CaptureService captureService = new CaptureService();
 
@@ -42,7 +43,7 @@ public class MainFrame {
         }
     };
 
-    public MainFrame() {
+    public MainFrame(final JFrame frame) {
         stopButton.setEnabled(false);
         defaultTableModel.setColumnIdentifiers(new Object[]{"序号", "源地址", "源端口", "目的地址", "目的端口", "协议", "长度"});
         packetTable.setModel(defaultTableModel);
@@ -112,6 +113,16 @@ public class MainFrame {
             public void actionPerformed(ActionEvent e) {
                 JPopupMenu lookOverMenu = MenuUtils.getLookOverMenu();
                 lookOverMenu.show(lookOverButton, 0, lookOverButton.getHeight());
+            }
+        });
+
+        capButton.setMnemonic('C');
+        capButton.setDisplayedMnemonicIndex(3);
+        capButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JPopupMenu capMenu = MenuUtils.getCapMenu(frame);
+                capMenu.show(capButton, 0, capButton.getHeight());
             }
         });
 

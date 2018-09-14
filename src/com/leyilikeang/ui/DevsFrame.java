@@ -19,6 +19,8 @@ public class DevsFrame {
     private JComboBox devsComboBox;
     private JButton useDevButton;
 
+    public DevsFrame(){}
+
     public DevsFrame(final JFrame jFrame) {
         final List<PcapIf> devs = PcapUtils.getAllDevs();
         for (PcapIf dev : devs) {
@@ -33,7 +35,7 @@ public class DevsFrame {
                     @Override
                     public void run() {
                         JFrame frame = new JFrame("MySniffer");
-                        frame.setContentPane(new MainFrame().getContentPane());
+                        frame.setContentPane(new MainFrame(frame).getContentPane());
                         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         frame.pack();
                         frame.setLocationRelativeTo(null);
