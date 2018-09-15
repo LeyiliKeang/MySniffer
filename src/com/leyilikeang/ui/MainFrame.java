@@ -3,6 +3,7 @@ package com.leyilikeang.ui;
 import com.leyilikeang.common.util.MenuUtils;
 import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.service.CaptureService;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -19,7 +20,7 @@ import java.awt.event.ActionListener;
 public class MainFrame {
 
     private JPanel contentPane;
-    private JTextArea toHexdumpTextArea;
+    private JTextArea toHexDumpTextArea;
     private JTextArea toStringTextArea;
     private JTable packetTable;
     private JTextField sourceIpTextField;
@@ -38,12 +39,7 @@ public class MainFrame {
 
     private CaptureService captureService = new CaptureService();
 
-    private DefaultTableModel defaultTableModel = new DefaultTableModel() {
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
-        }
-    };
+    private DefaultTableModel defaultTableModel;
 
     public MainFrame(JFrame mainFrame) {
         this();
@@ -52,6 +48,12 @@ public class MainFrame {
 
     public MainFrame() {
         stopButton.setEnabled(false);
+        defaultTableModel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         defaultTableModel.setColumnIdentifiers(new Object[]{"序号", "源地址", "源端口", "目的地址", "目的端口", "协议", "长度"});
         packetTable.setModel(defaultTableModel);
         packetTable.getTableHeader().setReorderingAllowed(false);
@@ -60,16 +62,26 @@ public class MainFrame {
         packetTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                Integer index = Integer.parseInt(packetTable.getValueAt(packetTable.getSelectedRow(), 0).toString());
-                final String hexdump = PacketUtils.allMap.get(index).toHexdump();
-                final String toString = PacketUtils.allMap.get(index).toString();
-                EventQueue.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        toHexdumpTextArea.setText(hexdump);
-                        toStringTextArea.setText(toString);
-                    }
-                });
+                if (packetTable.getSelectedRow() != -1) {
+                    Integer index = Integer.parseInt(packetTable.getValueAt(packetTable.getSelectedRow(), 0).toString());
+                    final String hexDump = PacketUtils.allMap.get(index).toHexdump();
+                    final String toString = PacketUtils.allMap.get(index).toString();
+                    EventQueue.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            toHexDumpTextArea.setText(hexDump);
+                            toStringTextArea.setText(toString);
+                        }
+                    });
+                } else {
+                    EventQueue.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            toHexDumpTextArea.setText("");
+                            toStringTextArea.setText("");
+                        }
+                    });
+                }
             }
         });
 
@@ -83,6 +95,8 @@ public class MainFrame {
                         stopButton.setEnabled(true);
                     }
                 });
+                PacketUtils.clear();
+                defaultTableModel.setRowCount(0);
                 captureService.capture(defaultTableModel);
             }
         });
@@ -138,8 +152,10 @@ public class MainFrame {
         toolButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JPopupMenu toolsMenu = MenuUtils.getToolsMenu();
-                toolsMenu.show(toolButton, 0, toolButton.getHeight());
+//                JPopupMenu toolsMenu = MenuUtils.getToolsMenu();
+//                toolsMenu.show(toolButton, 0, toolButton.getHeight());
+
+                packetTable.clearSelection();
             }
         });
 

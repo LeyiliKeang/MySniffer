@@ -221,6 +221,7 @@
                       <component id="8c3b8" class="javax.swing.JTable" binding="packetTable">
                         <constraints/>
                         <properties>
+                          <focusable value="false"/>
                           <font size="14"/>
                           <rowHeight value="20"/>
                         </properties>
@@ -267,7 +268,7 @@
                             <properties/>
                             <border type="none"/>
                             <children>
-                              <component id="2883" class="javax.swing.JTextArea" binding="toHexdumpTextArea">
+                              <component id="2883" class="javax.swing.JTextArea" binding="toHexDumpTextArea">
                                 <constraints/>
                                 <properties>
                                   <editable value="false"/>

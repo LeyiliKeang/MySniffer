@@ -78,7 +78,6 @@ public class MenuUtils {
         popupMenu.add(jumpToMenuItem);
 
         JMenuItem statisticsMenuItem = new JMenuItem("统计");
-        statisticsMenuItem.setAccelerator(KeyStroke.getKeyStroke("control S"));
         statisticsMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -89,11 +88,11 @@ public class MenuUtils {
         return popupMenu;
     }
 
+    // TODO ： 暂时分为切换网卡和捕获规则两种，传参为题待考虑
     public static JPopupMenu getCapMenu(final Window frame) {
         JPopupMenu popupMenu = new JPopupMenu();
 
         JMenuItem ruleMenuItem = new JMenuItem("规则");
-        ruleMenuItem.setAccelerator(KeyStroke.getKeyStroke("control R"));
         ruleMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -112,7 +111,6 @@ public class MenuUtils {
         JPopupMenu popupMenu = new JPopupMenu();
 
         JMenuItem scanMenuItem = new JMenuItem("扫描");
-        scanMenuItem.setAccelerator(KeyStroke.getKeyStroke("control S"));
         scanMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -122,7 +120,6 @@ public class MenuUtils {
         popupMenu.add(scanMenuItem);
 
         JMenuItem arpMenuItem = new JMenuItem("ARP欺骗");
-        arpMenuItem.setAccelerator(KeyStroke.getKeyStroke("control A"));
         arpMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
