@@ -3,7 +3,6 @@ package com.leyilikeang.ui;
 import com.leyilikeang.common.util.MenuUtils;
 import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.service.CaptureService;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -95,6 +94,13 @@ public class MainFrame {
                         stopButton.setEnabled(true);
                     }
                 });
+
+                PacketUtils.sourceIpAddress = sourceIpTextField.getText().trim().equals("")
+                        ? null : sourceIpTextField.getText().trim();
+                PacketUtils.destinationIpAddress = destinationIpTextField.getText().trim().equals("")
+                        ? null : destinationIpTextField.getText().trim();
+                PacketUtils.sourcePort = sourcePortTextField.getText().trim().equals("") ? null : Integer.parseInt(sourcePortTextField.getText().trim());
+                PacketUtils.destinationPort = destinationPortTextField.getText().trim().equals("") ? null : Integer.parseInt(destinationPortTextField.getText().trim());
                 PacketUtils.clear();
                 defaultTableModel.setRowCount(0);
                 captureService.capture(defaultTableModel);

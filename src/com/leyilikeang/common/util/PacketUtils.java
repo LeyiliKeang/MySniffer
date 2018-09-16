@@ -12,6 +12,18 @@ import java.util.Map;
  */
 public class PacketUtils {
 
+    public static String sourceIpAddress;
+
+    public static String destinationIpAddress;
+
+    public static Integer sourcePort;
+
+    public static Integer destinationPort;
+
+    public static String sourceMacAddress;
+
+    public static String destinationMacAddress;
+
     /**
      * 每次抓包的序号标记
      */

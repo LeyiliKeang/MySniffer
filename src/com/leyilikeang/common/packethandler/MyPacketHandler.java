@@ -4,8 +4,6 @@ import com.leyilikeang.common.util.PacketUtils;
 import org.jnetpcap.packet.JPacket;
 import org.jnetpcap.packet.JPacketHandler;
 import org.jnetpcap.packet.format.FormatUtils;
-import org.jnetpcap.packet.format.JFormatter;
-import org.jnetpcap.packet.format.TextFormatter;
 import org.jnetpcap.protocol.lan.Ethernet;
 import org.jnetpcap.protocol.network.Arp;
 import org.jnetpcap.protocol.network.Icmp;
@@ -17,7 +15,6 @@ import org.jnetpcap.protocol.voip.Sdp;
 import org.jnetpcap.protocol.voip.Sip;
 
 import javax.swing.table.DefaultTableModel;
-import java.io.IOException;
 
 /**
  * @author likang
@@ -59,18 +56,25 @@ public class MyPacketHandler<T> implements JPacketHandler<T> {
         if (jPacket.hasHeader(ethernet)) {
             String sourceMac = FormatUtils.mac(ethernet.source());
             String destinationMac = FormatUtils.mac(ethernet.destination());
-            if (jPacket.hasHeader(arp)) {
-                PacketUtils.arpCount++;
-                PacketUtils.arpMap.put(PacketUtils.arpCount, jPacket);
-                if (type == null) {
-                    defaultTableModel.addRow(new Object[]{PacketUtils.allCount, sourceMac, null, destinationMac, null, "ARP", jPacket.getPacketWirelen()});
-                } else if ("ARP".equals(type)) {
-                    defaultTableModel.addRow(new Object[]{PacketUtils.arpCount, sourceMac, null, destinationMac, null, "ARP", jPacket.getPacketWirelen()});
+            if (PacketUtils.sourceIpAddress == null && PacketUtils.destinationIpAddress == null && PacketUtils.sourcePort == null && PacketUtils.destinationPort == null) {
+                if (jPacket.hasHeader(arp)) {
+                    PacketUtils.arpCount++;
+                    PacketUtils.arpMap.put(PacketUtils.arpCount, jPacket);
+                    if (type == null) {
+                        defaultTableModel.addRow(new Object[]{PacketUtils.allCount, sourceMac, null, destinationMac, null, "ARP", jPacket.getPacketWirelen()});
+                    } else if ("ARP".equals(type)) {
+                        defaultTableModel.addRow(new Object[]{PacketUtils.arpCount, sourceMac, null, destinationMac, null, "ARP", jPacket.getPacketWirelen()});
+                    }
                 }
             }
             if (jPacket.hasHeader(ip4)) {
-                String sourceIp = FormatUtils.ip(ip4.source());
-                String destinationIp = FormatUtils.ip(ip4.destination());
+                String sourceIp = PacketUtils.sourceIpAddress == null ? FormatUtils.ip(ip4.source()) : PacketUtils.sourceIpAddress;
+                String destinationIp = PacketUtils.destinationIpAddress == null ? FormatUtils.ip(ip4.destination()) : PacketUtils.destinationIpAddress;
+
+                if (!FormatUtils.ip(ip4.source()).equals(sourceIp) || !FormatUtils.ip(ip4.destination()).equals(destinationIp)) {
+                    return;
+                }
+                destinationIp = FormatUtils.ip(ip4.destination());
                 if (jPacket.hasHeader(icmp)) {
                     PacketUtils.icmpCount++;
                     PacketUtils.icmpMap.put(PacketUtils.icmpCount, jPacket);
@@ -80,8 +84,11 @@ public class MyPacketHandler<T> implements JPacketHandler<T> {
                         defaultTableModel.addRow(new Object[]{PacketUtils.icmpCount, sourceIp, null, destinationIp, null, "ICMP", jPacket.getPacketWirelen()});
                     }
                 } else if (jPacket.hasHeader(tcp)) {
-                    int sourcePort = tcp.source();
-                    int destinationPort = tcp.destination();
+                    Integer sourcePort = PacketUtils.sourcePort == null ? tcp.source() : PacketUtils.sourcePort;
+                    Integer destinationPort = PacketUtils.destinationPort == null ? tcp.destination() : PacketUtils.destinationPort;
+                    if (tcp.source() != sourcePort || tcp.destination() != destinationPort) {
+                        return;
+                    }
                     if (jPacket.hasHeader(http)) {
                         PacketUtils.httpCount++;
                         PacketUtils.httpMap.put(PacketUtils.httpCount, jPacket);
@@ -100,8 +107,11 @@ public class MyPacketHandler<T> implements JPacketHandler<T> {
                         }
                     }
                 } else if (jPacket.hasHeader(udp)) {
-                    int sourcePort = udp.source();
-                    int destinationPort = udp.destination();
+                    int sourcePort = PacketUtils.sourcePort == null ? udp.source() : PacketUtils.sourcePort;
+                    int destinationPort = PacketUtils.destinationPort == null ? udp.destination() : PacketUtils.destinationPort;
+                    if (udp.source() != sourcePort || udp.destination() != destinationPort) {
+                        return;
+                    }
                     if (jPacket.hasHeader(sip)) {
                         PacketUtils.sipCount++;
                         PacketUtils.sipMap.put(PacketUtils.sipCount, jPacket);
