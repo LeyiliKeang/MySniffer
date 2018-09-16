@@ -11,6 +11,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * @author likang
@@ -158,13 +160,39 @@ public class MainFrame {
         toolButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                JPopupMenu toolsMenu = MenuUtils.getToolsMenu();
-//                toolsMenu.show(toolButton, 0, toolButton.getHeight());
-
-                packetTable.clearSelection();
+                JPopupMenu toolsMenu = MenuUtils.getToolsMenu();
+                toolsMenu.show(toolButton, 0, toolButton.getHeight());
             }
         });
 
+        fileButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                JPopupMenu fileMenu = MenuUtils.getFileMenu();
+                fileMenu.show(fileButton, 0, fileButton.getHeight());
+            }
+        });
+        lookOverButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                JPopupMenu lookOverMenu = MenuUtils.getLookOverMenu();
+                lookOverMenu.show(lookOverButton, 0, lookOverButton.getHeight());
+            }
+        });
+        capButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                JPopupMenu capMenu = MenuUtils.getCapMenu(mainFrame);
+                capMenu.show(capButton, 0, capButton.getHeight());
+            }
+        });
+        toolButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                JPopupMenu toolsMenu = MenuUtils.getToolsMenu();
+                toolsMenu.show(toolButton, 0, toolButton.getHeight());
+            }
+        });
     }
 
     public JPanel getContentPane() {
