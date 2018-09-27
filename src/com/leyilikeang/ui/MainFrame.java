@@ -127,40 +127,40 @@ public class MainFrame {
         fileButton.setMnemonic('F');
         // 按下Alt键时第四个字符带有下划线
         fileButton.setDisplayedMnemonicIndex(3);
+        final JPopupMenu fileMenu = MenuUtils.getFileMenu();
         fileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JPopupMenu fileMenu = MenuUtils.getFileMenu();
                 fileMenu.show(fileButton, 0, fileButton.getHeight());
             }
         });
 
         lookOverButton.setMnemonic('L');
         lookOverButton.setDisplayedMnemonicIndex(3);
+        final JPopupMenu lookOverMenu = MenuUtils.getLookOverMenu();
         lookOverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JPopupMenu lookOverMenu = MenuUtils.getLookOverMenu();
                 lookOverMenu.show(lookOverButton, 0, lookOverButton.getHeight());
             }
         });
 
         capButton.setMnemonic('C');
         capButton.setDisplayedMnemonicIndex(3);
+        final JPopupMenu capMenu = MenuUtils.getCapMenu(mainFrame);
         capButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JPopupMenu capMenu = MenuUtils.getCapMenu(mainFrame);
                 capMenu.show(capButton, 0, capButton.getHeight());
             }
         });
 
         toolButton.setMnemonic('T');
         toolButton.setDisplayedMnemonicIndex(3);
+        final JPopupMenu toolsMenu = MenuUtils.getToolsMenu();
         toolButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JPopupMenu toolsMenu = MenuUtils.getToolsMenu();
                 toolsMenu.show(toolButton, 0, toolButton.getHeight());
             }
         });
@@ -168,28 +168,24 @@ public class MainFrame {
         fileButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                JPopupMenu fileMenu = MenuUtils.getFileMenu();
                 fileMenu.show(fileButton, 0, fileButton.getHeight());
             }
         });
         lookOverButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                JPopupMenu lookOverMenu = MenuUtils.getLookOverMenu();
                 lookOverMenu.show(lookOverButton, 0, lookOverButton.getHeight());
             }
         });
         capButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                JPopupMenu capMenu = MenuUtils.getCapMenu(mainFrame);
                 capMenu.show(capButton, 0, capButton.getHeight());
             }
         });
         toolButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                JPopupMenu toolsMenu = MenuUtils.getToolsMenu();
                 toolsMenu.show(toolButton, 0, toolButton.getHeight());
             }
         });

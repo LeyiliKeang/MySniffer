@@ -88,7 +88,7 @@ public class MenuUtils {
         return popupMenu;
     }
 
-    // TODO ： 暂时分为切换网卡和捕获规则两种，传参为题待考虑
+    // TODO ： 暂时分为切换网卡和捕获规则两种，传参问题待考虑
     public static JPopupMenu getCapMenu(final Window frame) {
         JPopupMenu popupMenu = new JPopupMenu();
 
