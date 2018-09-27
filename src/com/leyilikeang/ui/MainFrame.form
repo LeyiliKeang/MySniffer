@@ -221,9 +221,11 @@
                       <component id="8c3b8" class="javax.swing.JTable" binding="packetTable">
                         <constraints/>
                         <properties>
-                          <focusable value="false"/>
+                          <focusable value="true"/>
                           <font size="14"/>
                           <rowHeight value="20"/>
+                          <showVerticalLines value="true"/>
+                          <surrendersFocusOnKeystroke value="false"/>
                         </properties>
                       </component>
                     </children>
@@ -236,6 +238,7 @@
                   <splitpane position="right"/>
                 </constraints>
                 <properties>
+                  <focusable value="true"/>
                   <minimumSize width="52" height="24"/>
                 </properties>
                 <border type="none"/>
@@ -258,7 +261,9 @@
                         <constraints>
                           <tabbedpane title="  内容  "/>
                         </constraints>
-                        <properties/>
+                        <properties>
+                          <focusable value="true"/>
+                        </properties>
                         <border type="none"/>
                         <children>
                           <scrollpane id="f4074">
