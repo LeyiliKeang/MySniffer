@@ -23,6 +23,7 @@ public class MenuUtils {
      * TODO : 另存为选项用于保存列表中所有的数据包信息到后缀名为.pcap的数据包文件中，可用Wireshark打开查看更多信息
      * TODO : 选择另存为选项用于选择指定的数据包进行另存为操作
      * TODO : 退出选项点击后退出程序，后续添加退出时询问是否保存对话框
+     *
      * @return 文件菜单
      */
     public static JPopupMenu getFileMenu() {
@@ -104,8 +105,9 @@ public class MenuUtils {
 
     /**
      * TODO : 捕获菜单暂时分为切换网卡和捕获规则两种，传参问题待考虑
+     * TODO : 弹出的网卡设备选择对话框未居中于frame
      *
-     * @param frame 切换网卡时，弹出的网卡设备选择对话框将居中与此frame
+     * @param frame 切换网卡时，弹出的网卡设备选择对话框将居中于此frame
      * @return 捕获菜单
      */
     public static JPopupMenu getCapMenu(final Window frame) {
@@ -115,7 +117,7 @@ public class MenuUtils {
         ruleMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JDialog dialog = new JDialog((JFrame) frame, true);
+                JDialog dialog = new JDialog((JFrame) frame, "选择网卡设备", true);
                 dialog.setContentPane(new DevsFrame(dialog).getContentPane());
                 dialog.pack();
                 dialog.setLocationRelativeTo(frame);
