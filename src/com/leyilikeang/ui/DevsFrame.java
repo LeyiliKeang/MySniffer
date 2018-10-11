@@ -82,17 +82,20 @@ public class DevsFrame {
             treeNodeMap.put(node, i++);
             top.add(node);
             for (PcapAddr addr : addrs) {
-                if (addr.getAddr().toString().startsWith("[INET4") || addr.getAddr().toString().startsWith("[INET6")) {
+                if (addr.getAddr().toString().startsWith("[INET4")
+                        || addr.getAddr().toString().startsWith("[INET6")) {
                     String ip = addr.getAddr().toString().replace("INET4", "Ip4");
                     ip = ip.replace("INET6", "Ip6");
                     node.add(new DefaultMutableTreeNode(ip));
                 }
-                if (addr.getNetmask().toString().startsWith("[INET4") || addr.getNetmask().toString().startsWith("[INET6")) {
+                if (addr.getNetmask().toString().startsWith("[INET4")
+                        || addr.getNetmask().toString().startsWith("[INET6")) {
                     String mask = addr.getNetmask().toString().replace("INET4", "Mask");
                     mask = mask.replace("INET6", "Mask");
                     node.add(new DefaultMutableTreeNode(mask));
                 }
-                if (addr.getBroadaddr().toString().startsWith("[INET4") || addr.getBroadaddr().toString().startsWith("[INET6")) {
+                if (addr.getBroadaddr().toString().startsWith("[INET4")
+                        || addr.getBroadaddr().toString().startsWith("[INET6")) {
                     String broad = addr.getBroadaddr().toString().replace("INET4", "Broad");
                     broad = broad.replace("INET6", "Broad");
                     node.add(new DefaultMutableTreeNode(broad));

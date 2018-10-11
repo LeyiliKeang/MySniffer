@@ -55,7 +55,8 @@ public class MainFrame {
                 return false;
             }
         };
-        defaultTableModel.setColumnIdentifiers(new Object[]{"序号", "源地址", "源端口", "目的地址", "目的端口", "协议", "长度"});
+        defaultTableModel.setColumnIdentifiers(
+                new Object[]{"序号", "源地址", "源端口", "目的地址", "目的端口", "协议", "长度"});
         packetTable.setModel(defaultTableModel);
         packetTable.getTableHeader().setReorderingAllowed(false);
         packetTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -64,7 +65,8 @@ public class MainFrame {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (packetTable.getSelectedRow() != -1) {
-                    Integer index = Integer.parseInt(packetTable.getValueAt(packetTable.getSelectedRow(), 0).toString());
+                    Integer index = Integer.parseInt(
+                            packetTable.getValueAt(packetTable.getSelectedRow(), 0).toString());
                     final String hexDump = PacketUtils.allMap.get(index).toHexdump();
                     final String toString = PacketUtils.allMap.get(index).toString();
                     EventQueue.invokeLater(new Runnable() {
@@ -97,15 +99,17 @@ public class MainFrame {
                     }
                 });
 
-                PacketUtils.sourceIpAddress = sourceIpTextField.getText().trim().equals("")
+                PacketUtils.sourceIpAddress = "".equals(sourceIpTextField.getText().trim())
                         ? null : sourceIpTextField.getText().trim();
-                PacketUtils.destinationIpAddress = destinationIpTextField.getText().trim().equals("")
+                PacketUtils.destinationIpAddress = "".equals(destinationIpTextField.getText().trim())
                         ? null : destinationIpTextField.getText().trim();
-                PacketUtils.sourcePort = sourcePortTextField.getText().trim().equals("") ? null : Integer.parseInt(sourcePortTextField.getText().trim());
-                PacketUtils.destinationPort = destinationPortTextField.getText().trim().equals("") ? null : Integer.parseInt(destinationPortTextField.getText().trim());
+                PacketUtils.sourcePort = "".equals(sourcePortTextField.getText().trim())
+                        ? null : Integer.parseInt(sourcePortTextField.getText().trim());
+                PacketUtils.destinationPort = "".equals(destinationPortTextField.getText().trim())
+                        ? null : Integer.parseInt(destinationPortTextField.getText().trim());
                 PacketUtils.clear();
                 defaultTableModel.setRowCount(0);
-                captureService.capture(defaultTableModel);
+                captureService.capture(MainFrame.this);
             }
         });
 
@@ -193,5 +197,9 @@ public class MainFrame {
 
     public JPanel getContentPane() {
         return contentPane;
+    }
+
+    public DefaultTableModel getDefaultTableModel() {
+        return defaultTableModel;
     }
 }

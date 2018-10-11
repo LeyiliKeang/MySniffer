@@ -39,6 +39,7 @@ public class ClassicPcapExampleOfflineCapture {
          **************************************************************************/
         PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>() {
 
+            @Override
             public void nextPacket(PcapPacket packet, String user) {
 
                 System.out.printf("Received at %s caplen=%-4d len=%-4d %s\n",

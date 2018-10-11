@@ -1,7 +1,6 @@
 package com.leyilikeang.common.util;
 
 import com.leyilikeang.ui.DevsFrame;
-import com.sun.org.apache.bcel.internal.generic.POP;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +17,14 @@ public class MenuUtils {
 
     }
 
+    /**
+     * TODO : 文件菜单分为打开选项，另存为选项，选择另存为选项和退出选项
+     * TODO : 打开选项用于打开后缀名为.pcap的数据包文件，并且读取数据包中的数据显示在列表中
+     * TODO : 另存为选项用于保存列表中所有的数据包信息到后缀名为.pcap的数据包文件中，可用Wireshark打开查看更多信息
+     * TODO : 选择另存为选项用于选择指定的数据包进行另存为操作
+     * TODO : 退出选项点击后退出程序，后续添加退出时询问是否保存对话框
+     * @return 文件菜单
+     */
     public static JPopupMenu getFileMenu() {
         JPopupMenu popupMenu = new JPopupMenu();
 
@@ -64,6 +71,13 @@ public class MenuUtils {
         return popupMenu;
     }
 
+    /**
+     * TODO : 查看菜单暂时分为跳转功能和统计功能
+     * TODO : 跳转功能实现在列表上跳转到指定序号的包
+     * TODO : 统计功能实现各数据包数量的统计
+     *
+     * @return 查看菜单
+     */
     public static JPopupMenu getLookOverMenu() {
         JPopupMenu popupMenu = new JPopupMenu();
 
@@ -88,7 +102,12 @@ public class MenuUtils {
         return popupMenu;
     }
 
-    // TODO ： 暂时分为切换网卡和捕获规则两种，传参问题待考虑
+    /**
+     * TODO : 捕获菜单暂时分为切换网卡和捕获规则两种，传参问题待考虑
+     *
+     * @param frame 切换网卡时，弹出的网卡设备选择对话框将居中与此frame
+     * @return 捕获菜单
+     */
     public static JPopupMenu getCapMenu(final Window frame) {
         JPopupMenu popupMenu = new JPopupMenu();
 
@@ -107,6 +126,13 @@ public class MenuUtils {
         return popupMenu;
     }
 
+    /**
+     * TODO : 工具菜单暂时分为扫描功能和ARP欺骗功能
+     * TODO : 扫描功能实现获取同网段内所有在线主机IP地址和对应的MAC地址，方便用于ARP欺骗
+     * TODO : ARP欺骗实现单向欺骗和双向欺骗
+     *
+     * @return 工具菜单
+     */
     public static JPopupMenu getToolsMenu() {
         JPopupMenu popupMenu = new JPopupMenu();
 

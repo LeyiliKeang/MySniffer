@@ -27,7 +27,7 @@ public class Run {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                JFrame devsFrame = new JFrame("DevsFrame");
+                JFrame devsFrame = new JFrame("选择网卡设备");
                 devsFrame.setContentPane(new DevsFrame(devsFrame).getContentPane());
                 devsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 devsFrame.pack();
