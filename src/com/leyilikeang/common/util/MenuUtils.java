@@ -113,7 +113,7 @@ public class MenuUtils {
     public static JPopupMenu getCapMenu(final Window frame) {
         JPopupMenu popupMenu = new JPopupMenu();
 
-        JMenuItem ruleMenuItem = new JMenuItem("规则");
+        JMenuItem ruleMenuItem = new JMenuItem("切换网卡");
         ruleMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
