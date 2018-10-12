@@ -78,7 +78,7 @@ public class DevsFrame {
         Integer i = 0;
         for (PcapIf dev : devs) {
             List<PcapAddr> addrs = dev.getAddresses();
-            DefaultMutableTreeNode node = new DefaultMutableTreeNode(dev.getDescription() + i);
+            DefaultMutableTreeNode node = new DefaultMutableTreeNode(dev.getDescription());
             treeNodeMap.put(node, i++);
             top.add(node);
             for (PcapAddr addr : addrs) {
