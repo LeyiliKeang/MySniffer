@@ -13,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.*;
+import java.util.Timer;
 
 /**
  * @author likang
@@ -41,6 +43,8 @@ public class MainFrame {
     private CaptureService captureService = new CaptureService();
 
     private DefaultTableModel defaultTableModel;
+
+    private Timer timer;
 
     public MainFrame(JFrame mainFrame) {
         this();
@@ -110,6 +114,18 @@ public class MainFrame {
                 PacketUtils.clear();
                 defaultTableModel.setRowCount(0);
                 captureService.capture(MainFrame.this);
+
+                final long time = System.currentTimeMillis();
+                TimerTask task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        String str = String.format("%1$tM:%1$tS:%1$1tL", System.currentTimeMillis() - time);
+//                        timeLabel.setText("用时：" + str);
+                    }
+                };
+                // 使用ScheduledExecutorService代替Timer
+                timer = new Timer();
+                timer.schedule(task, 1, 100);
             }
         });
 
