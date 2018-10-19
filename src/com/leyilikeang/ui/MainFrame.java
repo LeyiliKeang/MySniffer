@@ -218,4 +218,8 @@ public class MainFrame {
     public DefaultTableModel getDefaultTableModel() {
         return defaultTableModel;
     }
+
+    public JScrollPane getPacketTableScrollPane() {
+        return packetTableScrollPane;
+    }
 }

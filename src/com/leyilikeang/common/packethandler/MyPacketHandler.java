@@ -15,7 +15,9 @@ import org.jnetpcap.protocol.tcpip.Udp;
 import org.jnetpcap.protocol.voip.Sdp;
 import org.jnetpcap.protocol.voip.Sip;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 
 /**
  * @author likang
@@ -43,10 +45,13 @@ public class MyPacketHandler<T> implements JPacketHandler<T> {
 
     private DefaultTableModel defaultTableModel;
 
+    private JScrollPane scrollPane;
+
     private String type;
 
     public MyPacketHandler(MainFrame mainFrame) {
         this.defaultTableModel = mainFrame.getDefaultTableModel();
+        this.scrollPane = mainFrame.getPacketTableScrollPane();
     }
 
     @Override
@@ -163,5 +168,13 @@ public class MyPacketHandler<T> implements JPacketHandler<T> {
                 }
             }
         }
+
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                int maximum = scrollPane.getVerticalScrollBar().getMaximum();
+                scrollPane.getViewport().setViewPosition(new Point(0, maximum));
+            }
+        });
     }
 }
