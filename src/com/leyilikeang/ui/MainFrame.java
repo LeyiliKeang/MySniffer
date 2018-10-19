@@ -13,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.*;
+import java.util.Timer;
 
 /**
  * @author likang
@@ -42,6 +44,8 @@ public class MainFrame {
 
     private DefaultTableModel defaultTableModel;
 
+    private Timer timer;
+
     public MainFrame(JFrame mainFrame) {
         this();
         this.mainFrame = mainFrame;
@@ -55,7 +59,8 @@ public class MainFrame {
                 return false;
             }
         };
-        defaultTableModel.setColumnIdentifiers(new Object[]{"序号", "源地址", "源端口", "目的地址", "目的端口", "协议", "长度"});
+        defaultTableModel.setColumnIdentifiers(
+                new Object[]{"序号", "源地址", "源端口", "目的地址", "目的端口", "协议", "长度"});
         packetTable.setModel(defaultTableModel);
         packetTable.getTableHeader().setReorderingAllowed(false);
         packetTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -64,7 +69,8 @@ public class MainFrame {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (packetTable.getSelectedRow() != -1) {
-                    Integer index = Integer.parseInt(packetTable.getValueAt(packetTable.getSelectedRow(), 0).toString());
+                    Integer index = Integer.parseInt(
+                            packetTable.getValueAt(packetTable.getSelectedRow(), 0).toString());
                     final String hexDump = PacketUtils.allMap.get(index).toHexdump();
                     final String toString = PacketUtils.allMap.get(index).toString();
                     EventQueue.invokeLater(new Runnable() {
@@ -97,15 +103,29 @@ public class MainFrame {
                     }
                 });
 
-                PacketUtils.sourceIpAddress = sourceIpTextField.getText().trim().equals("")
+                PacketUtils.sourceIpAddress = "".equals(sourceIpTextField.getText().trim())
                         ? null : sourceIpTextField.getText().trim();
-                PacketUtils.destinationIpAddress = destinationIpTextField.getText().trim().equals("")
+                PacketUtils.destinationIpAddress = "".equals(destinationIpTextField.getText().trim())
                         ? null : destinationIpTextField.getText().trim();
-                PacketUtils.sourcePort = sourcePortTextField.getText().trim().equals("") ? null : Integer.parseInt(sourcePortTextField.getText().trim());
-                PacketUtils.destinationPort = destinationPortTextField.getText().trim().equals("") ? null : Integer.parseInt(destinationPortTextField.getText().trim());
+                PacketUtils.sourcePort = "".equals(sourcePortTextField.getText().trim())
+                        ? null : Integer.parseInt(sourcePortTextField.getText().trim());
+                PacketUtils.destinationPort = "".equals(destinationPortTextField.getText().trim())
+                        ? null : Integer.parseInt(destinationPortTextField.getText().trim());
                 PacketUtils.clear();
                 defaultTableModel.setRowCount(0);
-                captureService.capture(defaultTableModel);
+                captureService.capture(MainFrame.this);
+
+                final long time = System.currentTimeMillis();
+                TimerTask task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        String str = String.format("%1$tM:%1$tS:%1$1tL", System.currentTimeMillis() - time);
+//                        timeLabel.setText("用时：" + str);
+                    }
+                };
+                // 使用ScheduledExecutorService代替Timer
+                timer = new Timer();
+                timer.schedule(task, 1, 100);
             }
         });
 
@@ -193,5 +213,13 @@ public class MainFrame {
 
     public JPanel getContentPane() {
         return contentPane;
+    }
+
+    public DefaultTableModel getDefaultTableModel() {
+        return defaultTableModel;
+    }
+
+    public JScrollPane getPacketTableScrollPane() {
+        return packetTableScrollPane;
     }
 }

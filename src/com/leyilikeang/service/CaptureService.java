@@ -1,10 +1,8 @@
 package com.leyilikeang.service;
 
 import com.leyilikeang.common.packethandler.MyPacketHandler;
-import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.common.util.PcapUtils;
-
-import javax.swing.table.DefaultTableModel;
+import com.leyilikeang.ui.MainFrame;
 
 /**
  * @author likang
@@ -12,8 +10,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CaptureService {
 
-    public void capture(DefaultTableModel defaultTableModel) {
-        final MyPacketHandler packetHandler = new MyPacketHandler(defaultTableModel);
+    public void capture(MainFrame mainFrame) {
+        final MyPacketHandler packetHandler = new MyPacketHandler(mainFrame);
 
         new Thread(new Runnable() {
             @Override
