@@ -7,16 +7,27 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/jnetpcap/jnetpcap.jar!/" />
+          <root url="file://$MODULE_DIR$/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/lib/jnetpcap" />
         </CLASSES>
         <JAVADOC />
         <NATIVE>
-          <root url="file://$MODULE_DIR$/jnetpcap" />
+          <root url="file://$MODULE_DIR$/lib/jnetpcap" />
         </NATIVE>
         <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/lib/jnetpcap" recursive="false" />
       </library>
     </orderEntry>
   </component>
