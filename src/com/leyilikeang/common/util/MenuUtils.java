@@ -117,11 +117,16 @@ public class MenuUtils {
         ruleMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JDialog dialog = new JDialog((JFrame) frame, "选择网卡设备", true);
-                dialog.setContentPane(new DevsFrame(dialog).getContentPane());
-                dialog.pack();
-                dialog.setLocationRelativeTo(frame);
-                dialog.setVisible(true);
+                EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        JDialog dialog = new JDialog((JFrame) frame, "选择网卡设备", true);
+                        dialog.setContentPane(new DevsFrame(dialog).getContentPane());
+                        dialog.pack();
+                        dialog.setLocationRelativeTo(frame);
+                        dialog.setVisible(true);
+                    }
+                });
             }
         });
         popupMenu.add(ruleMenuItem);
