@@ -195,11 +195,12 @@
             </constraints>
             <properties>
               <continuousLayout value="true"/>
+              <dividerSize value="2"/>
               <focusCycleRoot value="false"/>
               <focusTraversalPolicyProvider value="false"/>
               <orientation value="0"/>
             </properties>
-            <border type="none"/>
+            <border type="empty"/>
             <children>
               <grid id="2dce7" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
@@ -207,6 +208,8 @@
                   <splitpane position="left"/>
                 </constraints>
                 <properties>
+                  <alignmentX value="0.0"/>
+                  <alignmentY value="0.0"/>
                   <preferredSize width="800" height="300"/>
                 </properties>
                 <border type="none"/>
@@ -215,7 +218,10 @@
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
-                    <properties/>
+                    <properties>
+                      <alignmentX value="0.0"/>
+                      <alignmentY value="0.0"/>
+                    </properties>
                     <border type="none"/>
                     <children>
                       <component id="8c3b8" class="javax.swing.JTable" binding="packetTable">
@@ -238,10 +244,12 @@
                   <splitpane position="right"/>
                 </constraints>
                 <properties>
+                  <alignmentX value="0.0"/>
+                  <alignmentY value="0.0"/>
                   <focusable value="true"/>
                   <minimumSize width="52" height="24"/>
                 </properties>
-                <border type="none"/>
+                <border type="empty"/>
                 <children>
                   <tabbedpane id="f79b4">
                     <constraints>
@@ -250,11 +258,13 @@
                       </grid>
                     </constraints>
                     <properties>
+                      <alignmentX value="0.0"/>
+                      <alignmentY value="0.0"/>
                       <focusTraversalPolicyProvider value="true"/>
                       <focusable value="false"/>
                       <verifyInputWhenFocusTarget value="true"/>
                     </properties>
-                    <border type="none"/>
+                    <border type="empty"/>
                     <children>
                       <grid id="929c3" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                         <margin top="0" left="0" bottom="0" right="0"/>
@@ -262,20 +272,27 @@
                           <tabbedpane title="  内容  "/>
                         </constraints>
                         <properties>
+                          <alignmentX value="0.0"/>
+                          <alignmentY value="0.0"/>
                           <focusable value="true"/>
                         </properties>
-                        <border type="none"/>
+                        <border type="empty"/>
                         <children>
                           <scrollpane id="f4074">
                             <constraints>
                               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                             </constraints>
-                            <properties/>
-                            <border type="none"/>
+                            <properties>
+                              <alignmentX value="0.0"/>
+                              <alignmentY value="0.0"/>
+                            </properties>
+                            <border type="empty"/>
                             <children>
                               <component id="2883" class="javax.swing.JTextArea" binding="toHexDumpTextArea">
                                 <constraints/>
                                 <properties>
+                                  <alignmentX value="0.0"/>
+                                  <alignmentY value="0.0"/>
                                   <editable value="false"/>
                                   <focusCycleRoot value="false"/>
                                   <focusTraversalPolicyProvider value="false"/>
@@ -291,19 +308,27 @@
                         <constraints>
                           <tabbedpane title="  格式  "/>
                         </constraints>
-                        <properties/>
-                        <border type="none"/>
+                        <properties>
+                          <alignmentX value="0.0"/>
+                          <alignmentY value="0.0"/>
+                        </properties>
+                        <border type="empty"/>
                         <children>
                           <scrollpane id="9027f">
                             <constraints>
                               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                             </constraints>
-                            <properties/>
-                            <border type="none"/>
+                            <properties>
+                              <alignmentX value="0.0"/>
+                              <alignmentY value="0.0"/>
+                            </properties>
+                            <border type="empty"/>
                             <children>
                               <component id="ddad6" class="javax.swing.JTextArea" binding="toStringTextArea">
                                 <constraints/>
                                 <properties>
+                                  <alignmentX value="0.0"/>
+                                  <alignmentY value="0.0"/>
                                   <editable value="false"/>
                                   <minimumSize width="0" height="0"/>
                                 </properties>
@@ -325,10 +350,12 @@
               </grid>
             </constraints>
             <properties>
+              <alignmentX value="0.0"/>
+              <alignmentY value="0.0"/>
               <floatable value="false"/>
               <inheritsPopupMenu value="false"/>
             </properties>
-            <border type="etched"/>
+            <border type="none"/>
             <children>
               <component id="de0f0" class="javax.swing.JButton" binding="fileButton">
                 <constraints/>
@@ -368,6 +395,8 @@
               </grid>
             </constraints>
             <properties>
+              <alignmentX value="0.0"/>
+              <alignmentY value="0.0"/>
               <floatable value="false"/>
             </properties>
             <border type="none"/>
