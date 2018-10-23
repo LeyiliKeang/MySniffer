@@ -11,11 +11,17 @@ public class ConstantUtils {
      */
     public static enum Protocol {
 
+        ETH("ETH", "以太帧"),
+        LLC("LLC", "逻辑链路控制协议"),
         ARP("ARP", "地址解析协议"),
         ICMP("ICMP", "互联网控制消息协议"),
-        IP("IP", "互联网协议"),
+        IPv4("IPv4", "互联网协议"),
+        IPv6("IPv6", "互联网协议第6版"),
         TCP("TCP", "传输控制协议"),
-        UDP("UDP", "用户数据报协议");
+        HTTP("HTTP", "超文本传输协议"),
+        UDP("UDP", "用户数据报协议"),
+        SIP("SIP", "会话发起协议"),
+        SDP("SDP", "会话描述协议");
 
         private String value;
         private String name;
