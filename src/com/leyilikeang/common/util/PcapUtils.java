@@ -1,6 +1,7 @@
 package com.leyilikeang.common.util;
 
 import org.jnetpcap.Pcap;
+import org.jnetpcap.PcapBpfProgram;
 import org.jnetpcap.PcapIf;
 
 import java.util.ArrayList;
@@ -41,5 +42,17 @@ public class PcapUtils {
                     + errbuf.toString());
             return;
         }
+    }
+
+    public static boolean filter(String expression) {
+        PcapBpfProgram filter = new PcapBpfProgram();
+        int optimize = 0;
+        int netmask = 0;
+        int r = pcap.compile(filter, expression, optimize, netmask);
+        if (r != Pcap.OK) {
+            return false;
+        }
+        pcap.setFilter(filter);
+        return true;
     }
 }
