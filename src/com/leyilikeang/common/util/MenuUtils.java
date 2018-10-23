@@ -130,6 +130,25 @@ public class MenuUtils {
             }
         });
         popupMenu.add(ruleMenuItem);
+
+        JMenuItem simpleFilter = new JMenuItem("过滤");
+        simpleFilter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("过滤");
+            }
+        });
+        popupMenu.add(simpleFilter);
+
+        JMenuItem expressionFilter = new JMenuItem("表达式过滤");
+        expressionFilter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("表达式过滤");
+            }
+        });
+        popupMenu.add(expressionFilter);
+
         return popupMenu;
     }
 
