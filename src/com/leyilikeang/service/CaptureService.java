@@ -1,6 +1,6 @@
 package com.leyilikeang.service;
 
-import com.leyilikeang.common.packethandler.MyPacketHandler;
+import com.leyilikeang.common.packethandler.ExpressionPacketHandler;
 import com.leyilikeang.common.util.PcapUtils;
 import com.leyilikeang.ui.MainFrame;
 
@@ -11,7 +11,7 @@ import com.leyilikeang.ui.MainFrame;
 public class CaptureService {
 
     public void capture(MainFrame mainFrame) {
-        final MyPacketHandler packetHandler = new MyPacketHandler(mainFrame);
+        final ExpressionPacketHandler packetHandler = new ExpressionPacketHandler(mainFrame);
 
         new Thread(new Runnable() {
             @Override
