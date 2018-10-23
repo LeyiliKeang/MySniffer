@@ -47,11 +47,14 @@ public class MyPacketHandler<T> implements JPacketHandler<T> {
 
     private JScrollPane scrollPane;
 
+    private JLabel countLabel;
+
     private String type;
 
     public MyPacketHandler(MainFrame mainFrame) {
         this.defaultTableModel = mainFrame.getDefaultTableModel();
         this.scrollPane = mainFrame.getPacketTableScrollPane();
+        this.countLabel = mainFrame.getCountLabel();
     }
 
     @Override
@@ -174,6 +177,7 @@ public class MyPacketHandler<T> implements JPacketHandler<T> {
             public void run() {
                 int maximum = scrollPane.getVerticalScrollBar().getMaximum();
                 scrollPane.getViewport().setViewPosition(new Point(0, maximum));
+                countLabel.setText("数量：" + PacketUtils.allMap.size());
             }
         });
     }

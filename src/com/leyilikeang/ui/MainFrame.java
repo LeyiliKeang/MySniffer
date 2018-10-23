@@ -37,6 +37,8 @@ public class MainFrame {
     private JButton lookOverButton;
     private JButton toolButton;
     private JButton capButton;
+    private JLabel countLabel;
+    private JLabel timeLabel;
 
     private JFrame mainFrame;
 
@@ -100,6 +102,7 @@ public class MainFrame {
                     public void run() {
                         captureButton.setEnabled(false);
                         stopButton.setEnabled(true);
+                        countLabel.setText("数量：0");
                     }
                 });
 
@@ -120,7 +123,7 @@ public class MainFrame {
                     @Override
                     public void run() {
                         String str = String.format("%1$tM:%1$tS:%1$1tL", System.currentTimeMillis() - time);
-//                        timeLabel.setText("用时：" + str);
+                        timeLabel.setText("用时：" + str);
                     }
                 };
                 // 使用ScheduledExecutorService代替Timer
@@ -140,6 +143,7 @@ public class MainFrame {
                     }
                 });
                 captureService.stop();
+                timer.cancel();
             }
         });
 
@@ -221,5 +225,9 @@ public class MainFrame {
 
     public JScrollPane getPacketTableScrollPane() {
         return packetTableScrollPane;
+    }
+
+    public JLabel getCountLabel() {
+        return countLabel;
     }
 }
