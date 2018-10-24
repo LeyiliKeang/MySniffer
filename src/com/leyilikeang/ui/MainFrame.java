@@ -73,8 +73,8 @@ public class MainFrame {
                 if (packetTable.getSelectedRow() != -1) {
                     Integer index = Integer.parseInt(
                             packetTable.getValueAt(packetTable.getSelectedRow(), 0).toString());
-                    final String hexDump = PacketUtils.allMap.get(index).toHexdump();
-                    final String toString = PacketUtils.allMap.get(index).toString();
+                    final String hexDump = PacketUtils.allPackets.get(packetTable.getSelectedRow()).toHexdump();
+                    final String toString = PacketUtils.allPackets.get(packetTable.getSelectedRow()).toString();
                     EventQueue.invokeLater(new Runnable() {
                         @Override
                         public void run() {

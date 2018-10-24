@@ -3,7 +3,9 @@ package com.leyilikeang.common.util;
 import org.jnetpcap.packet.JPacket;
 import org.jnetpcap.packet.PcapPacket;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -87,6 +89,19 @@ public class PacketUtils {
 
     public static Integer sdpCount = 0;
     public static Map<Integer, JPacket> sdpMap = new HashMap<Integer, JPacket>();
+
+    public static List<PcapPacket> allPackets = new ArrayList<PcapPacket>();
+    public static List<PcapPacket> ethernetPackets = new ArrayList<PcapPacket>();
+    public static List<PcapPacket> llc2Packets = new ArrayList<PcapPacket>();
+    public static List<PcapPacket> arpPackets = new ArrayList<PcapPacket>();
+    public static List<PcapPacket> icmpPackets = new ArrayList<PcapPacket>();
+    public static List<PcapPacket> ip4Packets = new ArrayList<PcapPacket>();
+    public static List<PcapPacket> ip6Packets = new ArrayList<PcapPacket>();
+    public static List<PcapPacket> tcpPackets = new ArrayList<PcapPacket>();
+    public static List<PcapPacket> httpPackets = new ArrayList<PcapPacket>();
+    public static List<PcapPacket> udpPackets = new ArrayList<PcapPacket>();
+    public static List<PcapPacket> sipPackets = new ArrayList<PcapPacket>();
+    public static List<PcapPacket> sdpPackets = new ArrayList<PcapPacket>();
 
     private PacketUtils() {
 

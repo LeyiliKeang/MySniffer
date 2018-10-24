@@ -1,8 +1,11 @@
 package com.leyilikeang.service;
 
-import com.leyilikeang.common.packethandler.ExpressionPacketHandler;
+import com.leyilikeang.common.packethandler.MyPacketHandler;
 import com.leyilikeang.common.util.PcapUtils;
 import com.leyilikeang.ui.MainFrame;
+import org.jnetpcap.PcapDumper;
+
+import java.io.File;
 
 /**
  * @author likang
@@ -11,12 +14,17 @@ import com.leyilikeang.ui.MainFrame;
 public class CaptureService {
 
     public void capture(MainFrame mainFrame) {
-        final ExpressionPacketHandler packetHandler = new ExpressionPacketHandler(mainFrame);
+        final MyPacketHandler<PcapDumper> packetHandler = new MyPacketHandler<PcapDumper>(mainFrame);
+
+        final String offFile = "D:/ttttttttt.cap";
+        final PcapDumper dumper = PcapUtils.pcap.dumpOpen(offFile);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                PcapUtils.pcap.loop(-1, packetHandler, "jNetPcap rocks!");
+                PcapUtils.pcap.loop(-1, packetHandler, dumper);
+                File file = new File(offFile);
+                dumper.close();
             }
         }).start();
     }
