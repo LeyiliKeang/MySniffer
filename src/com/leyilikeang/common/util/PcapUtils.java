@@ -55,4 +55,13 @@ public class PcapUtils {
         pcap.setFilter(filter);
         return true;
     }
+
+    public static Pcap readOffline(String file) {
+        Pcap offlinePcap = Pcap.openOffline(file, errbuf);
+        if (offlinePcap == null) {
+            System.err.printf("Error while opening device for capture: "
+                    + errbuf.toString());
+        }
+        return offlinePcap;
+    }
 }
