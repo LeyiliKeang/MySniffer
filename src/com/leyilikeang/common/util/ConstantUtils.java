@@ -55,7 +55,9 @@ public class ConstantUtils {
     public static enum Ethernet {
         DESTINATION_MAC(),
         SOURCE_MAC(),
-        ETHER_TYPE_ARP("0806", "以太类型-ARP");
+        ETHER_TYPE_IPv4("0800", "以太类型-IPv4"),
+        ETHER_TYPE_ARP("0806", "以太类型-ARP"),
+        ETHER_TYPE_IPv6("86DD", "以太类型-IPv6");
 
         private String value;
         private String name;
