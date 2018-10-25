@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * @author likang
@@ -36,6 +37,23 @@ public class MenuUtils {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("打开");
+                EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        JFileChooser fileChooser = new JFileChooser();
+//                        fileChooser.setCurrentDirectory(new File("."));
+//                        fileChooser.setSelectedFile(new File("packet.cap"));
+                        fileChooser.setMultiSelectionEnabled(false);
+                        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                        fileChooser.setFileHidingEnabled(true);
+                        fileChooser.setAcceptAllFileFilterUsed(false);
+                        fileChooser.setFileFilter(new MyFilter("cap"));
+                        int result = fileChooser.showOpenDialog(null);
+                        if (JFileChooser.APPROVE_OPTION == result) {
+                            System.out.println(fileChooser.getSelectedFile().getPath());
+                        }
+                    }
+                });
             }
         });
         popupMenu.add(openMenuItem);
@@ -46,6 +64,23 @@ public class MenuUtils {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("另存为");
+                EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        JFileChooser fileChooser = new JFileChooser();
+//                        fileChooser.setCurrentDirectory(new File("."));
+                        fileChooser.setSelectedFile(new File("packet.cap"));
+                        fileChooser.setMultiSelectionEnabled(false);
+                        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                        fileChooser.setFileHidingEnabled(true);
+                        fileChooser.setAcceptAllFileFilterUsed(false);
+                        fileChooser.setFileFilter(new MyFilter("cap"));
+                        int result = fileChooser.showSaveDialog(null);
+                        if (JFileChooser.APPROVE_OPTION == result) {
+                            System.out.println(fileChooser.getSelectedFile().getPath());
+                        }
+                    }
+                });
             }
         });
         popupMenu.add(saveMenuItem);
@@ -56,6 +91,23 @@ public class MenuUtils {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("选择另存为");
+                EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        JFileChooser fileChooser = new JFileChooser();
+//                        fileChooser.setCurrentDirectory(new File("."));
+                        fileChooser.setSelectedFile(new File("packet.cap"));
+                        fileChooser.setMultiSelectionEnabled(false);
+                        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                        fileChooser.setFileHidingEnabled(true);
+                        fileChooser.setAcceptAllFileFilterUsed(false);
+                        fileChooser.setFileFilter(new MyFilter("cap"));
+                        int result = fileChooser.showSaveDialog(null);
+                        if (JFileChooser.APPROVE_OPTION == result) {
+                            System.out.println(fileChooser.getSelectedFile().getPath());
+                        }
+                    }
+                });
             }
         });
         popupMenu.add(selectSaveMenuItem);

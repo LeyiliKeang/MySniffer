@@ -52,6 +52,8 @@ public class ExpressionPacketHandler<T> implements JPacketHandler<T> {
 
     private DefaultTableModel defaultTableModel;
 
+    private JLabel countLabel;
+
     private JScrollPane scrollPane;
 
     private String sourceMac;
@@ -64,6 +66,7 @@ public class ExpressionPacketHandler<T> implements JPacketHandler<T> {
 
     public ExpressionPacketHandler(MainFrame mainFrame) {
         this.defaultTableModel = mainFrame.getDefaultTableModel();
+        this.countLabel = mainFrame.getCountLabel();
         this.scrollPane = mainFrame.getPacketTableScrollPane();
     }
 
@@ -150,6 +153,7 @@ public class ExpressionPacketHandler<T> implements JPacketHandler<T> {
             public void run() {
                 int maximum = scrollPane.getVerticalScrollBar().getMaximum();
                 scrollPane.getViewport().setViewPosition(new Point(0, maximum));
+                countLabel.setText("数量：" + PacketUtils.allMap.size());
             }
         });
     }
