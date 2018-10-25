@@ -2,6 +2,7 @@ package com.leyilikeang.common.util;
 
 import org.jnetpcap.packet.JPacket;
 import org.jnetpcap.packet.PcapPacket;
+import org.jnetpcap.util.PcapPacketArrayList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,95 +45,34 @@ public class PacketUtils {
      */
     public static String destinationMacAddress;
 
-    /**
-     * 每次抓包的序号标记
-     */
-    public static Integer allCount = 0;
-
-    /**
-     * 存储所有包
-     */
-    public static Map<Integer, JPacket> allMap = new HashMap<Integer, JPacket>();
-
-    /**
-     * 存储不同协议的包，用于对协议分类查看
-     */
-    public static Map<String, Map<Integer, PcapPacket>> diffMap = new HashMap<String, Map<Integer, PcapPacket>>();
-
-    /**
-     * arp序号
-     */
-    public static Integer arpCount = 0;
-
-    /**
-     * 用于存储arp包
-     */
-    public static Map<Integer, JPacket> arpMap = new HashMap<Integer, JPacket>();
-
-    public static Integer ipCount = 0;
-    public static Map<Integer, JPacket> ipMap = new HashMap<Integer, JPacket>();
-
-    public static Integer icmpCount = 0;
-    public static Map<Integer, JPacket> icmpMap = new HashMap<Integer, JPacket>();
-
-    public static Integer tcpCount = 0;
-    public static Map<Integer, JPacket> tcpMap = new HashMap<Integer, JPacket>();
-
-    public static Integer httpCount = 0;
-    public static Map<Integer, JPacket> httpMap = new HashMap<Integer, JPacket>();
-
-    public static Integer udpCount = 0;
-    public static Map<Integer, JPacket> udpMap = new HashMap<Integer, JPacket>();
-
-    public static Integer sipCount = 0;
-    public static Map<Integer, JPacket> sipMap = new HashMap<Integer, JPacket>();
-
-    public static Integer sdpCount = 0;
-    public static Map<Integer, JPacket> sdpMap = new HashMap<Integer, JPacket>();
-
-    public static List<PcapPacket> allPackets = new ArrayList<PcapPacket>();
-    public static List<PcapPacket> ethernetPackets = new ArrayList<PcapPacket>();
-    public static List<PcapPacket> llc2Packets = new ArrayList<PcapPacket>();
-    public static List<PcapPacket> arpPackets = new ArrayList<PcapPacket>();
-    public static List<PcapPacket> icmpPackets = new ArrayList<PcapPacket>();
-    public static List<PcapPacket> ip4Packets = new ArrayList<PcapPacket>();
-    public static List<PcapPacket> ip6Packets = new ArrayList<PcapPacket>();
-    public static List<PcapPacket> tcpPackets = new ArrayList<PcapPacket>();
-    public static List<PcapPacket> httpPackets = new ArrayList<PcapPacket>();
-    public static List<PcapPacket> udpPackets = new ArrayList<PcapPacket>();
-    public static List<PcapPacket> sipPackets = new ArrayList<PcapPacket>();
-    public static List<PcapPacket> sdpPackets = new ArrayList<PcapPacket>();
+    public static PcapPacketArrayList allPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList ethernetPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList llc2Packets = new PcapPacketArrayList();
+    public static PcapPacketArrayList arpPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList icmpPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList ip4Packets = new PcapPacketArrayList();
+    public static PcapPacketArrayList ip6Packets = new PcapPacketArrayList();
+    public static PcapPacketArrayList tcpPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList httpPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList udpPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList sipPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList sdpPackets = new PcapPacketArrayList();
 
     private PacketUtils() {
-
     }
 
     public static void clear() {
-        allCount = 0;
-        allMap.clear();
-
-        arpCount = 0;
-        arpMap.clear();
-
-        ipCount = 0;
-        ipMap.clear();
-
-        icmpCount = 0;
-        icmpMap.clear();
-
-        tcpCount = 0;
-        tcpMap.clear();
-
-        httpCount = 0;
-        httpMap.clear();
-
-        udpCount = 0;
-        udpMap.clear();
-
-        sipCount = 0;
-        sipMap.clear();
-
-        sdpCount = 0;
-        sdpMap.clear();
+        allPackets.clear();
+        ethernetPackets.clear();
+        llc2Packets.clear();
+        arpPackets.clear();
+        icmpPackets.clear();
+        ip4Packets.clear();
+        ip6Packets.clear();
+        tcpPackets.clear();
+        httpPackets.clear();
+        udpPackets.clear();
+        sipPackets.clear();
+        sdpPackets.clear();
     }
 }

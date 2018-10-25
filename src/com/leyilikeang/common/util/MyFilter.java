@@ -10,9 +10,11 @@ import java.io.File;
 public class MyFilter extends FileFilter {
 
     private String extName;
+    private String description;
 
-    public MyFilter(String extName) {
+    public MyFilter(String extName, String description) {
         this.extName = extName;
+        this.description = description;
     }
 
     @Override
@@ -28,7 +30,7 @@ public class MyFilter extends FileFilter {
 
     @Override
     public String getDescription() {
-        return this.extName.toUpperCase();
+        return this.description;
     }
 
     private String getExtName(File file) {

@@ -223,6 +223,8 @@
                       <alignmentX value="0.0"/>
                       <alignmentY value="0.0"/>
                       <doubleBuffered value="true"/>
+                      <horizontalScrollBarPolicy value="32"/>
+                      <verticalScrollBarPolicy value="22"/>
                     </properties>
                     <border type="none"/>
                     <children>
@@ -231,6 +233,7 @@
                         <properties>
                           <alignmentX value="0.0"/>
                           <alignmentY value="0.0"/>
+                          <autoscrolls value="true"/>
                           <doubleBuffered value="true"/>
                           <focusable value="true"/>
                           <font size="14"/>

@@ -55,6 +55,8 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
 
     private JScrollPane scrollPane;
 
+    private JLabel countLabel;
+
     private String sourceMac;
     private String destinationMac;
     private String sourceIp;
@@ -66,6 +68,7 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
     public MyPacketHandler(MainFrame mainFrame) {
         this.defaultTableModel = mainFrame.getDefaultTableModel();
         this.scrollPane = mainFrame.getPacketTableScrollPane();
+        this.countLabel = mainFrame.getCountLabel();
     }
 
     @Override
@@ -84,71 +87,71 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
         }
         PacketUtils.allPackets.add(packet);
 
-        if (packet.hasHeader(ethernet)) {
-            protocol = ConstantUtils.Protocol.ETH.getValue();
-            sourceMac = FormatUtils.mac(ethernet.source());
-            destinationMac = FormatUtils.mac(ethernet.destination());
-            if (packet.hasHeader(arp)) {
+        if (packet.hasHeader(this.ethernet)) {
+            this.protocol = ConstantUtils.Protocol.ETH.getValue();
+            this.sourceMac = FormatUtils.mac(this.ethernet.source());
+            this.destinationMac = FormatUtils.mac(this.ethernet.destination());
+            if (packet.hasHeader(this.arp)) {
                 PacketUtils.arpPackets.add(packet);
-                protocol = ConstantUtils.Protocol.ARP.getValue();
+                this.protocol = ConstantUtils.Protocol.ARP.getValue();
             }
-            if (packet.hasHeader(ip4)) {
-                sourceIp = FormatUtils.ip(ip4.source());
-                destinationIp = FormatUtils.ip(ip4.destination());
-                protocol = ConstantUtils.Protocol.IPv4.getValue();
+            if (packet.hasHeader(this.ip4)) {
+                this.sourceIp = FormatUtils.ip(this.ip4.source());
+                this.destinationIp = FormatUtils.ip(this.ip4.destination());
+                this.protocol = ConstantUtils.Protocol.IPv4.getValue();
             }
-            if (packet.hasHeader(ip6)) {
-                sourceIp = FormatUtils.ip(ip6.source());
-                destinationIp = FormatUtils.ip(ip6.destination());
-                protocol = ConstantUtils.Protocol.IPv6.getValue();
+            if (packet.hasHeader(this.ip6)) {
+                this.sourceIp = FormatUtils.ip(this.ip6.source());
+                this.destinationIp = FormatUtils.ip(this.ip6.destination());
+                this.protocol = ConstantUtils.Protocol.IPv6.getValue();
             }
-            if (packet.hasHeader(icmp)) {
+            if (packet.hasHeader(this.icmp)) {
                 PacketUtils.icmpPackets.add(packet);
-                protocol = ConstantUtils.Protocol.ICMP.getValue();
-            } else if (packet.hasHeader(tcp)) {
-                sourcePort = tcp.source();
-                destinationPort = tcp.destination();
-                if (packet.hasHeader(http)) {
+                this.protocol = ConstantUtils.Protocol.ICMP.getValue();
+            } else if (packet.hasHeader(this.tcp)) {
+                this.sourcePort = this.tcp.source();
+                this.destinationPort = this.tcp.destination();
+                if (packet.hasHeader(this.http)) {
                     PacketUtils.httpPackets.add(packet);
-                    protocol = ConstantUtils.Protocol.HTTP.getValue();
+                    this.protocol = ConstantUtils.Protocol.HTTP.getValue();
                 } else {
                     PacketUtils.tcpPackets.add(packet);
-                    protocol = ConstantUtils.Protocol.TCP.getValue();
+                    this.protocol = ConstantUtils.Protocol.TCP.getValue();
                 }
-            } else if (packet.hasHeader(udp)) {
-                sourcePort = udp.source();
-                destinationPort = udp.destination();
-                if (packet.hasHeader(sip)) {
+            } else if (packet.hasHeader(this.udp)) {
+                this.sourcePort = this.udp.source();
+                this.destinationPort = this.udp.destination();
+                if (packet.hasHeader(this.sip)) {
                     PacketUtils.sipPackets.add(packet);
-                    protocol = ConstantUtils.Protocol.SIP.getValue();
-                } else if (packet.hasHeader(sdp)) {
+                    this.protocol = ConstantUtils.Protocol.SIP.getValue();
+                } else if (packet.hasHeader(this.sdp)) {
                     PacketUtils.sdpPackets.add(packet);
-                    protocol = ConstantUtils.Protocol.SDP.getValue();
+                    this.protocol = ConstantUtils.Protocol.SDP.getValue();
                 } else {
                     PacketUtils.udpPackets.add(packet);
-                    protocol = ConstantUtils.Protocol.UDP.getValue();
+                    this.protocol = ConstantUtils.Protocol.UDP.getValue();
                 }
             }
         }
-        if (packet.hasHeader(llc2)) {
+        if (packet.hasHeader(this.llc2)) {
             PacketUtils.llc2Packets.add(packet);
-            protocol = ConstantUtils.Protocol.LLC.getValue();
+            this.protocol = ConstantUtils.Protocol.LLC.getValue();
         }
-        if (ConstantUtils.Protocol.ETH.getValue().equals(protocol)) {
+        if (ConstantUtils.Protocol.ETH.getValue().equals(this.protocol)) {
             PacketUtils.ethernetPackets.add(packet);
         }
-        if (ConstantUtils.Protocol.IPv4.getValue().equals(protocol)) {
+        if (ConstantUtils.Protocol.IPv4.getValue().equals(this.protocol)) {
             PacketUtils.ip4Packets.add(packet);
         }
-        if (ConstantUtils.Protocol.IPv6.getValue().equals(protocol)) {
+        if (ConstantUtils.Protocol.IPv6.getValue().equals(this.protocol)) {
             PacketUtils.ip6Packets.add(packet);
         }
-        if (null != sourceIp && null != destinationIp) {
-            defaultTableModel.addRow(new Object[]{PacketUtils.allPackets.size(), sourceIp, sourcePort,
-                    destinationIp, destinationPort, protocol, pcapPacket.getPacketWirelen()});
+        if (null != this.sourceIp && null != this.destinationIp) {
+            this.defaultTableModel.addRow(new Object[]{PacketUtils.allPackets.size(), this.sourceIp, this.sourcePort,
+                    this.destinationIp, this.destinationPort, this.protocol, pcapPacket.getPacketWirelen()});
         } else {
-            defaultTableModel.addRow(new Object[]{PacketUtils.allPackets.size(), sourceMac, sourcePort,
-                    destinationMac, destinationPort, protocol, pcapPacket.getPacketWirelen()});
+            this.defaultTableModel.addRow(new Object[]{PacketUtils.allPackets.size(), this.sourceMac, this.sourcePort,
+                    this.destinationMac, this.destinationPort, this.protocol, pcapPacket.getPacketWirelen()});
         }
 
         EventQueue.invokeLater(new Runnable() {
@@ -156,6 +159,7 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
             public void run() {
                 int maximum = scrollPane.getVerticalScrollBar().getMaximum();
                 scrollPane.getViewport().setViewPosition(new Point(0, maximum));
+                countLabel.setText("数量：" + PacketUtils.allPackets.size());
             }
         });
     }

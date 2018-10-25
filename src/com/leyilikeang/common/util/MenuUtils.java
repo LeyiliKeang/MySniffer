@@ -15,7 +15,6 @@ import java.io.File;
 public class MenuUtils {
 
     private MenuUtils() {
-
     }
 
     /**
@@ -47,7 +46,7 @@ public class MenuUtils {
                         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
                         fileChooser.setFileHidingEnabled(true);
                         fileChooser.setAcceptAllFileFilterUsed(false);
-                        fileChooser.setFileFilter(new MyFilter("cap"));
+                        fileChooser.setFileFilter(new MyFilter("cap", "MySniffer(*.cap)"));
                         int result = fileChooser.showOpenDialog(null);
                         if (JFileChooser.APPROVE_OPTION == result) {
                             System.out.println(fileChooser.getSelectedFile().getPath());
@@ -74,7 +73,7 @@ public class MenuUtils {
                         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                         fileChooser.setFileHidingEnabled(true);
                         fileChooser.setAcceptAllFileFilterUsed(false);
-                        fileChooser.setFileFilter(new MyFilter("cap"));
+                        fileChooser.setFileFilter(new MyFilter("cap", "MySniffer(*.cap)"));
                         int result = fileChooser.showSaveDialog(null);
                         if (JFileChooser.APPROVE_OPTION == result) {
                             System.out.println(fileChooser.getSelectedFile().getPath());
@@ -101,7 +100,7 @@ public class MenuUtils {
                         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                         fileChooser.setFileHidingEnabled(true);
                         fileChooser.setAcceptAllFileFilterUsed(false);
-                        fileChooser.setFileFilter(new MyFilter("cap"));
+                        fileChooser.setFileFilter(new MyFilter("cap", "MySniffer(*.cap)"));
                         int result = fileChooser.showSaveDialog(null);
                         if (JFileChooser.APPROVE_OPTION == result) {
                             System.out.println(fileChooser.getSelectedFile().getPath());

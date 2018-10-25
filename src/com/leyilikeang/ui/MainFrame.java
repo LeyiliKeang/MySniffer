@@ -64,15 +64,12 @@ public class MainFrame {
         defaultTableModel.setColumnIdentifiers(
                 new Object[]{"序号", "源地址", "源端口", "目的地址", "目的端口", "协议", "长度"});
         packetTable.setModel(defaultTableModel);
-        packetTable.getTableHeader().setReorderingAllowed(false);
         packetTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         packetTableScrollPane.setViewportView(packetTable);
         packetTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (packetTable.getSelectedRow() != -1) {
-                    Integer index = Integer.parseInt(
-                            packetTable.getValueAt(packetTable.getSelectedRow(), 0).toString());
                     final String hexDump = PacketUtils.allPackets.get(packetTable.getSelectedRow()).toHexdump();
                     final String toString = PacketUtils.allPackets.get(packetTable.getSelectedRow()).toString();
                     EventQueue.invokeLater(new Runnable() {
@@ -128,7 +125,7 @@ public class MainFrame {
                 };
                 // 使用ScheduledExecutorService代替Timer
                 timer = new Timer();
-                timer.schedule(task, 1, 100);
+                timer.schedule(task, 1, 1);
             }
         });
 
