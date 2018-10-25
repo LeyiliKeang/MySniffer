@@ -70,58 +70,58 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
 
     @Override
     public void nextPacket(PcapPacket pcapPacket, T t) {
-        if (t instanceof PcapDumper) {
-            ((PcapDumper) t).dump(pcapPacket);
-        }
-        sourceMac = null;
-        destinationMac = null;
-        sourceIp = null;
-        destinationIp = null;
-        sourcePort = null;
-        destinationPort = null;
-        protocol = null;
+        this.sourceMac = null;
+        this.destinationMac = null;
+        this.sourceIp = null;
+        this.destinationIp = null;
+        this.sourcePort = null;
+        this.destinationPort = null;
+        this.protocol = null;
 
-        PcapPacket packet = new PcapPacket(pcapPacket);
+        final PcapPacket packet = new PcapPacket(pcapPacket);
+        if (t instanceof PcapDumper) {
+            ((PcapDumper) t).dump(packet);
+        }
         PacketUtils.allPackets.add(packet);
 
-        if (pcapPacket.hasHeader(ethernet)) {
+        if (packet.hasHeader(ethernet)) {
             protocol = ConstantUtils.Protocol.ETH.getValue();
             sourceMac = FormatUtils.mac(ethernet.source());
             destinationMac = FormatUtils.mac(ethernet.destination());
-            if (pcapPacket.hasHeader(arp)) {
+            if (packet.hasHeader(arp)) {
                 PacketUtils.arpPackets.add(packet);
                 protocol = ConstantUtils.Protocol.ARP.getValue();
             }
-            if (pcapPacket.hasHeader(ip4)) {
+            if (packet.hasHeader(ip4)) {
                 sourceIp = FormatUtils.ip(ip4.source());
                 destinationIp = FormatUtils.ip(ip4.destination());
                 protocol = ConstantUtils.Protocol.IPv4.getValue();
             }
-            if (pcapPacket.hasHeader(ip6)) {
+            if (packet.hasHeader(ip6)) {
                 sourceIp = FormatUtils.ip(ip6.source());
                 destinationIp = FormatUtils.ip(ip6.destination());
                 protocol = ConstantUtils.Protocol.IPv6.getValue();
             }
-            if (pcapPacket.hasHeader(icmp)) {
+            if (packet.hasHeader(icmp)) {
                 PacketUtils.icmpPackets.add(packet);
                 protocol = ConstantUtils.Protocol.ICMP.getValue();
-            } else if (pcapPacket.hasHeader(tcp)) {
+            } else if (packet.hasHeader(tcp)) {
                 sourcePort = tcp.source();
                 destinationPort = tcp.destination();
-                if (pcapPacket.hasHeader(http)) {
+                if (packet.hasHeader(http)) {
                     PacketUtils.httpPackets.add(packet);
                     protocol = ConstantUtils.Protocol.HTTP.getValue();
                 } else {
                     PacketUtils.tcpPackets.add(packet);
                     protocol = ConstantUtils.Protocol.TCP.getValue();
                 }
-            } else if (pcapPacket.hasHeader(udp)) {
+            } else if (packet.hasHeader(udp)) {
                 sourcePort = udp.source();
                 destinationPort = udp.destination();
-                if (pcapPacket.hasHeader(sip)) {
+                if (packet.hasHeader(sip)) {
                     PacketUtils.sipPackets.add(packet);
                     protocol = ConstantUtils.Protocol.SIP.getValue();
-                } else if (pcapPacket.hasHeader(sdp)) {
+                } else if (packet.hasHeader(sdp)) {
                     PacketUtils.sdpPackets.add(packet);
                     protocol = ConstantUtils.Protocol.SDP.getValue();
                 } else {
@@ -130,7 +130,7 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
                 }
             }
         }
-        if (pcapPacket.hasHeader(llc2)) {
+        if (packet.hasHeader(llc2)) {
             PacketUtils.llc2Packets.add(packet);
             protocol = ConstantUtils.Protocol.LLC.getValue();
         }
