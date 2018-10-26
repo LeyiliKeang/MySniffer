@@ -111,7 +111,7 @@ public class MainFrame {
                         ? null : Integer.parseInt(sourcePortTextField.getText().trim());
                 PacketUtils.destinationPort = "".equals(destinationPortTextField.getText().trim())
                         ? null : Integer.parseInt(destinationPortTextField.getText().trim());
-                PacketUtils.clear();
+                PacketUtils.capClear();
                 defaultTableModel.setRowCount(0);
                 captureService.capture(MainFrame.this);
 

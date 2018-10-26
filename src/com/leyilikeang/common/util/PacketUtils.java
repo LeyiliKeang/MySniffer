@@ -40,6 +40,8 @@ public class PacketUtils {
 
     public static String protocolType;
 
+    public static PcapPacketArrayList savePackets = new PcapPacketArrayList();
+
     public static PcapPacketArrayList allPackets = new PcapPacketArrayList();
     public static PcapPacketArrayList ethernetPackets = new PcapPacketArrayList();
     public static PcapPacketArrayList llc2Packets = new PcapPacketArrayList();
@@ -54,10 +56,24 @@ public class PacketUtils {
     public static PcapPacketArrayList sipPackets = new PcapPacketArrayList();
     public static PcapPacketArrayList sdpPackets = new PcapPacketArrayList();
 
+    public static PcapPacketArrayList allFilterPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList ethernetFilterPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList llc2FilterPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList arpFilterPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList icmpFilterPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList ip4FilterPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList ip6FilterPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList tcpFilterPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList httpFilterPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList udpFilterPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList dnsFilterPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList sipFilterPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList sdpFilterPackets = new PcapPacketArrayList();
+
     private PacketUtils() {
     }
 
-    public static void clear() {
+    public static void capClear() {
         allPackets.clear();
         ethernetPackets.clear();
         llc2Packets.clear();
@@ -71,5 +87,21 @@ public class PacketUtils {
         dnsPackets.clear();
         sipPackets.clear();
         sdpPackets.clear();
+    }
+
+    public static void filterClear() {
+        allFilterPackets.clear();
+        ethernetFilterPackets.clear();
+        llc2FilterPackets.clear();
+        arpFilterPackets.clear();
+        icmpFilterPackets.clear();
+        ip4FilterPackets.clear();
+        ip6FilterPackets.clear();
+        tcpFilterPackets.clear();
+        httpFilterPackets.clear();
+        udpFilterPackets.clear();
+        dnsFilterPackets.clear();
+        sipFilterPackets.clear();
+        sdpFilterPackets.clear();
     }
 }
