@@ -164,7 +164,8 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
             @Override
             public void run() {
                 int maximum = scrollPane.getVerticalScrollBar().getMaximum();
-                scrollPane.getViewport().setViewPosition(new Point(0, maximum));
+                int extent = scrollPane.getVerticalScrollBar().getModel().getExtent();
+                scrollPane.getVerticalScrollBar().setValue(maximum - extent);
                 countLabel.setText("数量：" + PacketUtils.allPackets.size());
             }
         });
