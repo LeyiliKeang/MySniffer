@@ -111,7 +111,10 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
             } else if (packet.hasHeader(this.tcp)) {
                 this.sourcePort = this.tcp.source();
                 this.destinationPort = this.tcp.destination();
-                if (packet.hasHeader(this.http)) {
+                if (53 == this.sourcePort || 53 == this.destinationPort) {
+                    PacketUtils.dnsPackets.add(packet);
+                    this.protocol = ConstantUtils.Protocol.DNS.getValue();
+                } else if (packet.hasHeader(this.http)) {
                     PacketUtils.httpPackets.add(packet);
                     this.protocol = ConstantUtils.Protocol.HTTP.getValue();
                 } else {
@@ -121,7 +124,10 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
             } else if (packet.hasHeader(this.udp)) {
                 this.sourcePort = this.udp.source();
                 this.destinationPort = this.udp.destination();
-                if (packet.hasHeader(this.sip)) {
+                if (53 == this.sourcePort || 53 == this.destinationPort) {
+                    PacketUtils.dnsPackets.add(packet);
+                    this.protocol = ConstantUtils.Protocol.DNS.getValue();
+                } else if (packet.hasHeader(this.sip)) {
                     PacketUtils.sipPackets.add(packet);
                     this.protocol = ConstantUtils.Protocol.SIP.getValue();
                 } else if (packet.hasHeader(this.sdp)) {
@@ -131,11 +137,6 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
                     PacketUtils.udpPackets.add(packet);
                     this.protocol = ConstantUtils.Protocol.UDP.getValue();
                 }
-            }
-        }
-        if (null != this.sourcePort && null != this.destinationPort) {
-            if (53 == this.sourcePort || 53 == this.destinationPort) {
-                this.protocol = ConstantUtils.Protocol.DNS.getValue();
             }
         }
         if (packet.hasHeader(this.llc2)) {

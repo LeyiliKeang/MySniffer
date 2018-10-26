@@ -1,13 +1,6 @@
 package com.leyilikeang.common.util;
 
-import org.jnetpcap.packet.JPacket;
-import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.util.PcapPacketArrayList;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author likang
@@ -55,6 +48,7 @@ public class PacketUtils {
     public static PcapPacketArrayList tcpPackets = new PcapPacketArrayList();
     public static PcapPacketArrayList httpPackets = new PcapPacketArrayList();
     public static PcapPacketArrayList udpPackets = new PcapPacketArrayList();
+    public static PcapPacketArrayList dnsPackets = new PcapPacketArrayList();
     public static PcapPacketArrayList sipPackets = new PcapPacketArrayList();
     public static PcapPacketArrayList sdpPackets = new PcapPacketArrayList();
 
@@ -72,6 +66,7 @@ public class PacketUtils {
         tcpPackets.clear();
         httpPackets.clear();
         udpPackets.clear();
+        dnsPackets.clear();
         sipPackets.clear();
         sdpPackets.clear();
     }
