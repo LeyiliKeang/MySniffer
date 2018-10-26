@@ -79,4 +79,18 @@ public class PcapUtils {
         }
         return offlinePcap;
     }
+
+    public static Pcap saveOffline() {
+        PcapIf device = alldevs.get(index);
+        int snaplen = 64 * 1024;
+        int flags = Pcap.MODE_PROMISCUOUS;
+        int timeout = 10 * 1000;
+        Pcap pcap = Pcap.openLive(device.getName(), snaplen, flags, timeout, errbuf);
+        if (pcap == null) {
+            System.err.printf("Error while opening device for capture: "
+                    + errbuf.toString());
+            return null;
+        }
+        return pcap;
+    }
 }

@@ -1,5 +1,6 @@
 package com.leyilikeang.common.util;
 
+import com.leyilikeang.service.SaveService;
 import com.leyilikeang.ui.DevsFrame;
 
 import javax.swing.*;
@@ -62,7 +63,6 @@ public class MenuUtils {
         saveMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("另存为");
                 EventQueue.invokeLater(new Runnable() {
                     @Override
                     public void run() {
@@ -70,13 +70,15 @@ public class MenuUtils {
 //                        fileChooser.setCurrentDirectory(new File("."));
                         fileChooser.setSelectedFile(new File("packet.cap"));
                         fileChooser.setMultiSelectionEnabled(false);
-                        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
                         fileChooser.setFileHidingEnabled(true);
                         fileChooser.setAcceptAllFileFilterUsed(false);
                         fileChooser.setFileFilter(new MyFileFilter("cap", "MySniffer(*.cap)"));
                         int result = fileChooser.showSaveDialog(null);
                         if (JFileChooser.APPROVE_OPTION == result) {
-                            System.out.println(fileChooser.getSelectedFile().getPath());
+                            SaveService saveService = new SaveService();
+                            String path = fileChooser.getSelectedFile().getPath();
+                            saveService.save(path);
                         }
                     }
                 });
@@ -97,7 +99,7 @@ public class MenuUtils {
 //                        fileChooser.setCurrentDirectory(new File("."));
                         fileChooser.setSelectedFile(new File("packet.cap"));
                         fileChooser.setMultiSelectionEnabled(false);
-                        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
                         fileChooser.setFileHidingEnabled(true);
                         fileChooser.setAcceptAllFileFilterUsed(false);
                         fileChooser.setFileFilter(new MyFileFilter("cap", "MySniffer(*.cap)"));
