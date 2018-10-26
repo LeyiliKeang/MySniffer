@@ -13,8 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.*;
 import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author likang
@@ -148,7 +148,7 @@ public class MainFrame {
         fileButton.setMnemonic('F');
         // 按下Alt键时第四个字符带有下划线
         fileButton.setDisplayedMnemonicIndex(3);
-        final JPopupMenu fileMenu = MenuUtils.getFileMenu();
+        final JPopupMenu fileMenu = MenuUtils.getFileMenu(this);
         fileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -226,5 +226,9 @@ public class MainFrame {
 
     public JLabel getCountLabel() {
         return countLabel;
+    }
+
+    public JTextField getSourceIpTextField() {
+        return sourceIpTextField;
     }
 }
