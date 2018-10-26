@@ -133,6 +133,11 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
                 }
             }
         }
+        if (null != this.sourcePort && null != this.destinationPort) {
+            if (53 == this.sourcePort || 53 == this.destinationPort) {
+                this.protocol = ConstantUtils.Protocol.DNS.getValue();
+            }
+        }
         if (packet.hasHeader(this.llc2)) {
             PacketUtils.llc2Packets.add(packet);
             this.protocol = ConstantUtils.Protocol.LLC.getValue();

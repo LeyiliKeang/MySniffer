@@ -20,6 +20,7 @@ public class ConstantUtils {
         TCP("TCP", "传输控制协议"),
         HTTP("HTTP", "超文本传输协议"),
         UDP("UDP", "用户数据报协议"),
+        DNS("DNS", "域名系统"),
         SIP("SIP", "会话发起协议"),
         SDP("SDP", "会话描述协议");
 
