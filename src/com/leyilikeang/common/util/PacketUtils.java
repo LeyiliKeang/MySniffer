@@ -38,6 +38,8 @@ public class PacketUtils {
      */
     public static String destinationMacAddress;
 
+    public static String protocolType;
+
     public static PcapPacketArrayList allPackets = new PcapPacketArrayList();
     public static PcapPacketArrayList ethernetPackets = new PcapPacketArrayList();
     public static PcapPacketArrayList llc2Packets = new PcapPacketArrayList();

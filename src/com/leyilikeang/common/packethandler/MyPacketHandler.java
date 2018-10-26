@@ -82,10 +82,6 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
         this.protocol = null;
 
         final PcapPacket packet = new PcapPacket(pcapPacket);
-        if (t instanceof PcapDumper) {
-            ((PcapDumper) t).dump(packet);
-        }
-        PacketUtils.allPackets.add(packet);
 
         if (packet.hasHeader(this.ethernet)) {
             this.protocol = ConstantUtils.Protocol.ETH.getValue();
@@ -152,6 +148,19 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
         if (ConstantUtils.Protocol.IPv6.getValue().equals(this.protocol)) {
             PacketUtils.ip6Packets.add(packet);
         }
+
+        if (null == PacketUtils.protocolType) {
+            PacketUtils.allPackets.add(packet);
+        } else if (this.protocol.equals(PacketUtils.protocolType)) {
+            PacketUtils.allPackets.add(packet);
+        } else {
+            return;
+        }
+
+        if (t instanceof PcapDumper) {
+            ((PcapDumper) t).dump(packet);
+        }
+
         if (null != this.sourceIp && null != this.destinationIp) {
             this.defaultTableModel.addRow(new Object[]{PacketUtils.allPackets.size(), this.sourceIp, this.sourcePort,
                     this.destinationIp, this.destinationPort, this.protocol, pcapPacket.getPacketWirelen()});

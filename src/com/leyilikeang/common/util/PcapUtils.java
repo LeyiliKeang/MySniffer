@@ -48,6 +48,21 @@ public class PcapUtils {
         PcapBpfProgram filter = new PcapBpfProgram();
         int optimize = 0;
         int netmask = 0;
+        if (expression.equalsIgnoreCase(ConstantUtils.Protocol.LLC.getValue())) {
+            PacketUtils.protocolType = ConstantUtils.Protocol.LLC.getValue();
+            return true;
+        } else if (expression.equalsIgnoreCase(ConstantUtils.Protocol.HTTP.getValue())) {
+            PacketUtils.protocolType = ConstantUtils.Protocol.HTTP.getValue();
+            return true;
+        } else if (expression.equalsIgnoreCase(ConstantUtils.Protocol.SIP.getValue())) {
+            PacketUtils.protocolType = ConstantUtils.Protocol.SIP.getValue();
+            return true;
+        } else if (expression.equalsIgnoreCase(ConstantUtils.Protocol.SDP.getValue())) {
+            PacketUtils.protocolType = ConstantUtils.Protocol.SDP.getValue();
+            return true;
+        } else if (expression.equalsIgnoreCase(ConstantUtils.Protocol.DNS.getValue())) {
+            expression = "port 53";
+        }
         int r = pcap.compile(filter, expression, optimize, netmask);
         if (r != Pcap.OK) {
             return false;
