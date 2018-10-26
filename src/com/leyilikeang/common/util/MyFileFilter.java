@@ -7,12 +7,12 @@ import java.io.File;
  * @author likang
  * @date 2018/10/24 20:30
  */
-public class MyFilter extends FileFilter {
+public class MyFileFilter extends FileFilter {
 
     private String extName;
     private String description;
 
-    public MyFilter(String extName, String description) {
+    public MyFileFilter(String extName, String description) {
         this.extName = extName;
         this.description = description;
     }
