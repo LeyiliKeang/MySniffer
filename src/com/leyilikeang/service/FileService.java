@@ -12,7 +12,7 @@ import java.io.File;
  * @author likang
  * @date 2018/10/26 14:10
  */
-public class SaveService {
+public class FileService {
 
     public void save(String path) {
         Pcap pcap = PcapUtils.saveOffline();

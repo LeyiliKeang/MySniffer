@@ -1,6 +1,6 @@
 package com.leyilikeang.common.util;
 
-import com.leyilikeang.service.SaveService;
+import com.leyilikeang.service.FileService;
 import com.leyilikeang.ui.DevsFrame;
 
 import javax.swing.*;
@@ -76,7 +76,7 @@ public class MenuUtils {
                         fileChooser.setFileFilter(new MyFileFilter("cap", "MySniffer(*.cap)"));
                         int result = fileChooser.showSaveDialog(null);
                         if (JFileChooser.APPROVE_OPTION == result) {
-                            SaveService saveService = new SaveService();
+                            FileService saveService = new FileService();
                             String path = fileChooser.getSelectedFile().getPath();
                             saveService.save(path);
                         }
