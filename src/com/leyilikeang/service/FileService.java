@@ -46,6 +46,7 @@ public class FileService {
             @Override
             public void run() {
                 pcap.loop(-1, packetHandler, "likang");
+                pcap.close();
             }
         }).start();
     }

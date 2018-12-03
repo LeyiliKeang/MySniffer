@@ -88,7 +88,7 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
             this.sourceMac = FormatUtils.mac(this.ethernet.source());
             this.destinationMac = FormatUtils.mac(this.ethernet.destination());
             if (packet.hasHeader(this.arp)) {
-                PacketUtils.arpPackets.add(packet);
+                PacketUtils.arpAmount++;
                 this.protocol = ConstantUtils.Protocol.ARP.getValue();
             }
             if (packet.hasHeader(this.ip4)) {
@@ -102,51 +102,51 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
                 this.protocol = ConstantUtils.Protocol.IPv6.getValue();
             }
             if (packet.hasHeader(this.icmp)) {
-                PacketUtils.icmpPackets.add(packet);
+                PacketUtils.icmpAmount++;
                 this.protocol = ConstantUtils.Protocol.ICMP.getValue();
             } else if (packet.hasHeader(this.tcp)) {
                 this.sourcePort = this.tcp.source();
                 this.destinationPort = this.tcp.destination();
                 if (53 == this.sourcePort || 53 == this.destinationPort) {
-                    PacketUtils.dnsPackets.add(packet);
+                    PacketUtils.dnsAmount++;
                     this.protocol = ConstantUtils.Protocol.DNS.getValue();
                 } else if (packet.hasHeader(this.http)) {
-                    PacketUtils.httpPackets.add(packet);
+                    PacketUtils.httpAmount++;
                     this.protocol = ConstantUtils.Protocol.HTTP.getValue();
                 } else {
-                    PacketUtils.tcpPackets.add(packet);
+                    PacketUtils.tcpAmount++;
                     this.protocol = ConstantUtils.Protocol.TCP.getValue();
                 }
             } else if (packet.hasHeader(this.udp)) {
                 this.sourcePort = this.udp.source();
                 this.destinationPort = this.udp.destination();
                 if (53 == this.sourcePort || 53 == this.destinationPort) {
-                    PacketUtils.dnsPackets.add(packet);
+                    PacketUtils.dnsAmount++;
                     this.protocol = ConstantUtils.Protocol.DNS.getValue();
                 } else if (packet.hasHeader(this.sip)) {
-                    PacketUtils.sipPackets.add(packet);
+                    PacketUtils.sipAmount++;
                     this.protocol = ConstantUtils.Protocol.SIP.getValue();
                 } else if (packet.hasHeader(this.sdp)) {
-                    PacketUtils.sdpPackets.add(packet);
+                    PacketUtils.sdpAmount++;
                     this.protocol = ConstantUtils.Protocol.SDP.getValue();
                 } else {
-                    PacketUtils.udpPackets.add(packet);
+                    PacketUtils.udpAmount++;
                     this.protocol = ConstantUtils.Protocol.UDP.getValue();
                 }
             }
         }
         if (packet.hasHeader(this.llc2)) {
-            PacketUtils.llc2Packets.add(packet);
+            PacketUtils.llc2Amount++;
             this.protocol = ConstantUtils.Protocol.LLC.getValue();
         }
         if (ConstantUtils.Protocol.ETH.getValue().equals(this.protocol)) {
-            PacketUtils.ethernetPackets.add(packet);
+            PacketUtils.ethernetAmount++;
         }
         if (ConstantUtils.Protocol.IPv4.getValue().equals(this.protocol)) {
-            PacketUtils.ip4Packets.add(packet);
+            PacketUtils.ip4Amount++;
         }
         if (ConstantUtils.Protocol.IPv6.getValue().equals(this.protocol)) {
-            PacketUtils.ip6Packets.add(packet);
+            PacketUtils.ip6Amount++;
         }
 
         if (null == PacketUtils.protocolType) {
@@ -163,10 +163,10 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
 
         if (null != this.sourceIp && null != this.destinationIp) {
             this.defaultTableModel.addRow(new Object[]{PacketUtils.allPackets.size(), this.sourceIp, this.sourcePort,
-                    this.destinationIp, this.destinationPort, this.protocol, pcapPacket.getPacketWirelen()});
+                    this.destinationIp, this.destinationPort, this.protocol, packet.getPacketWirelen()});
         } else {
             this.defaultTableModel.addRow(new Object[]{PacketUtils.allPackets.size(), this.sourceMac, this.sourcePort,
-                    this.destinationMac, this.destinationPort, this.protocol, pcapPacket.getPacketWirelen()});
+                    this.destinationMac, this.destinationPort, this.protocol, packet.getPacketWirelen()});
         }
 
         EventQueue.invokeLater(new Runnable() {

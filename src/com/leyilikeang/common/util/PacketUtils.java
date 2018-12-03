@@ -43,65 +43,65 @@ public class PacketUtils {
     public static PcapPacketArrayList savePackets = new PcapPacketArrayList();
 
     public static PcapPacketArrayList allPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList ethernetPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList llc2Packets = new PcapPacketArrayList();
-    public static PcapPacketArrayList arpPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList icmpPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList ip4Packets = new PcapPacketArrayList();
-    public static PcapPacketArrayList ip6Packets = new PcapPacketArrayList();
-    public static PcapPacketArrayList tcpPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList httpPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList udpPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList dnsPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList sipPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList sdpPackets = new PcapPacketArrayList();
+    public static Integer ethernetAmount = 0;
+    public static Integer llc2Amount = 0;
+    public static Integer arpAmount = 0;
+    public static Integer icmpAmount = 0;
+    public static Integer ip4Amount = 0;
+    public static Integer ip6Amount = 0;
+    public static Integer tcpAmount = 0;
+    public static Integer httpAmount = 0;
+    public static Integer udpAmount = 0;
+    public static Integer dnsAmount = 0;
+    public static Integer sipAmount = 0;
+    public static Integer sdpAmount = 0;
 
     public static PcapPacketArrayList allFilterPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList ethernetFilterPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList llc2FilterPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList arpFilterPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList icmpFilterPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList ip4FilterPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList ip6FilterPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList tcpFilterPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList httpFilterPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList udpFilterPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList dnsFilterPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList sipFilterPackets = new PcapPacketArrayList();
-    public static PcapPacketArrayList sdpFilterPackets = new PcapPacketArrayList();
+    public static Integer ethernetFilterAmount = 0;
+    public static Integer llc2FilterAmount = 0;
+    public static Integer arpFilterAmount = 0;
+    public static Integer icmpFilterAmount = 0;
+    public static Integer ip4FilterAmount = 0;
+    public static Integer ip6FilterAmount = 0;
+    public static Integer tcpFilterAmount = 0;
+    public static Integer httpFilterAmount = 0;
+    public static Integer udpFilterAmount = 0;
+    public static Integer dnsFilterAmount = 0;
+    public static Integer sipFilterAmount = 0;
+    public static Integer sdpFilterAmount = 0;
 
     private PacketUtils() {
     }
 
     public static void capClear() {
         allPackets.clear();
-        ethernetPackets.clear();
-        llc2Packets.clear();
-        arpPackets.clear();
-        icmpPackets.clear();
-        ip4Packets.clear();
-        ip6Packets.clear();
-        tcpPackets.clear();
-        httpPackets.clear();
-        udpPackets.clear();
-        dnsPackets.clear();
-        sipPackets.clear();
-        sdpPackets.clear();
+        ethernetAmount = 0;
+        llc2Amount = 0;
+        arpAmount = 0;
+        icmpAmount = 0;
+        ip4Amount = 0;
+        ip6Amount = 0;
+        tcpAmount = 0;
+        httpAmount = 0;
+        udpAmount = 0;
+        dnsAmount = 0;
+        sipAmount = 0;
+        sdpAmount = 0;
     }
 
     public static void filterClear() {
         allFilterPackets.clear();
-        ethernetFilterPackets.clear();
-        llc2FilterPackets.clear();
-        arpFilterPackets.clear();
-        icmpFilterPackets.clear();
-        ip4FilterPackets.clear();
-        ip6FilterPackets.clear();
-        tcpFilterPackets.clear();
-        httpFilterPackets.clear();
-        udpFilterPackets.clear();
-        dnsFilterPackets.clear();
-        sipFilterPackets.clear();
-        sdpFilterPackets.clear();
+        ethernetFilterAmount = 0;
+        llc2FilterAmount = 0;
+        arpFilterAmount = 0;
+        icmpFilterAmount = 0;
+        ip4FilterAmount = 0;
+        ip6FilterAmount = 0;
+        tcpFilterAmount = 0;
+        httpFilterAmount = 0;
+        udpFilterAmount = 0;
+        dnsFilterAmount = 0;
+        sipFilterAmount = 0;
+        sdpFilterAmount = 0;
     }
 }
