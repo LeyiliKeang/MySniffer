@@ -45,7 +45,7 @@ public class SavePacket {
 
         String outFile = "D:/test.cap";
         PcapDumper dumper = PcapUtils.pcap.dumpOpen(outFile);
-        for (JPacket packet : pcapPacketArrayList) {
+        for (PcapPacket packet : pcapPacketArrayList) {
             dumper.dump(packet);
         }
         File out = new File(outFile);
