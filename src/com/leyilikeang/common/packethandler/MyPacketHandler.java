@@ -65,6 +65,8 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
     private Integer destinationPort;
     private String protocol;
 
+    public static Integer per = 0;
+
     public MyPacketHandler(MainFrame mainFrame) {
         this.defaultTableModel = mainFrame.getDefaultTableModel();
         this.scrollPane = mainFrame.getPacketTableScrollPane();
@@ -169,6 +171,7 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
                     this.destinationMac, this.destinationPort, this.protocol, packet.getPacketWirelen()});
         }
 
+        per = per + packet.getPacketWirelen();
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {

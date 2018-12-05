@@ -1,5 +1,6 @@
 package com.leyilikeang.ui;
 
+import com.leyilikeang.common.packethandler.MyPacketHandler;
 import com.leyilikeang.common.util.MenuUtils;
 import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.service.CaptureService;
@@ -13,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -39,6 +41,7 @@ public class MainFrame {
     private JButton capButton;
     private JLabel countLabel;
     private JLabel timeLabel;
+    private JLabel rateLabel;
 
     private JFrame mainFrame;
 
@@ -123,9 +126,18 @@ public class MainFrame {
                         timeLabel.setText("用时：" + str);
                     }
                 };
+                TimerTask task1 = new TimerTask() {
+                    @Override
+                    public void run() {
+                        String str = String.format("%.2f", (double) MyPacketHandler.per / 1024);
+                        rateLabel.setText("流量：" + str + "Kb/s");
+                        MyPacketHandler.per = 0;
+                    }
+                };
                 // 使用ScheduledExecutorService代替Timer
                 timer = new Timer();
                 timer.schedule(task, 1, 1);
+                timer.schedule(task1,1, 1000);
             }
         });
 
@@ -137,6 +149,7 @@ public class MainFrame {
                     public void run() {
                         captureButton.setEnabled(true);
                         stopButton.setEnabled(false);
+                        rateLabel.setText("流量：0.00Kb/s");
                     }
                 });
                 captureService.stop();
