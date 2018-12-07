@@ -28,8 +28,9 @@ public class FileService {
         pcap.close();
     }
 
+    // TODO : 打开时检查是否有过滤，赋值expression
     public void open(MainFrame mainFrame, String path) {
-        String expression = mainFrame.getSourceIpTextField().getText();
+        String expression = "";
         mainFrame.getDefaultTableModel().setRowCount(0);
         PacketUtils.capClear();
         final Pcap pcap = PcapUtils.readOffline(path);

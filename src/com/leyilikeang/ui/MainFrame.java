@@ -28,10 +28,6 @@ public class MainFrame {
     private JTextArea toHexDumpTextArea;
     private JTextArea toStringTextArea;
     private JTable packetTable;
-    private JTextField sourceIpTextField;
-    private JTextField sourcePortTextField;
-    private JTextField destinationIpTextField;
-    private JTextField destinationPortTextField;
     private JButton captureButton;
     private JButton stopButton;
     private JScrollPane packetTableScrollPane;
@@ -106,14 +102,6 @@ public class MainFrame {
                     }
                 });
 
-                PacketUtils.sourceIpAddress = "".equals(sourceIpTextField.getText().trim())
-                        ? null : sourceIpTextField.getText().trim();
-                PacketUtils.destinationIpAddress = "".equals(destinationIpTextField.getText().trim())
-                        ? null : destinationIpTextField.getText().trim();
-                PacketUtils.sourcePort = "".equals(sourcePortTextField.getText().trim())
-                        ? null : Integer.parseInt(sourcePortTextField.getText().trim());
-                PacketUtils.destinationPort = "".equals(destinationPortTextField.getText().trim())
-                        ? null : Integer.parseInt(destinationPortTextField.getText().trim());
                 PacketUtils.capClear();
                 defaultTableModel.setRowCount(0);
                 captureService.capture(MainFrame.this);
@@ -239,9 +227,5 @@ public class MainFrame {
 
     public JLabel getCountLabel() {
         return countLabel;
-    }
-
-    public JTextField getSourceIpTextField() {
-        return sourceIpTextField;
     }
 }
