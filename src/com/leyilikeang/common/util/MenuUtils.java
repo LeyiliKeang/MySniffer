@@ -74,7 +74,7 @@ public class MenuUtils {
 //                        fileChooser.setCurrentDirectory(new File("."));
                         fileChooser.setSelectedFile(new File("packet.cap"));
                         fileChooser.setMultiSelectionEnabled(false);
-                        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+                        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                         fileChooser.setFileHidingEnabled(true);
                         fileChooser.setAcceptAllFileFilterUsed(false);
                         fileChooser.setFileFilter(new MyFileFilter("cap", "MySniffer(*.cap)"));
@@ -164,10 +164,10 @@ public class MenuUtils {
      * TODO : 捕获菜单暂时分为切换网卡和捕获规则两种，传参问题待考虑
      * TODO : 弹出的网卡设备选择对话框未居中于frame
      *
-     * @param frame 切换网卡时，弹出的网卡设备选择对话框将居中于此frame
+     * @param mainFrame 切换网卡时，弹出的网卡设备选择对话框将居中于此frame
      * @return 捕获菜单
      */
-    public static JPopupMenu getCapMenu(final Window frame) {
+    public static JPopupMenu getCapMenu(final MainFrame mainFrame) {
         JPopupMenu popupMenu = new JPopupMenu();
 
         JMenuItem ruleMenuItem = new JMenuItem("切换网卡");
@@ -177,11 +177,7 @@ public class MenuUtils {
                 EventQueue.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        JDialog dialog = new JDialog((JFrame) frame, "选择网卡设备", true);
-                        dialog.setContentPane(new DevsFrame(dialog).getContentPane());
-                        dialog.pack();
-                        dialog.setLocationRelativeTo(frame);
-                        dialog.setVisible(true);
+                        mainFrame.devs();
                     }
                 });
             }

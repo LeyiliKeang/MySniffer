@@ -38,6 +38,10 @@ public class MainFrame {
     private JLabel countLabel;
     private JLabel timeLabel;
     private JLabel rateLabel;
+    private JPanel bottomPane;
+    private JPanel rightPane;
+    private JPanel leftPane;
+    private DevsFrame devsFrame;
 
     private JFrame mainFrame;
 
@@ -53,6 +57,7 @@ public class MainFrame {
     }
 
     public MainFrame() {
+        rightPane.setVisible(false);
         stopButton.setEnabled(false);
         defaultTableModel = new DefaultTableModel() {
             @Override
@@ -169,7 +174,7 @@ public class MainFrame {
 
         capButton.setMnemonic('C');
         capButton.setDisplayedMnemonicIndex(3);
-        final JPopupMenu capMenu = MenuUtils.getCapMenu(mainFrame);
+        final JPopupMenu capMenu = MenuUtils.getCapMenu(this);
         capButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -227,5 +232,19 @@ public class MainFrame {
 
     public JLabel getCountLabel() {
         return countLabel;
+    }
+
+    public DevsFrame getDevsFrame() {
+        return devsFrame;
+    }
+
+    public void ready() {
+        this.leftPane.setVisible(false);
+        this.rightPane.setVisible(true);
+    }
+
+    public void devs() {
+        this.rightPane.setVisible(false);
+        this.leftPane.setVisible(true);
     }
 }
