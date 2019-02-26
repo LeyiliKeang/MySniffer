@@ -6,8 +6,10 @@ import org.jnetpcap.Pcap;
 import org.jnetpcap.packet.JPacket;
 import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.packet.PcapPacketHandler;
+import org.jnetpcap.packet.format.FormatUtils;
 import org.jnetpcap.protocol.lan.Ethernet;
 import org.jnetpcap.protocol.network.Ip4;
+import org.jnetpcap.protocol.tcpip.Tcp;
 
 /**
  * Created by Goldmsg on 2018/10/22.
@@ -15,10 +17,10 @@ import org.jnetpcap.protocol.network.Ip4;
 public class Forward {
 
     public static void main(String[] args) {
-        final String destinationMac = "ec 26 ca ff 9d 36";
+        final String destinationMac = "c4 b8 b5 c7 ab c6";
         final String destinationIp = "c0 a8 01 01";
-        final String sourceMac = "40 e2 30 df f9 ff";
-        String sourceIp = "c0 a8 01 66";
+        final String sourceMac = "c8 ff 28 8f 18 d8";
+        final String sourceIp = "192.168.1.6";
 
         PcapUtils.getAllDevs();
         PcapUtils.index = 2;
@@ -27,7 +29,7 @@ public class Forward {
 
             @Override
             public void nextPacket(PcapPacket pcapPacket, Object o) {
-                System.out.println(pcapPacket.toString());
+//                System.out.println(pcapPacket.toString());
 
                 final JPacket packet = new PcapPacket(pcapPacket);
                 /**
@@ -35,28 +37,35 @@ public class Forward {
                  */
                 Ip4 ip4 = new Ip4();
                 if (packet.hasHeader(ip4)) {
-                    if (ip4.destination().equals(destinationIp)) {
+                    if (FormatUtils.ip(ip4.source()).equals(sourceIp)) {
+                        System.out.println(pcapPacket.toString());
                         Ethernet ethernet = packet.getHeader(new Ethernet());
                         byte[] sourceMacByte = ConvertUtils.macToByteArray(sourceMac, " ");
                         byte[] destinationMacByte = ConvertUtils.macToByteArray(destinationMac, " ");
                         ethernet.source(sourceMacByte);
                         ethernet.destination(destinationMacByte);
-                    }
-                }
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        while (true) {
-                            if (PcapUtils.pcap.sendPacket(packet) != Pcap.OK) {
-                                System.out.println(PcapUtils.pcap.getErr());
-                            }
+                        ethernet.checksum(ethernet.calculateChecksum());
+                        System.out.println(pcapPacket.toString());
+                        if (PcapUtils.pcap.sendPacket(packet) != Pcap.OK) {
+                            System.out.println(PcapUtils.pcap.getErr());
                         }
                     }
-                }).start();
-                System.out.println(packet.toString());
+                }
+
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        while (true) {
+//                            if (PcapUtils.pcap.sendPacket(packet) != Pcap.OK) {
+//                                System.out.println(PcapUtils.pcap.getErr());
+//                            }
+//                        }
+//                    }
+//                }).start();
+//                System.out.println(packet.toString());
             }
         };
-        PcapUtils.pcap.loop(1, pcapPacketHandler, "likang");
+        PcapUtils.pcap.loop(-1, pcapPacketHandler, "likang");
         PcapUtils.pcap.close();
     }
 }

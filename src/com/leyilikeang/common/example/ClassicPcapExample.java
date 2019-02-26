@@ -64,7 +64,7 @@ public class ClassicPcapExample {
             }
         };
 
-        pcap.loop(-1, packetHandler, "jNetPcap rocks!");
+        pcap.loop(10, packetHandler, "jNetPcap rocks!");
 
         pcap.close();
     }

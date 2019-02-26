@@ -31,7 +31,7 @@ public class PcapDumperExample {
                     errbuf.toString());
             return;
         }
-        PcapIf device = alldevs.get(1); // We know we have atleast 1 device
+        PcapIf device = alldevs.get(5); // We know we have atleast 1 device
 
         /***************************************************************************
          * 打开选中设备
@@ -68,7 +68,7 @@ public class PcapDumperExample {
         /***************************************************************************
          * 告诉loop捕获10个数据包，并传入我们第三步创建的dumper
          **************************************************************************/
-        pcap.loop(10, dumpHandler, dumper);
+        pcap.loop(20, dumpHandler, dumper);
 
         File file = new File(ofile);
         System.out.printf("%s file has %d bytes in it!\n", ofile, file.length());
@@ -80,9 +80,9 @@ public class PcapDumperExample {
         dumper.close(); // 如果dumper不关闭，那么输出文件是没法删除的
         pcap.close();
 
-        if (file.exists()) {
-            file.delete();
-            // 删除输出文件，当然你也可以不删除，使用wireshark打开可以看到更多的信息
-        }
+//        if (file.exists()) {
+//            file.delete();
+//            // 删除输出文件，当然你也可以不删除，使用wireshark打开可以看到更多的信息
+//        }
     }
 }
