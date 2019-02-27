@@ -101,36 +101,20 @@ public class MainFrame {
                 EventQueue.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        captureButton.setEnabled(false);
-                        stopButton.setEnabled(true);
-                        countLabel.setText("数量：0");
+                        JDialog dialog = new JDialog(mainFrame, "捕获过滤器", true);
+                        dialog.setContentPane(new FilterFrame(MainFrame.this, dialog).getContentPane());
+                        dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+                        dialog.pack();
+                        dialog.setLocationRelativeTo(mainFrame);
+                        dialog.setVisible(true);
+                        int state = dialog.getDefaultCloseOperation();
+                        if (state == JDialog.DISPOSE_ON_CLOSE) {
+                            captureButton.setEnabled(false);
+                            stopButton.setEnabled(true);
+                            countLabel.setText("数量：0");
+                        }
                     }
                 });
-
-                PacketUtils.capClear();
-                defaultTableModel.setRowCount(0);
-                captureService.capture(MainFrame.this);
-
-                final long time = System.currentTimeMillis();
-                TimerTask task = new TimerTask() {
-                    @Override
-                    public void run() {
-                        String str = String.format("%1$tM:%1$tS:%1$1tL", System.currentTimeMillis() - time);
-                        timeLabel.setText("用时：" + str);
-                    }
-                };
-                TimerTask task1 = new TimerTask() {
-                    @Override
-                    public void run() {
-                        String str = String.format("%.2f", (double) MyPacketHandler.per / 1024);
-                        rateLabel.setText("流量：" + str + "Kb/s");
-                        MyPacketHandler.per = 0;
-                    }
-                };
-                // 使用ScheduledExecutorService代替Timer
-                timer = new Timer();
-                timer.schedule(task, 1, 1);
-                timer.schedule(task1,1, 1000);
             }
         });
 
@@ -246,5 +230,21 @@ public class MainFrame {
     public void devs() {
         this.rightPane.setVisible(false);
         this.leftPane.setVisible(true);
+    }
+
+    public CaptureService getCaptureService() {
+        return captureService;
+    }
+
+    public JLabel getTimeLabel() {
+        return timeLabel;
+    }
+
+    public JLabel getRateLabel() {
+        return rateLabel;
+    }
+
+    public void setTimer(Timer timer) {
+        this.timer = timer;
     }
 }

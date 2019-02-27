@@ -1,7 +1,9 @@
 import org.jnetpcap.Pcap;
+import org.jnetpcap.PcapAddr;
 import org.jnetpcap.PcapIf;
 import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.packet.PcapPacketHandler;
+import org.jnetpcap.packet.format.FormatUtils;
 import org.jnetpcap.protocol.network.Icmp;
 import org.jnetpcap.protocol.network.Ip4;
 import org.jnetpcap.protocol.network.Ip6;
@@ -51,7 +53,7 @@ public class ClassicPcapExample {
         int snaplen = 64 * 1024;           // Capture all packets, no trucation
         int flags = Pcap.MODE_PROMISCUOUS; // capture all packets
         int timeout = 10 * 1000;           // 10 seconds in millis
-        Pcap pcap =
+        final Pcap pcap =
                 Pcap.openLive(device.getName(), snaplen, flags, timeout, errbuf);
 
         if (pcap == null) {
@@ -90,7 +92,12 @@ public class ClassicPcapExample {
 //                        }
 //                    }
 //                }
-                System.out.println(packet.toHexdump());
+                System.out.println(packet.toString());
+                Ip4 ip4 = new Ip4();
+                if (packet.hasHeader(ip4)) {
+                    System.out.printf("IP.version = %d\n", ip4.version());
+                    System.out.printf("%s -> %s\n", FormatUtils.ip(ip4.source()), FormatUtils.ip(ip4.destination()));
+                }
             }
         };
 
@@ -102,7 +109,7 @@ public class ClassicPcapExample {
          * the loop method exists that allows the programmer to sepecify exactly
          * which protocol ID to use as the data link type for this pcap interface.
          **************************************************************************/
-        pcap.loop(-1, jpacketHandler, "jNetPcap rocks!");
+        pcap.loop(2, jpacketHandler, "jNetPcap rocks!");
 
         /***************************************************************************
          * Last thing to do is close the pcap handle

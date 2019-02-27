@@ -11,7 +11,7 @@ public class ScanTest {
     private static int i;
 
     public static void main(String[] args) {
-        final String ip = "192.168.36.";
+        final String ip = "192.168.0.";
         for (i = 1; i < 255; i++) {
             new Thread(new Runnable() {
                 final int j = i;
@@ -21,7 +21,7 @@ public class ScanTest {
                     try {
                         InetAddress address = InetAddress.getByName(host);
                         if (address.isReachable(1500)) {
-                            System.out.println("涓绘満" + host + "鍦ㄧ嚎");
+                            System.out.println(host);
                         }
                     } catch (UnknownHostException e) {
                         e.printStackTrace();
