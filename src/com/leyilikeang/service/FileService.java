@@ -1,6 +1,7 @@
 package com.leyilikeang.service;
 
 import com.leyilikeang.common.packethandler.MyPacketHandler;
+import com.leyilikeang.common.util.FileUtils;
 import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.common.util.PcapUtils;
 import com.leyilikeang.ui.MainFrame;
@@ -8,6 +9,7 @@ import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapBpfProgram;
 import org.jnetpcap.PcapDumper;
 import org.jnetpcap.packet.PcapPacket;
+import org.jnetstream.capture.CapturePacket;
 
 import java.io.File;
 
@@ -29,11 +31,10 @@ public class FileService {
     }
 
     // TODO : 打开时检查是否有过滤，赋值expression
-    public void open(MainFrame mainFrame, String path) {
-        String expression = "";
+    public void open(MainFrame mainFrame, String expression) {
         mainFrame.getDefaultTableModel().setRowCount(0);
         PacketUtils.capClear();
-        final Pcap pcap = PcapUtils.readOffline(path);
+        final Pcap pcap = PcapUtils.readOffline(FileUtils.openFile);
         PcapBpfProgram filter = new PcapBpfProgram();
         int optimize = 0;
         int netmask = 0;

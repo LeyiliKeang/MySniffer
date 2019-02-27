@@ -52,9 +52,9 @@ public class MenuUtils {
                         int result = fileChooser.showOpenDialog(null);
                         if (JFileChooser.APPROVE_OPTION == result) {
                             System.out.println(fileChooser.getSelectedFile().getPath());
-                            String path = fileChooser.getSelectedFile().getPath();
+                            FileUtils.openFile = fileChooser.getSelectedFile().getPath();
                             FileService fileService = new FileService();
-                            fileService.open(mainFrame, path);
+                            fileService.open(mainFrame, "");
                         }
                     }
                 });
@@ -184,20 +184,20 @@ public class MenuUtils {
         });
         popupMenu.add(ruleMenuItem);
 
-        JMenuItem simpleFilter = new JMenuItem("过滤");
+        JMenuItem simpleFilter = new JMenuItem("筛选");
         simpleFilter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("过滤");
+                System.out.println("筛选");
             }
         });
         popupMenu.add(simpleFilter);
 
-        JMenuItem expressionFilter = new JMenuItem("表达式过滤");
+        JMenuItem expressionFilter = new JMenuItem("表达式筛选");
         expressionFilter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("表达式过滤");
+                System.out.println("表达式筛选");
             }
         });
         popupMenu.add(expressionFilter);

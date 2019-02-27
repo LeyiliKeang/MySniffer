@@ -1,6 +1,7 @@
 package com.leyilikeang.service;
 
 import com.leyilikeang.common.packethandler.MyPacketHandler;
+import com.leyilikeang.common.util.FileUtils;
 import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.common.util.PcapUtils;
 import com.leyilikeang.ui.MainFrame;
@@ -17,14 +18,13 @@ public class CaptureService {
     public void capture(MainFrame mainFrame) {
         final MyPacketHandler<PcapDumper> packetHandler = new MyPacketHandler<PcapDumper>(mainFrame);
 
-        final String offFile = "D:/ttttttttt.cap";
-        final PcapDumper dumper = PcapUtils.pcap.dumpOpen(offFile);
+        final PcapDumper dumper = PcapUtils.pcap.dumpOpen(FileUtils.tempFile);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 PcapUtils.pcap.loop(-1, packetHandler, dumper);
-                File file = new File(offFile);
+                File file = new File(FileUtils.tempFile);
                 dumper.close();
             }
         }).start();

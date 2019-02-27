@@ -44,7 +44,7 @@ public class PcapUtils {
         }
     }
 
-    public static boolean filter(String expression) {
+    public static boolean filter(String expression, Pcap pcap) {
         PcapBpfProgram filter = new PcapBpfProgram();
         int optimize = 0;
         int netmask = 0;

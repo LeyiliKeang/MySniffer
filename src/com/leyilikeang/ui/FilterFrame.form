@@ -54,7 +54,7 @@
                       <component id="7c956" class="javax.swing.JTextField" binding="sourceIpTextField">
                         <constraints>
                           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                            <preferred-size width="150" height="25"/>
+                            <preferred-size width="100" height="-1"/>
                           </grid>
                         </constraints>
                         <properties/>
@@ -80,7 +80,7 @@
                       <component id="14d33" class="javax.swing.JTextField" binding="destinationIpTextField">
                         <constraints>
                           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                            <preferred-size width="150" height="25"/>
+                            <preferred-size width="100" height="-1"/>
                           </grid>
                         </constraints>
                         <properties/>
@@ -118,7 +118,7 @@
                       <component id="60697" class="javax.swing.JTextField" binding="sourcePortTextField">
                         <constraints>
                           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                            <preferred-size width="150" height="25"/>
+                            <preferred-size width="100" height="-1"/>
                           </grid>
                         </constraints>
                         <properties/>
@@ -144,7 +144,7 @@
                       <component id="2308" class="javax.swing.JTextField" binding="destinationPortTextField">
                         <constraints>
                           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                            <preferred-size width="150" height="25"/>
+                            <preferred-size width="100" height="-1"/>
                           </grid>
                         </constraints>
                         <properties/>
@@ -232,11 +232,25 @@
                   <component id="4daf5" class="javax.swing.JComboBox" binding="expressionComboBox">
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                        <preferred-size width="350" height="25"/>
+                        <preferred-size width="350" height="-1"/>
                       </grid>
                     </constraints>
                     <properties>
                       <editable value="true"/>
+                      <model>
+                        <item value="src xxx.xxx.xxx.xxx"/>
+                        <item value="dst xxx.xxx.xxx.xxx"/>
+                        <item value="port xxx"/>
+                        <item value="host xxx.xxx.xxx.xxx"/>
+                        <item value="src port xxx"/>
+                        <item value="dst port xxx"/>
+                        <item value="arp"/>
+                        <item value="ip"/>
+                        <item value="tcp"/>
+                        <item value="tcp and port 80"/>
+                        <item value="udp"/>
+                        <item value="http"/>
+                      </model>
                     </properties>
                   </component>
                 </children>

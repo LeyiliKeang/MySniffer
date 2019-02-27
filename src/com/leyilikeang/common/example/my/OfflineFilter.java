@@ -38,7 +38,7 @@ public class OfflineFilter {
         PcapUtils.index = 0;
         PcapUtils.useDev();
 
-        PcapUtils.filter("port 443");
+        PcapUtils.filter("port 443", PcapUtils.pcap);
 
         PcapPacketArrayList pcapPacketArrayList = new PcapPacketArrayList(packets);
 

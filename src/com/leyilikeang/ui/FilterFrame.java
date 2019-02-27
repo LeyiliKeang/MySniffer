@@ -3,6 +3,7 @@ package com.leyilikeang.ui;
 import com.leyilikeang.common.packethandler.MyPacketHandler;
 import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.common.util.PcapUtils;
+import org.jnetpcap.Pcap;
 import sun.applet.Main;
 
 import javax.swing.*;
@@ -34,6 +35,7 @@ public class FilterFrame {
     private JComboBox expressionComboBox;
 
     public FilterFrame(final MainFrame mainFrame, final JDialog dialog) {
+        expressionComboBox.setSelectedIndex(-1);
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -171,7 +173,7 @@ public class FilterFrame {
             }
         }
         System.out.println(expression);
-        if (PcapUtils.filter(expression)) {
+        if (PcapUtils.filter(expression, PcapUtils.pcap)) {
             System.out.println("过滤器加载成功");
         } else {
             System.out.println("过滤器加载失败");
@@ -180,7 +182,7 @@ public class FilterFrame {
 
     private void doExpressionFilter() {
         String expression = expressionComboBox.getSelectedItem().toString().trim();
-        if (PcapUtils.filter(expression)) {
+        if (PcapUtils.filter(expression, PcapUtils.pcap)) {
             System.out.println("过滤器加载成功");
         } else {
             System.out.println("过滤器加载失败");

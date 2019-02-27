@@ -1,9 +1,12 @@
 package com.leyilikeang.ui;
 
 import com.leyilikeang.common.packethandler.MyPacketHandler;
+import com.leyilikeang.common.util.FileUtils;
 import com.leyilikeang.common.util.MenuUtils;
 import com.leyilikeang.common.util.PacketUtils;
+import com.leyilikeang.common.util.PcapUtils;
 import com.leyilikeang.service.CaptureService;
+import com.leyilikeang.service.FileService;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -42,6 +45,8 @@ public class MainFrame {
     private JPanel rightPane;
     private JPanel leftPane;
     private DevsFrame devsFrame;
+    private JComboBox expressionComboBox;
+    private JButton applyButton;
 
     private JFrame mainFrame;
 
@@ -57,6 +62,7 @@ public class MainFrame {
     }
 
     public MainFrame() {
+        expressionComboBox.setSelectedIndex(-1);
         rightPane.setVisible(false);
         stopButton.setEnabled(false);
         defaultTableModel = new DefaultTableModel() {
@@ -112,6 +118,7 @@ public class MainFrame {
                             captureButton.setEnabled(false);
                             stopButton.setEnabled(true);
                             countLabel.setText("数量：0");
+                            FileUtils.openFile = null;
                         }
                     }
                 });
@@ -131,6 +138,19 @@ public class MainFrame {
                 });
                 captureService.stop();
                 timer.cancel();
+            }
+        });
+
+        applyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String expression = expressionComboBox.getSelectedItem().toString().trim();
+                expression = ((expression == null) ? "" : expression);
+                if (FileUtils.openFile == null) {
+                    FileUtils.openFile = FileUtils.tempFile;
+                }
+                FileService fileService = new FileService();
+                fileService.open(MainFrame.this, expression);
             }
         });
 
