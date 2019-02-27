@@ -108,6 +108,53 @@ public class FilterFrame {
             destinationExpression = "dst " + destinationIp + " and dst port " + destinationPort;
         }
 
+        StringBuilder protocolExpression = new StringBuilder();
+        String protocol = "";
+        if (arpCheckBox.isSelected()) {
+            protocol = "arp";
+            protocolExpression.append(protocol);
+            protocol = "";
+        }
+        if (ipCheckBox.isSelected()) {
+            protocol = "ip";
+            if (!protocolExpression.toString().equals("")) {
+                protocolExpression.append(" and ").append(protocol);
+                protocol = "";
+            } else {
+                protocolExpression.append(protocol);
+                protocol = "";
+            }
+        }
+        if (tcpCheckBox.isSelected()) {
+            protocol = "tcp";
+            if (!protocolExpression.toString().equals("")) {
+                protocolExpression.append(" and ").append(protocol);
+                protocol = "";
+            } else {
+                protocolExpression.append(protocol);
+                protocol = "";
+            }
+        }
+        if (udpCheckBox.isSelected()) {
+            protocol = "udp";
+            if (!protocolExpression.toString().equals("")) {
+                protocolExpression.append(" and ").append(protocol);
+                protocol = "";
+            } else {
+                protocolExpression.append(protocol);
+                protocol = "";
+            }
+        }
+        if (httpCheckBox.isSelected()) {
+            protocol = "http";
+            if (!protocolExpression.toString().equals("")) {
+                protocolExpression.append(" and ").append(protocol);
+            } else {
+                protocolExpression.append(protocol);
+            }
+        }
+        System.out.println(protocolExpression);
+
         String expression = "";
         if (sourceExpression.equals("") && !destinationExpression.equals("")) {
             expression = destinationExpression;
@@ -116,6 +163,14 @@ public class FilterFrame {
         } else if (!sourceExpression.equals("") && !destinationExpression.equals("")) {
             expression = sourceExpression + " and " + destinationExpression;
         }
+        if (!protocolExpression.toString().equals("")) {
+            if (expression.equals("")) {
+                expression = protocolExpression.toString();
+            } else {
+                expression = expression + " and " + protocolExpression.toString();
+            }
+        }
+        System.out.println(expression);
         if (PcapUtils.filter(expression)) {
             System.out.println("过滤器加载成功");
         } else {

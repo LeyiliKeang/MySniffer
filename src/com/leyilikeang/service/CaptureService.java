@@ -1,6 +1,7 @@
 package com.leyilikeang.service;
 
 import com.leyilikeang.common.packethandler.MyPacketHandler;
+import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.common.util.PcapUtils;
 import com.leyilikeang.ui.MainFrame;
 import org.jnetpcap.PcapDumper;
@@ -32,5 +33,6 @@ public class CaptureService {
     public void stop() {
         PcapUtils.pcap.close();
         PcapUtils.useDev();
+        PacketUtils.protocolType = null;
     }
 }
