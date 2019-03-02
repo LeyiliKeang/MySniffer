@@ -42,39 +42,43 @@ public class FilterFrame {
                 dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
                 dialog.dispose();
 
-                PacketUtils.capClear();
-                mainFrame.getDefaultTableModel().setRowCount(0);
-                mainFrame.getCaptureService().capture(mainFrame);
+                boolean isStart = false;
 
                 if (tabbedPane.getSelectedIndex() == 0) {
-                    doSimpleFilter();
+                    isStart = doSimpleFilter();
                 }
 
                 if (tabbedPane.getSelectedIndex() == 1) {
-                    doExpressionFilter();
+                    isStart = doExpressionFilter();
                 }
 
-                final long time = System.currentTimeMillis();
-                TimerTask task = new TimerTask() {
-                    @Override
-                    public void run() {
-                        String str = String.format("%1$tM:%1$tS:%1$1tL", System.currentTimeMillis() - time);
-                        mainFrame.getTimeLabel().setText("用时：" + str);
-                    }
-                };
-                TimerTask task1 = new TimerTask() {
-                    @Override
-                    public void run() {
-                        String str = String.format("%.2f", (double) MyPacketHandler.per / 1024);
-                        mainFrame.getRateLabel().setText("流量：" + str + "Kb/s");
-                        MyPacketHandler.per = 0;
-                    }
-                };
-                // 使用ScheduledExecutorService代替Timer
-                Timer timer = new Timer();
-                timer.schedule(task, 1, 1);
-                timer.schedule(task1, 1, 1000);
-                mainFrame.setTimer(timer);
+                if (isStart) {
+                    PacketUtils.capClear();
+                    mainFrame.getDefaultTableModel().setRowCount(0);
+                    mainFrame.getCaptureService().capture(mainFrame);
+
+                    final long time = System.currentTimeMillis();
+                    TimerTask task = new TimerTask() {
+                        @Override
+                        public void run() {
+                            String str = String.format("%1$tM:%1$tS:%1$1tL", System.currentTimeMillis() - time);
+                            mainFrame.getTimeLabel().setText("用时：" + str);
+                        }
+                    };
+                    TimerTask task1 = new TimerTask() {
+                        @Override
+                        public void run() {
+                            String str = String.format("%.2f", (double) MyPacketHandler.per / 1024);
+                            mainFrame.getRateLabel().setText("流量：" + str + "Kb/s");
+                            MyPacketHandler.per = 0;
+                        }
+                    };
+                    // 使用ScheduledExecutorService代替Timer
+                    Timer timer = new Timer();
+                    timer.schedule(task, 1, 1);
+                    timer.schedule(task1, 1, 1000);
+                    mainFrame.setTimer(timer);
+                }
             }
         });
 
@@ -87,7 +91,7 @@ public class FilterFrame {
         });
     }
 
-    private void doSimpleFilter() {
+    private boolean doSimpleFilter() {
         String sourceIp = sourceIpTextField.getText().trim();
         String sourcePort = sourcePortTextField.getText().trim();
         String sourceExpression = "";
@@ -120,7 +124,7 @@ public class FilterFrame {
         if (ipCheckBox.isSelected()) {
             protocol = "ip";
             if (!protocolExpression.toString().equals("")) {
-                protocolExpression.append(" and ").append(protocol);
+                protocolExpression.append(" or ").append(protocol);
                 protocol = "";
             } else {
                 protocolExpression.append(protocol);
@@ -130,7 +134,7 @@ public class FilterFrame {
         if (tcpCheckBox.isSelected()) {
             protocol = "tcp";
             if (!protocolExpression.toString().equals("")) {
-                protocolExpression.append(" and ").append(protocol);
+                protocolExpression.append(" or ").append(protocol);
                 protocol = "";
             } else {
                 protocolExpression.append(protocol);
@@ -140,7 +144,7 @@ public class FilterFrame {
         if (udpCheckBox.isSelected()) {
             protocol = "udp";
             if (!protocolExpression.toString().equals("")) {
-                protocolExpression.append(" and ").append(protocol);
+                protocolExpression.append(" or ").append(protocol);
                 protocol = "";
             } else {
                 protocolExpression.append(protocol);
@@ -150,7 +154,7 @@ public class FilterFrame {
         if (httpCheckBox.isSelected()) {
             protocol = "http";
             if (!protocolExpression.toString().equals("")) {
-                protocolExpression.append(" and ").append(protocol);
+                protocolExpression.append(" or ").append(protocol);
             } else {
                 protocolExpression.append(protocol);
             }
@@ -169,23 +173,28 @@ public class FilterFrame {
             if (expression.equals("")) {
                 expression = protocolExpression.toString();
             } else {
-                expression = expression + " and " + protocolExpression.toString();
+                expression = expression + " or " + protocolExpression.toString();
             }
         }
         System.out.println(expression);
         if (PcapUtils.filter(expression, PcapUtils.pcap)) {
             System.out.println("过滤器加载成功");
+            return true;
         } else {
             System.out.println("过滤器加载失败");
+            return false;
         }
     }
 
-    private void doExpressionFilter() {
-        String expression = expressionComboBox.getSelectedItem().toString().trim();
+    private boolean doExpressionFilter() {
+        String expression = expressionComboBox.getEditor().getItem().toString().trim();
+        System.out.println(expression);
         if (PcapUtils.filter(expression, PcapUtils.pcap)) {
             System.out.println("过滤器加载成功");
+            return true;
         } else {
             System.out.println("过滤器加载失败");
+            return false;
         }
     }
 

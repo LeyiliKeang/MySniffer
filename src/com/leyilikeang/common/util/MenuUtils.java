@@ -49,7 +49,8 @@ public class MenuUtils {
                         fileChooser.setFileHidingEnabled(true);
                         fileChooser.setAcceptAllFileFilterUsed(false);
                         fileChooser.setFileFilter(new MyFileFilter("cap", "MySniffer(*.cap)"));
-                        int result = fileChooser.showOpenDialog(null);
+                        fileChooser.setFileFilter(new MyFileFilter("pcap", "MySniffer(*.pcap)"));
+                        int result = fileChooser.showOpenDialog(mainFrame.getContentPane());
                         if (JFileChooser.APPROVE_OPTION == result) {
                             System.out.println(fileChooser.getSelectedFile().getPath());
                             FileUtils.openFile = fileChooser.getSelectedFile().getPath();
@@ -78,7 +79,7 @@ public class MenuUtils {
                         fileChooser.setFileHidingEnabled(true);
                         fileChooser.setAcceptAllFileFilterUsed(false);
                         fileChooser.setFileFilter(new MyFileFilter("cap", "MySniffer(*.cap)"));
-                        int result = fileChooser.showSaveDialog(null);
+                        int result = fileChooser.showSaveDialog(mainFrame.getContentPane());
                         if (JFileChooser.APPROVE_OPTION == result) {
                             String path = fileChooser.getSelectedFile().getPath();
                             FileService fileService = new FileService();
@@ -107,7 +108,7 @@ public class MenuUtils {
                         fileChooser.setFileHidingEnabled(true);
                         fileChooser.setAcceptAllFileFilterUsed(false);
                         fileChooser.setFileFilter(new MyFileFilter("cap", "MySniffer(*.cap)"));
-                        int result = fileChooser.showSaveDialog(null);
+                        int result = fileChooser.showSaveDialog(mainFrame.getContentPane());
                         if (JFileChooser.APPROVE_OPTION == result) {
                             System.out.println(fileChooser.getSelectedFile().getPath());
                         }

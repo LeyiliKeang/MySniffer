@@ -29,6 +29,8 @@ public class DevsFrame {
     private JButton useDevButton;
     private JTree devTree;
     private JScrollPane devTreeScrollPane;
+    private JList list1;
+    private JButton 打开Button;
 
 
     private Window devsFrame;

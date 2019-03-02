@@ -35,20 +35,18 @@ public class FileService {
         mainFrame.getDefaultTableModel().setRowCount(0);
         PacketUtils.capClear();
         final Pcap pcap = PcapUtils.readOffline(FileUtils.openFile);
-        PcapBpfProgram filter = new PcapBpfProgram();
-        int optimize = 0;
-        int netmask = 0;
-        int r = pcap.compile(filter, expression, optimize, netmask);
-        if (r != Pcap.OK) {
-            return;
+        if (PcapUtils.filter(expression, pcap)) {
+            System.out.println("过滤器加载成功");
+        } else {
+            System.out.println("过滤器加载失败");
         }
-        pcap.setFilter(filter);
         final MyPacketHandler packetHandler = new MyPacketHandler(mainFrame);
         new Thread(new Runnable() {
             @Override
             public void run() {
                 pcap.loop(-1, packetHandler, "likang");
                 pcap.close();
+                PacketUtils.protocolType = null;
             }
         }).start();
     }

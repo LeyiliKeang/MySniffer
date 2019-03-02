@@ -2,6 +2,7 @@ package com.leyilikeang;
 
 import com.leyilikeang.ui.DevsFrame;
 import com.leyilikeang.ui.MainFrame;
+import sun.awt.image.ToolkitImage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,6 +37,7 @@ public class Run {
 //                devsFrame.setVisible(true);
 
                 JFrame mainFrame = new JFrame("MySniffer");
+                mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("imgs/icon.png"));
                 MainFrame main = new MainFrame(mainFrame);
                 main.getDevsFrame().setMainFrame(main);
                 mainFrame.setContentPane(main.getContentPane());

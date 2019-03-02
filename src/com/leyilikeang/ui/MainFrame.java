@@ -144,8 +144,8 @@ public class MainFrame {
         applyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String expression = expressionComboBox.getSelectedItem().toString().trim();
-                expression = ((expression == null) ? "" : expression);
+                String expression = expressionComboBox.getEditor().getItem().toString().trim();
+                System.out.println(expression);
                 if (FileUtils.openFile == null) {
                     FileUtils.openFile = FileUtils.tempFile;
                 }
