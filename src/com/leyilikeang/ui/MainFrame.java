@@ -275,6 +275,8 @@ public class MainFrame {
         isReady = false;
         this.rightPane.setVisible(false);
         this.leftPane.setVisible(true);
+        devsFrame.recent();
+        devsFrame.refreshDevs();
     }
 
     public CaptureService getCaptureService() {

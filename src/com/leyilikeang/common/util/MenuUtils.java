@@ -11,6 +11,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.lang.management.GarbageCollectorMXBean;
 
 /**
  * @author likang
@@ -59,6 +61,11 @@ public class MenuUtils {
                         if (JFileChooser.APPROVE_OPTION == result) {
                             System.out.println(fileChooser.getSelectedFile().getPath());
                             FileUtils.openFile = fileChooser.getSelectedFile().getPath();
+                            try {
+                                new FileUtils().writeRecent(FileUtils.openFile, false);
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
                             FileService fileService = new FileService();
                             fileService.open(mainFrame, "");
                         }
@@ -90,6 +97,11 @@ public class MenuUtils {
                         int result = fileChooser.showSaveDialog(mainFrame.getContentPane());
                         if (JFileChooser.APPROVE_OPTION == result) {
                             String path = fileChooser.getSelectedFile().getPath();
+                            try {
+                                new FileUtils().writeRecent(path, false);
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
                             FileService fileService = new FileService();
                             fileService.save(path);
                         }
@@ -121,6 +133,11 @@ public class MenuUtils {
                         fileChooser.setFileFilter(new MyFileFilter("cap", "MySniffer(*.cap)"));
                         int result = fileChooser.showSaveDialog(mainFrame.getContentPane());
                         if (JFileChooser.APPROVE_OPTION == result) {
+//                            try {
+//                                new FileUtils().writeRecent(path, false);
+//                            } catch (IOException ex) {
+//                                ex.printStackTrace();
+//                            }
                             System.out.println(fileChooser.getSelectedFile().getPath());
                         }
                     }
