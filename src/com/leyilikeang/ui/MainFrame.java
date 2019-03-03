@@ -263,6 +263,10 @@ public class MainFrame {
         return devsFrame;
     }
 
+    public JFrame getMainFrame() {
+        return mainFrame;
+    }
+
     public void ready() {
         isDevs = false;
         isReady = true;

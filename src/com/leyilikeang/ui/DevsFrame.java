@@ -17,6 +17,7 @@ import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
@@ -159,8 +160,20 @@ public class DevsFrame {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                FileService fileService = new FileService();
-                fileService.open(mainFrame, "");
+                File file = new File(FileUtils.openFile);
+                if (file.exists()) {
+                    FileService fileService = new FileService();
+                    fileService.open(mainFrame, "");
+                } else {
+                    JOptionPane.showMessageDialog(mainFrame.getMainFrame(),
+                            "文件已不存在", "提示", JOptionPane.WARNING_MESSAGE);
+                    try {
+                        new FileUtils().deleteRecent(FileUtils.openFile);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    recent();
+                }
             }
         });
     }

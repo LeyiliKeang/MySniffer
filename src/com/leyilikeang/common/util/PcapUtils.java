@@ -82,7 +82,7 @@ public class PcapUtils {
     }
 
     public static Pcap saveOffline() {
-        PcapIf device = alldevs.get(index);
+        PcapIf device = alldevs.get(0);
         int snaplen = 64 * 1024;
         int flags = Pcap.MODE_PROMISCUOUS;
         int timeout = 10 * 1000;

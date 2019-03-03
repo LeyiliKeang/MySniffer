@@ -4,6 +4,7 @@ import com.leyilikeang.service.CaptureService;
 import com.leyilikeang.service.FileService;
 import com.leyilikeang.ui.DevsFrame;
 import com.leyilikeang.ui.MainFrame;
+import com.leyilikeang.ui.PacketFrame;
 import sun.applet.Main;
 
 import javax.swing.*;
@@ -90,7 +91,7 @@ public class MenuUtils {
 //                        fileChooser.setCurrentDirectory(new File("."));
                         fileChooser.setSelectedFile(new File("packet.cap"));
                         fileChooser.setMultiSelectionEnabled(false);
-                        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
                         fileChooser.setFileHidingEnabled(true);
                         fileChooser.setAcceptAllFileFilterUsed(false);
                         fileChooser.setFileFilter(new MyFileFilter("cap", "MySniffer(*.cap)"));
@@ -103,7 +104,7 @@ public class MenuUtils {
                                 ex.printStackTrace();
                             }
                             FileService fileService = new FileService();
-                            fileService.save(path);
+                            fileService.save(path, true);
                         }
                     }
                 });
@@ -123,23 +124,13 @@ public class MenuUtils {
                 EventQueue.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        JFileChooser fileChooser = new JFileChooser();
-//                        fileChooser.setCurrentDirectory(new File("."));
-                        fileChooser.setSelectedFile(new File("packet.cap"));
-                        fileChooser.setMultiSelectionEnabled(false);
-                        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-                        fileChooser.setFileHidingEnabled(true);
-                        fileChooser.setAcceptAllFileFilterUsed(false);
-                        fileChooser.setFileFilter(new MyFileFilter("cap", "MySniffer(*.cap)"));
-                        int result = fileChooser.showSaveDialog(mainFrame.getContentPane());
-                        if (JFileChooser.APPROVE_OPTION == result) {
-//                            try {
-//                                new FileUtils().writeRecent(path, false);
-//                            } catch (IOException ex) {
-//                                ex.printStackTrace();
-//                            }
-                            System.out.println(fileChooser.getSelectedFile().getPath());
-                        }
+                        JDialog dialog = new JDialog(mainFrame.getMainFrame(), "选择另存为", true);
+                        dialog.setContentPane(new PacketFrame(mainFrame, dialog).getContentPane());
+                        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                        Rectangle rectangle = mainFrame.getContentPane().getBounds();
+                        dialog.setBounds(rectangle);
+                        dialog.setLocationRelativeTo(mainFrame.getContentPane());
+                        dialog.setVisible(true);
                     }
                 });
             }

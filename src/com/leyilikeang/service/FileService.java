@@ -5,6 +5,7 @@ import com.leyilikeang.common.util.FileUtils;
 import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.common.util.PcapUtils;
 import com.leyilikeang.ui.MainFrame;
+import com.leyilikeang.ui.PacketFrame;
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapBpfProgram;
 import org.jnetpcap.PcapDumper;
@@ -21,11 +22,18 @@ import java.io.File;
  */
 public class FileService {
 
-    public void save(String path) {
+    public void save(String path, boolean saveAll) {
         Pcap pcap = PcapUtils.saveOffline();
         PcapDumper dumper = pcap.dumpOpen(path);
-        for (PcapPacket packet : PacketUtils.allPackets) {
-            dumper.dump(packet);
+        if (saveAll) {
+            for (PcapPacket packet : PacketUtils.allPackets) {
+                dumper.dump(packet);
+            }
+        } else {
+            for (PcapPacket packet : PacketUtils.savePackets) {
+                dumper.dump(packet);
+            }
+            PacketUtils.savePackets.clear();
         }
         File file = new File(path);
         dumper.close();

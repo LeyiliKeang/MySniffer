@@ -57,6 +57,20 @@ public class FileUtils {
         }
     }
 
+    public void deleteRecent(String path) throws IOException {
+        ArrayList<String> arrayList = readRecent();
+        if (arrayList.contains(path)) {
+            arrayList.remove(path);
+            BufferedWriter bufferedWriter = new BufferedWriter(
+                    new OutputStreamWriter(new FileOutputStream("files/recent.txt", false)));
+            for (String str : arrayList) {
+                bufferedWriter.write(str);
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.close();
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         FileUtils fileUtils = new FileUtils();
 //        fileUtils.readRecent();
