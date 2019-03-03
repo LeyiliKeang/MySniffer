@@ -14,6 +14,7 @@ import java.io.File;
  * @date 2018/9/7 22:01
  */
 public class CaptureService {
+    public static boolean isStart = false;
 
     public void capture(MainFrame mainFrame) {
         final MyPacketHandler<PcapDumper> packetHandler = new MyPacketHandler<PcapDumper>(mainFrame);
@@ -23,6 +24,7 @@ public class CaptureService {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                isStart = true;
                 PcapUtils.pcap.loop(-1, packetHandler, dumper);
                 File file = new File(FileUtils.tempFile);
                 dumper.close();
@@ -31,6 +33,7 @@ public class CaptureService {
     }
 
     public void stop() {
+        isStart = false;
         PcapUtils.pcap.close();
         PcapUtils.useDev();
         PacketUtils.protocolType = null;

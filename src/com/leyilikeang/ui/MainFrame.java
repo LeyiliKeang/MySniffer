@@ -56,6 +56,12 @@ public class MainFrame {
 
     private Timer timer;
 
+    public static boolean isReady = false;
+
+    public static boolean isDevs = true;
+
+    public static boolean isFilter = false;
+
     public MainFrame(JFrame mainFrame) {
         this();
         this.mainFrame = mainFrame;
@@ -64,6 +70,7 @@ public class MainFrame {
     public MainFrame() {
         expressionComboBox.setSelectedIndex(-1);
         rightPane.setVisible(false);
+        captureButton.setEnabled(false);
         stopButton.setEnabled(false);
         defaultTableModel = new DefaultTableModel() {
             @Override
@@ -145,6 +152,16 @@ public class MainFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String expression = expressionComboBox.getEditor().getItem().toString().trim();
+                if (isFilter) {
+                    expression = "";
+                    isFilter = false;
+                    applyButton.setText("应用");
+                    expressionComboBox.setEnabled(true);
+                } else {
+                    if (expression.equals("")) {
+                        return;
+                    }
+                }
                 System.out.println(expression);
                 if (FileUtils.openFile == null) {
                     FileUtils.openFile = FileUtils.tempFile;
@@ -158,40 +175,40 @@ public class MainFrame {
         fileButton.setMnemonic('F');
         // 按下Alt键时第四个字符带有下划线
         fileButton.setDisplayedMnemonicIndex(3);
-        final JPopupMenu fileMenu = MenuUtils.getFileMenu(this);
         fileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                JPopupMenu fileMenu = MenuUtils.getFileMenu(MainFrame.this);
                 fileMenu.show(fileButton, 0, fileButton.getHeight());
             }
         });
 
         lookOverButton.setMnemonic('L');
         lookOverButton.setDisplayedMnemonicIndex(3);
-        final JPopupMenu lookOverMenu = MenuUtils.getLookOverMenu();
         lookOverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                JPopupMenu lookOverMenu = MenuUtils.getLookOverMenu();
                 lookOverMenu.show(lookOverButton, 0, lookOverButton.getHeight());
             }
         });
 
         capButton.setMnemonic('C');
         capButton.setDisplayedMnemonicIndex(3);
-        final JPopupMenu capMenu = MenuUtils.getCapMenu(this);
         capButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                JPopupMenu capMenu = MenuUtils.getCapMenu(MainFrame.this);
                 capMenu.show(capButton, 0, capButton.getHeight());
             }
         });
 
         toolButton.setMnemonic('T');
         toolButton.setDisplayedMnemonicIndex(3);
-        final JPopupMenu toolsMenu = MenuUtils.getToolsMenu();
         toolButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                JPopupMenu toolsMenu = MenuUtils.getToolsMenu();
                 toolsMenu.show(toolButton, 0, toolButton.getHeight());
             }
         });
@@ -199,24 +216,28 @@ public class MainFrame {
         fileButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
+                JPopupMenu fileMenu = MenuUtils.getFileMenu(MainFrame.this);
                 fileMenu.show(fileButton, 0, fileButton.getHeight());
             }
         });
         lookOverButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
+                JPopupMenu lookOverMenu = MenuUtils.getLookOverMenu();
                 lookOverMenu.show(lookOverButton, 0, lookOverButton.getHeight());
             }
         });
         capButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
+                JPopupMenu capMenu = MenuUtils.getCapMenu(MainFrame.this);
                 capMenu.show(capButton, 0, capButton.getHeight());
             }
         });
         toolButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
+                JPopupMenu toolsMenu = MenuUtils.getToolsMenu();
                 toolsMenu.show(toolButton, 0, toolButton.getHeight());
             }
         });
@@ -243,11 +264,15 @@ public class MainFrame {
     }
 
     public void ready() {
+        isDevs = false;
+        isReady = true;
         this.leftPane.setVisible(false);
         this.rightPane.setVisible(true);
     }
 
     public void devs() {
+        isDevs = true;
+        isReady = false;
         this.rightPane.setVisible(false);
         this.leftPane.setVisible(true);
     }
@@ -266,5 +291,21 @@ public class MainFrame {
 
     public void setTimer(Timer timer) {
         this.timer = timer;
+    }
+
+    public JButton getCaptureButton() {
+        return captureButton;
+    }
+
+    public JButton getStopButton() {
+        return stopButton;
+    }
+
+    public JButton getApplyButton() {
+        return applyButton;
+    }
+
+    public JComboBox getExpressionComboBox() {
+        return expressionComboBox;
     }
 }

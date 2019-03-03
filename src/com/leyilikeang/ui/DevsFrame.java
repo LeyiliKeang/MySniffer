@@ -120,25 +120,10 @@ public class DevsFrame {
         useDevButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                if (PcapUtils.index == null) {
-//                    PcapUtils.index = index;
-//                    PcapUtils.useDev();
-//                    EventQueue.invokeLater(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            JFrame mainFrame = new JFrame("MySniffer");
-//                            mainFrame.setContentPane(new MainFrame(mainFrame).getContentPane());
-//                            mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//                            mainFrame.pack();
-//                            mainFrame.setLocationRelativeTo(null);
-//                            mainFrame.setVisible(true);
-//                        }
-//                    });
-//                } else {
                     PcapUtils.index = index;
                     PcapUtils.useDev();
                     mainFrame.ready();
-//                }
+                    mainFrame.getCaptureButton().setEnabled(true);
             }
         });
     }

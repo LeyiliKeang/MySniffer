@@ -1,8 +1,10 @@
 package com.leyilikeang.common.util;
 
+import com.leyilikeang.service.CaptureService;
 import com.leyilikeang.service.FileService;
 import com.leyilikeang.ui.DevsFrame;
 import com.leyilikeang.ui.MainFrame;
+import sun.applet.Main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,6 +34,9 @@ public class MenuUtils {
         JPopupMenu popupMenu = new JPopupMenu();
 
         JMenuItem openMenuItem = new JMenuItem("打开");
+        if (CaptureService.isStart) {
+            openMenuItem.setEnabled(false);
+        }
         // 设置快捷键为 Ctrl + O
         openMenuItem.setAccelerator(KeyStroke.getKeyStroke("control O"));
         openMenuItem.addActionListener(new ActionListener() {
@@ -64,6 +69,9 @@ public class MenuUtils {
         popupMenu.add(openMenuItem);
 
         JMenuItem saveMenuItem = new JMenuItem("另存为");
+        if (CaptureService.isStart || MainFrame.isDevs) {
+            saveMenuItem.setEnabled(false);
+        }
         saveMenuItem.setAccelerator(KeyStroke.getKeyStroke("control S"));
         saveMenuItem.addActionListener(new ActionListener() {
             @Override
@@ -92,6 +100,9 @@ public class MenuUtils {
         popupMenu.add(saveMenuItem);
 
         JMenuItem selectSaveMenuItem = new JMenuItem("选择另存为");
+        if (CaptureService.isStart || MainFrame.isDevs) {
+            selectSaveMenuItem.setEnabled(false);
+        }
         selectSaveMenuItem.setAccelerator(KeyStroke.getKeyStroke("control shift S"));
         selectSaveMenuItem.addActionListener(new ActionListener() {
             @Override
@@ -118,6 +129,21 @@ public class MenuUtils {
         });
         popupMenu.add(selectSaveMenuItem);
 
+        JMenuItem closeMenuItem = new JMenuItem("关闭");
+        if (CaptureService.isStart || mainFrame.isDevs) {
+            closeMenuItem.setEnabled(false);
+        }
+        closeMenuItem.setAccelerator(KeyStroke.getKeyStroke("control W"));
+        closeMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PacketUtils.capClear();
+                mainFrame.getDefaultTableModel().setRowCount(0);
+                mainFrame.devs();
+            }
+        });
+        popupMenu.add(closeMenuItem);
+
         JMenuItem exitMenuItem = new JMenuItem("退出");
         exitMenuItem.setAccelerator(KeyStroke.getKeyStroke("control Q"));
         exitMenuItem.addActionListener(new ActionListener() {
@@ -141,6 +167,9 @@ public class MenuUtils {
         JPopupMenu popupMenu = new JPopupMenu();
 
         JMenuItem jumpToMenuItem = new JMenuItem("跳转");
+        if (CaptureService.isStart || MainFrame.isDevs) {
+            jumpToMenuItem.setEnabled(false);
+        }
         jumpToMenuItem.setAccelerator(KeyStroke.getKeyStroke("control J"));
         jumpToMenuItem.addActionListener(new ActionListener() {
             @Override
@@ -151,6 +180,9 @@ public class MenuUtils {
         popupMenu.add(jumpToMenuItem);
 
         JMenuItem statisticsMenuItem = new JMenuItem("统计");
+        if (MainFrame.isDevs) {
+            statisticsMenuItem.setEnabled(false);
+        }
         statisticsMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -172,12 +204,17 @@ public class MenuUtils {
         JPopupMenu popupMenu = new JPopupMenu();
 
         JMenuItem ruleMenuItem = new JMenuItem("切换网卡");
+        if (CaptureService.isStart || MainFrame.isDevs) {
+            ruleMenuItem.setEnabled(false);
+        }
         ruleMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 EventQueue.invokeLater(new Runnable() {
                     @Override
                     public void run() {
+                        PacketUtils.capClear();
+                        mainFrame.getDefaultTableModel().setRowCount(0);
                         mainFrame.devs();
                     }
                 });
@@ -185,23 +222,34 @@ public class MenuUtils {
         });
         popupMenu.add(ruleMenuItem);
 
-        JMenuItem simpleFilter = new JMenuItem("筛选");
-        simpleFilter.addActionListener(new ActionListener() {
+        JMenuItem capture = new JMenuItem("捕获");
+        capture.setEnabled(false);
+        if (PcapUtils.index != null && MainFrame.isReady) {
+            capture.setEnabled(true);
+        }
+        if (CaptureService.isStart) {
+            capture.setEnabled(false);
+        }
+        capture.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("筛选");
+                mainFrame.getCaptureButton().doClick();
             }
         });
-        popupMenu.add(simpleFilter);
+        popupMenu.add(capture);
 
-        JMenuItem expressionFilter = new JMenuItem("表达式筛选");
-        expressionFilter.addActionListener(new ActionListener() {
+        JMenuItem stopCapture = new JMenuItem("停止");
+        stopCapture.setEnabled(false);
+        if (CaptureService.isStart) {
+            stopCapture.setEnabled(true);
+        }
+        stopCapture.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("表达式筛选");
+                mainFrame.getStopButton().doClick();
             }
         });
-        popupMenu.add(expressionFilter);
+        popupMenu.add(stopCapture);
 
         return popupMenu;
     }
@@ -217,6 +265,10 @@ public class MenuUtils {
         JPopupMenu popupMenu = new JPopupMenu();
 
         JMenuItem scanMenuItem = new JMenuItem("扫描");
+        scanMenuItem.setEnabled(false);
+        if (PcapUtils.index != null && MainFrame.isReady) {
+            scanMenuItem.setEnabled(true);
+        }
         scanMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -226,6 +278,10 @@ public class MenuUtils {
         popupMenu.add(scanMenuItem);
 
         JMenuItem arpMenuItem = new JMenuItem("ARP欺骗");
+        arpMenuItem.setEnabled(false);
+        if (PcapUtils.index != null && MainFrame.isReady) {
+            arpMenuItem.setEnabled(true);
+        }
         arpMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

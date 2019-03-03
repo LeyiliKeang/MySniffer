@@ -39,9 +39,6 @@ public class FilterFrame {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-                dialog.dispose();
-
                 boolean isStart = false;
 
                 if (tabbedPane.getSelectedIndex() == 0) {
@@ -53,6 +50,8 @@ public class FilterFrame {
                 }
 
                 if (isStart) {
+                    dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                    dialog.dispose();
                     PacketUtils.capClear();
                     mainFrame.getDefaultTableModel().setRowCount(0);
                     mainFrame.getCaptureService().capture(mainFrame);
@@ -78,6 +77,8 @@ public class FilterFrame {
                     timer.schedule(task, 1, 1);
                     timer.schedule(task1, 1, 1000);
                     mainFrame.setTimer(timer);
+                } else {
+                    JOptionPane.showMessageDialog(dialog, "过滤器设置失败", "提示", JOptionPane.WARNING_MESSAGE);
                 }
             }
         });

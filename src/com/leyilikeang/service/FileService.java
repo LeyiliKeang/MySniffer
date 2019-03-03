@@ -10,7 +10,9 @@ import org.jnetpcap.PcapBpfProgram;
 import org.jnetpcap.PcapDumper;
 import org.jnetpcap.packet.PcapPacket;
 import org.jnetstream.capture.CapturePacket;
+import sun.applet.Main;
 
+import javax.swing.*;
 import java.io.File;
 
 /**
@@ -32,13 +34,25 @@ public class FileService {
 
     // TODO : 打开时检查是否有过滤，赋值expression
     public void open(MainFrame mainFrame, String expression) {
+        if (MainFrame.isDevs) {
+            mainFrame.ready();
+        }
+        final Pcap pcap = PcapUtils.readOffline(FileUtils.openFile);
+        if (!expression.equals("")) {
+            if (PcapUtils.filter(expression, pcap)) {
+                System.out.println("筛选器加载成功");
+                MainFrame.isFilter = true;
+            } else {
+                System.out.println("筛选器加载失败");
+                JOptionPane.showMessageDialog(mainFrame.getContentPane(), "筛选器加载失败", "提示", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        }
         mainFrame.getDefaultTableModel().setRowCount(0);
         PacketUtils.capClear();
-        final Pcap pcap = PcapUtils.readOffline(FileUtils.openFile);
-        if (PcapUtils.filter(expression, pcap)) {
-            System.out.println("过滤器加载成功");
-        } else {
-            System.out.println("过滤器加载失败");
+        if (MainFrame.isFilter) {
+            mainFrame.getApplyButton().setText("取消");
+            mainFrame.getExpressionComboBox().setEnabled(false);
         }
         final MyPacketHandler packetHandler = new MyPacketHandler(mainFrame);
         new Thread(new Runnable() {

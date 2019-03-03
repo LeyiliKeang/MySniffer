@@ -45,6 +45,7 @@ public class PcapUtils {
     }
 
     public static boolean filter(String expression, Pcap pcap) {
+        expression = expression.toLowerCase();
         PcapBpfProgram filter = new PcapBpfProgram();
         int optimize = 0;
         int netmask = 0;
