@@ -2,10 +2,7 @@ package com.leyilikeang.common.util;
 
 import com.leyilikeang.service.CaptureService;
 import com.leyilikeang.service.FileService;
-import com.leyilikeang.ui.DevsFrame;
-import com.leyilikeang.ui.MainFrame;
-import com.leyilikeang.ui.PacketFrame;
-import com.leyilikeang.ui.StatisticsFrame;
+import com.leyilikeang.ui.*;
 import com.sun.corba.se.impl.protocol.JIDLLocalCRDImpl;
 import sun.applet.Main;
 
@@ -149,7 +146,6 @@ public class MenuUtils {
         closeMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainFrame.getStatisticsFrame().reset();
                 PacketUtils.capClear();
                 mainFrame.getDefaultTableModel().setRowCount(0);
                 mainFrame.devs();
@@ -179,15 +175,24 @@ public class MenuUtils {
     public static JPopupMenu getLookOverMenu(final MainFrame mainFrame) {
         JPopupMenu popupMenu = new JPopupMenu();
 
-        JMenuItem jumpToMenuItem = new JMenuItem("跳转");
-        if (CaptureService.isStart || MainFrame.isDevs) {
+        final JMenuItem jumpToMenuItem = new JMenuItem("跳转");
+        if (CaptureService.isStart || MainFrame.isDevs || mainFrame.getJumpToDialog().isVisible()) {
             jumpToMenuItem.setEnabled(false);
         }
         jumpToMenuItem.setAccelerator(KeyStroke.getKeyStroke("control J"));
         jumpToMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("跳转");
+                jumpToMenuItem.setEnabled(false);
+                JumpToFrame.isOpen = true;
+                JDialog dialog = mainFrame.getJumpToDialog();
+                dialog.setResizable(false);
+                dialog.pack();
+                Rectangle rectangle = mainFrame.getMainFrame().getBounds();
+                dialog.setBounds(rectangle.x + rectangle.width - dialog.getWidth() - 5,
+                        rectangle.y + rectangle.height - dialog.getHeight() - 280,
+                        dialog.getWidth(), dialog.getHeight());
+                dialog.setVisible(true);
             }
         });
         popupMenu.add(jumpToMenuItem);
@@ -203,14 +208,15 @@ public class MenuUtils {
                     @Override
                     public void run() {
                         statisticsMenuItem.setEnabled(false);
-                        JDialog statisticsDialog = mainFrame.getStatisticsDialog();
-                        statisticsDialog.setAlwaysOnTop(true);
-                        statisticsDialog.pack();
+                        StatisticsFrame.isOpen = true;
+                        JDialog dialog = mainFrame.getStatisticsDialog();
+                        dialog.setResizable(false);
+                        dialog.pack();
                         Rectangle rectangle = mainFrame.getMainFrame().getBounds();
-                        statisticsDialog.setBounds(rectangle.x + rectangle.width - statisticsDialog.getWidth(),
-                                rectangle.y + rectangle.height - statisticsDialog.getHeight() - 30,
-                                statisticsDialog.getWidth(), statisticsDialog.getHeight());
-                        statisticsDialog.setVisible(true);
+                        dialog.setBounds(rectangle.x + rectangle.width - dialog.getWidth() - 5,
+                                rectangle.y + rectangle.height - dialog.getHeight() - 40,
+                                dialog.getWidth(), dialog.getHeight());
+                        dialog.setVisible(true);
                     }
                 });
             }
@@ -239,7 +245,6 @@ public class MenuUtils {
                 EventQueue.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        mainFrame.getStatisticsFrame().reset();
                         PacketUtils.capClear();
                         mainFrame.getDefaultTableModel().setRowCount(0);
                         mainFrame.devs();

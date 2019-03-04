@@ -24,6 +24,8 @@ public class StatisticsFrame {
     private JLabel ipv6Label;
     private JLabel icmpLabel;
 
+    public static boolean isOpen = false;
+
     public StatisticsFrame(MainFrame mainFrame) {
         mainFrame.setStatisticsFrame(this);
     }

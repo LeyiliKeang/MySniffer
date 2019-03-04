@@ -5,7 +5,9 @@ import com.leyilikeang.common.util.FileUtils;
 import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.common.util.PcapUtils;
 import com.leyilikeang.ui.MainFrame;
+import com.sun.media.sound.SoftMainMixer;
 import org.jnetpcap.PcapDumper;
+import sun.applet.Main;
 
 import java.io.File;
 
@@ -16,7 +18,7 @@ import java.io.File;
 public class CaptureService {
     public static boolean isStart = false;
 
-    public void capture(MainFrame mainFrame) {
+    public void capture(final MainFrame mainFrame) {
         final MyPacketHandler<PcapDumper> packetHandler = new MyPacketHandler<PcapDumper>(mainFrame);
 
         final PcapDumper dumper = PcapUtils.pcap.dumpOpen(FileUtils.tempFile);
@@ -25,9 +27,11 @@ public class CaptureService {
             @Override
             public void run() {
                 isStart = true;
+                mainFrame.getJumpToDialog().setEnabled(false);
                 PcapUtils.pcap.loop(-1, packetHandler, dumper);
                 File file = new File(FileUtils.tempFile);
                 dumper.close();
+                mainFrame.getJumpToDialog().setEnabled(true);
             }
         }).start();
     }

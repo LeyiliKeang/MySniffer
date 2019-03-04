@@ -41,7 +41,7 @@ public class FileService {
     }
 
     // TODO : 打开时检查是否有过滤，赋值expression
-    public void open(MainFrame mainFrame, String expression) {
+    public void open(final MainFrame mainFrame, String expression) {
         if (MainFrame.isDevs) {
             mainFrame.ready();
         }
@@ -66,8 +66,12 @@ public class FileService {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                CaptureService.isStart = true;
+                mainFrame.getJumpToDialog().setEnabled(false);
                 pcap.loop(-1, packetHandler, "likang");
                 pcap.close();
+                CaptureService.isStart = false;
+                mainFrame.getJumpToDialog().setEnabled(true);
                 PacketUtils.protocolType = null;
             }
         }).start();

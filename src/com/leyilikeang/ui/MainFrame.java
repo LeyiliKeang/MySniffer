@@ -49,7 +49,11 @@ public class MainFrame {
 
     private JDialog statisticsDialog;
 
+    private JDialog jumpToDialog;
+
     private StatisticsFrame statisticsFrame;
+
+    private JumpToFrame jumpToFrame;
 
     private CaptureService captureService = new CaptureService();
 
@@ -63,20 +67,33 @@ public class MainFrame {
 
     public static boolean isFilter = false;
 
-
-
-    private int i = 0;
-
     public MainFrame(JFrame mainFrame) {
         this();
         this.mainFrame = mainFrame;
-    }
-
-    public MainFrame() {
         statisticsDialog = new JDialog(mainFrame, "统计", false);
         statisticsDialog.setContentPane(new StatisticsFrame(this).getContentPane());
         statisticsDialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+        statisticsDialog.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                StatisticsFrame.isOpen = false;
+            }
+        });
 
+        jumpToDialog = new JDialog(mainFrame, "跳转", false);
+        jumpToDialog.setContentPane(new JumpToFrame(this).getContentPane());
+        jumpToDialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+        jumpToDialog.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                JumpToFrame.isOpen = false;
+            }
+        });
+    }
+
+    public MainFrame() {
         expressionComboBox.setSelectedIndex(-1);
         rightPane.setVisible(false);
         captureButton.setEnabled(false);
@@ -292,6 +309,13 @@ public class MainFrame {
         isReady = true;
         this.leftPane.setVisible(false);
         this.rightPane.setVisible(true);
+        if (StatisticsFrame.isOpen) {
+            statisticsDialog.setVisible(true);
+        }
+
+        if (JumpToFrame.isOpen) {
+            jumpToDialog.setVisible(true);
+        }
     }
 
     public void devs() {
@@ -299,6 +323,14 @@ public class MainFrame {
         isReady = false;
         this.rightPane.setVisible(false);
         this.leftPane.setVisible(true);
+        statisticsFrame.reset();
+        jumpToFrame.reset();
+        if (statisticsDialog.isVisible()) {
+            statisticsDialog.setVisible(false);
+        }
+        if (jumpToDialog.isVisible()) {
+            jumpToDialog.setVisible(false);
+        }
         devsFrame.recent();
         devsFrame.refreshDevs();
     }
@@ -335,8 +367,16 @@ public class MainFrame {
         return expressionComboBox;
     }
 
+    public JTable getPacketTable() {
+        return packetTable;
+    }
+
     public void setStatisticsFrame(StatisticsFrame statisticsFrame) {
         this.statisticsFrame = statisticsFrame;
+    }
+
+    public void setJumpToFrame(JumpToFrame jumpToFrame) {
+        this.jumpToFrame = jumpToFrame;
     }
 
     public StatisticsFrame getStatisticsFrame() {
@@ -345,5 +385,9 @@ public class MainFrame {
 
     public JDialog getStatisticsDialog() {
         return statisticsDialog;
+    }
+
+    public JDialog getJumpToDialog() {
+        return jumpToDialog;
     }
 }

@@ -98,11 +98,13 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
                 this.protocol = ConstantUtils.Protocol.ARP.getValue();
             }
             if (packet.hasHeader(this.ip4)) {
+                PacketUtils.ip4Amount++;
                 this.sourceIp = FormatUtils.ip(this.ip4.source());
                 this.destinationIp = FormatUtils.ip(this.ip4.destination());
                 this.protocol = ConstantUtils.Protocol.IPv4.getValue();
             }
             if (packet.hasHeader(this.ip6)) {
+                PacketUtils.ip6Amount++;
                 this.sourceIp = FormatUtils.ip(this.ip6.source());
                 this.destinationIp = FormatUtils.ip(this.ip6.destination());
                 this.protocol = ConstantUtils.Protocol.IPv6.getValue();
@@ -113,19 +115,17 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
             } else if (packet.hasHeader(this.tcp)) {
                 this.sourcePort = this.tcp.source();
                 this.destinationPort = this.tcp.destination();
-                if (53 == this.sourcePort || 53 == this.destinationPort) {
-                    PacketUtils.dnsAmount++;
-                    this.protocol = ConstantUtils.Protocol.DNS.getValue();
-                } else if (packet.hasHeader(this.http)) {
+                PacketUtils.tcpAmount++;
+                if (packet.hasHeader(this.http)) {
                     PacketUtils.httpAmount++;
                     this.protocol = ConstantUtils.Protocol.HTTP.getValue();
                 } else {
-                    PacketUtils.tcpAmount++;
                     this.protocol = ConstantUtils.Protocol.TCP.getValue();
                 }
             } else if (packet.hasHeader(this.udp)) {
                 this.sourcePort = this.udp.source();
                 this.destinationPort = this.udp.destination();
+                PacketUtils.udpAmount++;
                 if (53 == this.sourcePort || 53 == this.destinationPort) {
                     PacketUtils.dnsAmount++;
                     this.protocol = ConstantUtils.Protocol.DNS.getValue();
@@ -136,7 +136,6 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
                     PacketUtils.sdpAmount++;
                     this.protocol = ConstantUtils.Protocol.SDP.getValue();
                 } else {
-                    PacketUtils.udpAmount++;
                     this.protocol = ConstantUtils.Protocol.UDP.getValue();
                 }
             }
