@@ -26,7 +26,7 @@ public class Forward {
         final String sourceIp = "192.168.0.10";
 
         PcapUtils.getAllDevs();
-        PcapUtils.index = 2;
+        PcapUtils.index = 5;
         PcapUtils.useDev();
         PcapPacketHandler pcapPacketHandler = new PcapPacketHandler() {
 

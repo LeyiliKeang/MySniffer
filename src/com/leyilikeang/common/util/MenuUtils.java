@@ -293,7 +293,7 @@ public class MenuUtils {
      *
      * @return 工具菜单
      */
-    public static JPopupMenu getToolsMenu() {
+    public static JPopupMenu getToolsMenu(final MainFrame mainFrame) {
         JPopupMenu popupMenu = new JPopupMenu();
 
         JMenuItem scanMenuItem = new JMenuItem("扫描");
@@ -317,7 +317,12 @@ public class MenuUtils {
         arpMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("ARP欺骗");
+                JDialog dialog = new JDialog(mainFrame.getMainFrame(), "ARP欺骗", true);
+                dialog.setContentPane(new ArpFraudFrame().getContentPane());
+                dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                dialog.pack();
+                dialog.setLocationRelativeTo(mainFrame.getMainFrame());
+                dialog.setVisible(true);
             }
         });
         popupMenu.add(arpMenuItem);

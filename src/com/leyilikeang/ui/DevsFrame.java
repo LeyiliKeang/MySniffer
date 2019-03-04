@@ -7,8 +7,10 @@ import com.sun.org.apache.xml.internal.resolver.readers.TR9401CatalogReader;
 import org.jnetpcap.PcapAddr;
 import org.jnetpcap.PcapIf;
 import org.jnetpcap.packet.format.FormatUtils;
+import org.jnetstream.protocol.ProtocolInfo;
 import sun.nio.cs.ext.ISCII91;
 
+import javax.sound.midi.Soundbank;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -95,26 +97,24 @@ public class DevsFrame {
         Integer i = 0;
         for (PcapIf dev : devs) {
             List<PcapAddr> addrs = dev.getAddresses();
-            DefaultMutableTreeNode node = new DefaultMutableTreeNode(dev.getDescription());
-            treeNodeMap.put(node, i++);
-            top.add(node);
+            DefaultMutableTreeNode node = new DefaultMutableTreeNode();
+            treeNodeMap.put(node, i);
+            HashMap<String, String> hashMap = new HashMap<String, String>();
             for (PcapAddr addr : addrs) {
-                if (addr.getAddr().toString().startsWith("[INET4")
-                        || addr.getAddr().toString().startsWith("[INET6")) {
+                if (addr.getAddr().toString().startsWith("[INET6")) {
+                    continue;
+                }
+                if (addr.getAddr().toString().startsWith("[INET4")) {
                     String ip = addr.getAddr().toString().replace("INET4", "Ip4");
-                    ip = ip.replace("INET6", "Ip6");
+                    hashMap.put("IP", ip.substring(5, ip.length() - 1));
                     node.add(new DefaultMutableTreeNode(ip));
                 }
-                if (addr.getNetmask().toString().startsWith("[INET4")
-                        || addr.getNetmask().toString().startsWith("[INET6")) {
+                if (addr.getNetmask().toString().startsWith("[INET4")) {
                     String mask = addr.getNetmask().toString().replace("INET4", "Mask");
-                    mask = mask.replace("INET6", "Mask");
                     node.add(new DefaultMutableTreeNode(mask));
                 }
-                if (addr.getBroadaddr().toString().startsWith("[INET4")
-                        || addr.getBroadaddr().toString().startsWith("[INET6")) {
+                if (addr.getBroadaddr().toString().startsWith("[INET4")) {
                     String broad = addr.getBroadaddr().toString().replace("INET4", "Broad");
-                    broad = broad.replace("INET6", "Broad");
                     node.add(new DefaultMutableTreeNode(broad));
                 }
             }
@@ -124,7 +124,17 @@ public class DevsFrame {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            String description = dev.getDescription();
+            if (description.equalsIgnoreCase("VMware Virtual Ethernet Adapter")) {
+                description += " VMnet" + mac.substring(mac.length() - 1);
+            }
+            if (!node.isLeaf()) {
+                node.setUserObject(description);
+                top.add(node);
+            }
             node.add(new DefaultMutableTreeNode("[MAC:" + mac + "]"));
+            hashMap.put("MAC", mac);
+            PcapUtils.ipMacMap.put(i++, hashMap);
         }
 
         devTree.setModel(defaultTreeModel);
@@ -160,6 +170,7 @@ public class DevsFrame {
             public void actionPerformed(ActionEvent e) {
                 FileUtils.openFile = (String) recentList.getSelectedValue();
                 try {
+                    FileUtils.openFile = FileUtils.openFile.substring(0, FileUtils.openFile.lastIndexOf("("));
                     new FileUtils().writeRecent(FileUtils.openFile, false);
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -187,7 +198,28 @@ public class DevsFrame {
         try {
             ArrayList<String> arrayList = new FileUtils().readRecent();
             for (int i = arrayList.size() - 1; i >= 0; i--) {
-                defaultListModel.addElement(arrayList.get(i));
+                String path = arrayList.get(i);
+                File file = new File(path);
+                if (file.exists()) {
+                    String end = "";
+                    long size = file.length();
+                    if (size < Math.pow(2, 11)) {
+                        end = " Bytes";
+                    } else if (size < Math.pow(2, 20)) {
+                        size /= Math.pow(2, 10);
+                        end = " KB";
+                    } else if (size < Math.pow(2, 30)) {
+                        size /= Math.pow(2, 20);
+                        end = " MB";
+                    } else if (size < Math.pow(2, 40)) {
+                        size /= Math.pow(2, 30);
+                        end = " GB";
+                    }
+                    path += "(" + Long.toString(size) + end + ")";
+                } else {
+                    path += "(未找到)";
+                }
+                defaultListModel.addElement(path);
             }
         } catch (IOException e) {
             e.printStackTrace();

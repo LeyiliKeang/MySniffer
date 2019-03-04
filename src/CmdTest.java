@@ -22,24 +22,26 @@ public class CmdTest {
             while ((message = br.readLine()) != null) {
                 sb.append(message + "\n");
             }
-            System.out.println(sb.toString());
+//            System.out.println(sb.toString());
             String str = sb.toString();
-            int index = str.indexOf("接口: 192.168.58.1");
+            int index = str.indexOf("接口: 192.168.0.7");
+            int startIndex = str.indexOf("类型", index + 1);
             int endIndex = str.indexOf("接口", index + 1);
-            System.out.println(index);
-            System.out.println(endIndex);
-            String string = str.substring(index, endIndex);
-            System.out.println(string);
+//            System.out.println(index);
+//            System.out.println(endIndex);
+            String string = str.substring(startIndex + 2, endIndex);
+//            System.out.println(string);
             String[] splitString = string.split("\n");
             for (String s : splitString) {
-                if (s.startsWith("  192.168.58.") && !s.startsWith("  192.168.58.255")) {
-                    System.out.println(s);
+                if (s.startsWith("  192.168.0.") && !s.startsWith("  192.168.0.255")) {
+                    String[] s1 = s.split(" ");
+                    for (String s2 : s1) {
+                        if (s2.equals("")) {
+                            continue;
+                        }
+                        System.out.println(s2);
+                    }
                 }
-                String[] s1 = s.split(" ");
-                for (String s2 : s1) {
-                    System.out.println(s2);
-                }
-                System.out.println("----------");
             }
         } catch (IOException e) {
             e.printStackTrace();

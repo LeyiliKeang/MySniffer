@@ -234,7 +234,7 @@ public class MainFrame {
         toolButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JPopupMenu toolsMenu = MenuUtils.getToolsMenu();
+                JPopupMenu toolsMenu = MenuUtils.getToolsMenu(MainFrame.this);
                 toolsMenu.show(toolButton, 0, toolButton.getHeight());
             }
         });
@@ -263,7 +263,7 @@ public class MainFrame {
         toolButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                JPopupMenu toolsMenu = MenuUtils.getToolsMenu();
+                JPopupMenu toolsMenu = MenuUtils.getToolsMenu(MainFrame.this);
                 toolsMenu.show(toolButton, 0, toolButton.getHeight());
             }
         });

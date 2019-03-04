@@ -4,7 +4,9 @@ import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapBpfProgram;
 import org.jnetpcap.PcapIf;
 
+import javax.xml.crypto.KeySelector;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -17,6 +19,7 @@ public class PcapUtils {
     public static Integer index;
     private static List<PcapIf> alldevs;
     private static StringBuilder errbuf = new StringBuilder();
+    public static HashMap<Integer, HashMap<String, String>> ipMacMap = new HashMap<Integer, HashMap<String, String>>();
 
     public static List<PcapIf> getAllDevs() {
         alldevs = new ArrayList<PcapIf>();

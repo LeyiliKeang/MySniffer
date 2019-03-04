@@ -70,23 +70,4 @@ public class FileUtils {
             bufferedWriter.close();
         }
     }
-
-    public static void main(String[] args) throws IOException {
-        FileUtils fileUtils = new FileUtils();
-//        fileUtils.readRecent();
-        ArrayList<String> arrayList = fileUtils.readRecent();
-        for (String str : arrayList) {
-            System.out.println(str);
-        }
-        System.out.println();
-        fileUtils.writeRecent("什么鬼啊1", true);
-//        fileUtils.writeRecent("什么鬼啊1", true);
-
-//        System.out.println();
-//        fileUtils.writeRecent();
-//        fileUtils.readRecent();
-//        System.out.println();
-//        fileUtils.writeRecent();
-//        fileUtils.readRecent();
-    }
 }
