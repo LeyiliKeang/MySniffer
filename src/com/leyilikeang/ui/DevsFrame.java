@@ -7,6 +7,7 @@ import com.sun.org.apache.xml.internal.resolver.readers.TR9401CatalogReader;
 import org.jnetpcap.PcapAddr;
 import org.jnetpcap.PcapIf;
 import org.jnetpcap.packet.format.FormatUtils;
+import sun.nio.cs.ext.ISCII91;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
@@ -136,6 +137,9 @@ public class DevsFrame {
                 PcapUtils.useDev();
                 mainFrame.ready();
                 mainFrame.getCaptureButton().setEnabled(true);
+                if (JumpToFrame.isOpen) {
+                    mainFrame.getJumpToDialog().setVisible(true);
+                }
             }
         });
 

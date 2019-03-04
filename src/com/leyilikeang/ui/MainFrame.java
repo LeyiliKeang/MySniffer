@@ -153,17 +153,6 @@ public class MainFrame {
                             countLabel.setText("数量：0");
                             FileUtils.openFile = null;
                         }
-
-//                        for (int j = i; j < PacketUtils.allPackets.size(); j++) {
-//                            String protocol = (String) defaultTableModel.getValueAt(j, 5);
-//                            if (protocol.equalsIgnoreCase("tcp")) {
-//                                packetTable.setRowSelectionInterval(j, j);
-//                                Rectangle rectangle = packetTable.getCellRect(j, 0, true);
-//                                packetTable.scrollRectToVisible(rectangle);
-//                                i = ++j;
-//                                return;
-//                            }
-//                        }
                     }
                 });
             }
@@ -311,10 +300,6 @@ public class MainFrame {
         this.rightPane.setVisible(true);
         if (StatisticsFrame.isOpen) {
             statisticsDialog.setVisible(true);
-        }
-
-        if (JumpToFrame.isOpen) {
-            jumpToDialog.setVisible(true);
         }
     }
 

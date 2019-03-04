@@ -4,6 +4,7 @@ import com.leyilikeang.common.packethandler.MyPacketHandler;
 import com.leyilikeang.common.util.FileUtils;
 import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.common.util.PcapUtils;
+import com.leyilikeang.ui.JumpToFrame;
 import com.leyilikeang.ui.MainFrame;
 import com.leyilikeang.ui.PacketFrame;
 import org.jnetpcap.Pcap;
@@ -67,11 +68,15 @@ public class FileService {
             @Override
             public void run() {
                 CaptureService.isStart = true;
-                mainFrame.getJumpToDialog().setEnabled(false);
+                if (JumpToFrame.isOpen) {
+                    mainFrame.getJumpToDialog().setVisible(false);
+                }
                 pcap.loop(-1, packetHandler, "likang");
                 pcap.close();
                 CaptureService.isStart = false;
-                mainFrame.getJumpToDialog().setEnabled(true);
+                if (JumpToFrame.isOpen) {
+                    mainFrame.getJumpToDialog().setVisible(true);
+                }
                 PacketUtils.protocolType = null;
             }
         }).start();

@@ -189,8 +189,8 @@ public class MenuUtils {
                 dialog.setResizable(false);
                 dialog.pack();
                 Rectangle rectangle = mainFrame.getMainFrame().getBounds();
-                dialog.setBounds(rectangle.x + rectangle.width - dialog.getWidth() - 5,
-                        rectangle.y + rectangle.height - dialog.getHeight() - 280,
+                dialog.setBounds(rectangle.x + rectangle.width - dialog.getWidth() - 13,
+                        rectangle.y + rectangle.height - dialog.getHeight() - 279,
                         dialog.getWidth(), dialog.getHeight());
                 dialog.setVisible(true);
             }
@@ -213,7 +213,7 @@ public class MenuUtils {
                         dialog.setResizable(false);
                         dialog.pack();
                         Rectangle rectangle = mainFrame.getMainFrame().getBounds();
-                        dialog.setBounds(rectangle.x + rectangle.width - dialog.getWidth() - 5,
+                        dialog.setBounds(rectangle.x + rectangle.width - dialog.getWidth() - 13,
                                 rectangle.y + rectangle.height - dialog.getHeight() - 40,
                                 dialog.getWidth(), dialog.getHeight());
                         dialog.setVisible(true);
