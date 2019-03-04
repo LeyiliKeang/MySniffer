@@ -37,7 +37,7 @@ public class Run {
 //                devsFrame.setVisible(true);
 
                 JFrame mainFrame = new JFrame("MySniffer");
-                mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("imgs/icon.png"));
+                mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("imgs/images.png"));
                 MainFrame main = new MainFrame(mainFrame);
                 main.getDevsFrame().setMainFrame(main);
                 mainFrame.setContentPane(main.getContentPane());

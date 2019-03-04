@@ -5,12 +5,16 @@ import com.leyilikeang.service.FileService;
 import com.leyilikeang.ui.DevsFrame;
 import com.leyilikeang.ui.MainFrame;
 import com.leyilikeang.ui.PacketFrame;
+import com.leyilikeang.ui.StatisticsFrame;
+import com.sun.corba.se.impl.protocol.JIDLLocalCRDImpl;
 import sun.applet.Main;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.lang.management.GarbageCollectorMXBean;
@@ -145,6 +149,7 @@ public class MenuUtils {
         closeMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                mainFrame.getStatisticsFrame().reset();
                 PacketUtils.capClear();
                 mainFrame.getDefaultTableModel().setRowCount(0);
                 mainFrame.devs();
@@ -171,7 +176,7 @@ public class MenuUtils {
      *
      * @return 查看菜单
      */
-    public static JPopupMenu getLookOverMenu() {
+    public static JPopupMenu getLookOverMenu(final MainFrame mainFrame) {
         JPopupMenu popupMenu = new JPopupMenu();
 
         JMenuItem jumpToMenuItem = new JMenuItem("跳转");
@@ -187,14 +192,27 @@ public class MenuUtils {
         });
         popupMenu.add(jumpToMenuItem);
 
-        JMenuItem statisticsMenuItem = new JMenuItem("统计");
-        if (MainFrame.isDevs) {
+        final JMenuItem statisticsMenuItem = new JMenuItem("统计");
+        if (MainFrame.isDevs || mainFrame.getStatisticsDialog().isVisible()) {
             statisticsMenuItem.setEnabled(false);
         }
         statisticsMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("统计");
+                EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        statisticsMenuItem.setEnabled(false);
+                        JDialog statisticsDialog = mainFrame.getStatisticsDialog();
+                        statisticsDialog.setAlwaysOnTop(true);
+                        statisticsDialog.pack();
+                        Rectangle rectangle = mainFrame.getMainFrame().getBounds();
+                        statisticsDialog.setBounds(rectangle.x + rectangle.width - statisticsDialog.getWidth(),
+                                rectangle.y + rectangle.height - statisticsDialog.getHeight() - 30,
+                                statisticsDialog.getWidth(), statisticsDialog.getHeight());
+                        statisticsDialog.setVisible(true);
+                    }
+                });
             }
         });
         popupMenu.add(statisticsMenuItem);
@@ -221,6 +239,7 @@ public class MenuUtils {
                 EventQueue.invokeLater(new Runnable() {
                     @Override
                     public void run() {
+                        mainFrame.getStatisticsFrame().reset();
                         PacketUtils.capClear();
                         mainFrame.getDefaultTableModel().setRowCount(0);
                         mainFrame.devs();

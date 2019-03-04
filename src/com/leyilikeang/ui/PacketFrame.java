@@ -38,25 +38,30 @@ public class PacketFrame {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int[] count = packetTable.getSelectedRows();
-                JFileChooser fileChooser = new JFileChooser();
+                EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        int[] count = packetTable.getSelectedRows();
+                        JFileChooser fileChooser = new JFileChooser();
 //                fileChooser.setCurrentDirectory(new File("."));
-                fileChooser.setSelectedFile(new File("packet.cap"));
-                fileChooser.setMultiSelectionEnabled(false);
-                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                fileChooser.setFileHidingEnabled(true);
-                fileChooser.setAcceptAllFileFilterUsed(false);
-                fileChooser.setFileFilter(new MyFileFilter("cap", "MySniffer(*.cap)"));
-                int result = fileChooser.showSaveDialog(mainFrame.getContentPane());
-                if (JFileChooser.APPROVE_OPTION == result) {
-                    for (int index : count) {
-                        PacketUtils.savePackets.add(PacketUtils.allPackets.get(index));
+                        fileChooser.setSelectedFile(new File("packet.cap"));
+                        fileChooser.setMultiSelectionEnabled(false);
+                        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                        fileChooser.setFileHidingEnabled(true);
+                        fileChooser.setAcceptAllFileFilterUsed(false);
+                        fileChooser.setFileFilter(new MyFileFilter("cap", "MySniffer(*.cap)"));
+                        int result = fileChooser.showSaveDialog(mainFrame.getContentPane());
+                        if (JFileChooser.APPROVE_OPTION == result) {
+                            for (int index : count) {
+                                PacketUtils.savePackets.add(PacketUtils.allPackets.get(index));
+                            }
+                            String path = fileChooser.getSelectedFile().getPath();
+                            FileService fileService = new FileService();
+                            fileService.save(path, false);
+                            dialog.dispose();
+                        }
                     }
-                    String path = fileChooser.getSelectedFile().getPath();
-                    FileService fileService = new FileService();
-                    fileService.save(path, false);
-                    dialog.dispose();
-                }
+                });
             }
         });
 

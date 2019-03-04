@@ -3,6 +3,7 @@ package com.leyilikeang.common.packethandler;
 import com.leyilikeang.common.util.ConstantUtils;
 import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.ui.MainFrame;
+import com.leyilikeang.ui.StatisticsFrame;
 import org.jnetpcap.PcapDumper;
 import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.packet.PcapPacketHandler;
@@ -57,6 +58,8 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
 
     private JLabel countLabel;
 
+    private StatisticsFrame statisticsFrame;
+
     private String sourceMac;
     private String destinationMac;
     private String sourceIp;
@@ -71,6 +74,7 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
         this.defaultTableModel = mainFrame.getDefaultTableModel();
         this.scrollPane = mainFrame.getPacketTableScrollPane();
         this.countLabel = mainFrame.getCountLabel();
+        this.statisticsFrame = mainFrame.getStatisticsFrame();
     }
 
     @Override
@@ -179,6 +183,14 @@ public class MyPacketHandler<T> implements PcapPacketHandler<T> {
                 int extent = scrollPane.getVerticalScrollBar().getModel().getExtent();
                 scrollPane.getVerticalScrollBar().setValue(maximum - extent);
                 countLabel.setText("数量：" + PacketUtils.allPackets.size());
+                statisticsFrame.getArpLabel().setText("ARP：" + PacketUtils.arpAmount);
+                statisticsFrame.getIcmpLabel().setText("ICMP：" + PacketUtils.icmpAmount);
+                statisticsFrame.getIpv4Label().setText("IPv4：" + PacketUtils.ip4Amount);
+                statisticsFrame.getIpv6Label().setText("IPv6：" + PacketUtils.ip6Amount);
+                statisticsFrame.getTcpLabel().setText("TCP：" + PacketUtils.tcpAmount);
+                statisticsFrame.getUdpLabel().setText("UDP：" + PacketUtils.udpAmount);
+                statisticsFrame.getHttpLabel().setText("HTTP：" + PacketUtils.httpAmount);
+                statisticsFrame.getDnsLabel().setText("DNS：" + PacketUtils.dnsAmount);
             }
         });
     }

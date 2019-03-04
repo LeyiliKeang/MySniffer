@@ -13,10 +13,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.text.DecimalFormat;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -50,6 +47,10 @@ public class MainFrame {
 
     private JFrame mainFrame;
 
+    private JDialog statisticsDialog;
+
+    private StatisticsFrame statisticsFrame;
+
     private CaptureService captureService = new CaptureService();
 
     private DefaultTableModel defaultTableModel;
@@ -62,12 +63,20 @@ public class MainFrame {
 
     public static boolean isFilter = false;
 
+
+
+    private int i = 0;
+
     public MainFrame(JFrame mainFrame) {
         this();
         this.mainFrame = mainFrame;
     }
 
     public MainFrame() {
+        statisticsDialog = new JDialog(mainFrame, "统计", false);
+        statisticsDialog.setContentPane(new StatisticsFrame(this).getContentPane());
+        statisticsDialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+
         expressionComboBox.setSelectedIndex(-1);
         rightPane.setVisible(false);
         captureButton.setEnabled(false);
@@ -127,6 +136,17 @@ public class MainFrame {
                             countLabel.setText("数量：0");
                             FileUtils.openFile = null;
                         }
+
+//                        for (int j = i; j < PacketUtils.allPackets.size(); j++) {
+//                            String protocol = (String) defaultTableModel.getValueAt(j, 5);
+//                            if (protocol.equalsIgnoreCase("tcp")) {
+//                                packetTable.setRowSelectionInterval(j, j);
+//                                Rectangle rectangle = packetTable.getCellRect(j, 0, true);
+//                                packetTable.scrollRectToVisible(rectangle);
+//                                i = ++j;
+//                                return;
+//                            }
+//                        }
                     }
                 });
             }
@@ -188,7 +208,7 @@ public class MainFrame {
         lookOverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JPopupMenu lookOverMenu = MenuUtils.getLookOverMenu();
+                JPopupMenu lookOverMenu = MenuUtils.getLookOverMenu(MainFrame.this);
                 lookOverMenu.show(lookOverButton, 0, lookOverButton.getHeight());
             }
         });
@@ -223,7 +243,7 @@ public class MainFrame {
         lookOverButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                JPopupMenu lookOverMenu = MenuUtils.getLookOverMenu();
+                JPopupMenu lookOverMenu = MenuUtils.getLookOverMenu(MainFrame.this);
                 lookOverMenu.show(lookOverButton, 0, lookOverButton.getHeight());
             }
         });
@@ -313,5 +333,17 @@ public class MainFrame {
 
     public JComboBox getExpressionComboBox() {
         return expressionComboBox;
+    }
+
+    public void setStatisticsFrame(StatisticsFrame statisticsFrame) {
+        this.statisticsFrame = statisticsFrame;
+    }
+
+    public StatisticsFrame getStatisticsFrame() {
+        return statisticsFrame;
+    }
+
+    public JDialog getStatisticsDialog() {
+        return statisticsDialog;
     }
 }

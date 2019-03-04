@@ -43,6 +43,7 @@
                   <component id="7ac69" class="javax.swing.JList" binding="recentList">
                     <constraints/>
                     <properties>
+                      <fixedCellHeight value="20"/>
                       <font size="14"/>
                     </properties>
                   </component>
