@@ -1,16 +1,10 @@
 package com.leyilikeang.ui;
 
-import com.leyilikeang.common.packethandler.MyPacketHandler;
 import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.common.util.PcapUtils;
-import org.jnetpcap.Pcap;
-import sun.applet.Main;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.Timer;
 import java.util.TimerTask;
 

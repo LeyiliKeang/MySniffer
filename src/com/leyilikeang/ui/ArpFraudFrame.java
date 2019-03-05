@@ -1,15 +1,9 @@
 package com.leyilikeang.ui;
 
-import com.leyilikeang.common.example.my.ArpFraud;
 import com.leyilikeang.common.util.ConvertUtils;
-import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.common.util.PcapUtils;
-import org.jnetpcap.Pcap;
-
-import javax.sql.rowset.serial.SQLOutputImpl;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.ComponentView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,11 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.sql.SQLOutput;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * @author likang

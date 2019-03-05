@@ -2,14 +2,10 @@ package com.leyilikeang.ui;
 
 import com.leyilikeang.common.util.ConstantUtils;
 import com.leyilikeang.common.util.PacketUtils;
-import org.jnetstream.protocol.ProtocolInfo;
-import sun.applet.Main;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.PortUnreachableException;
 import java.util.ArrayList;
 
 /**

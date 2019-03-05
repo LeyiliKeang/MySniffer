@@ -3,14 +3,9 @@ package com.leyilikeang.ui;
 import com.leyilikeang.common.util.FileUtils;
 import com.leyilikeang.common.util.PcapUtils;
 import com.leyilikeang.service.FileService;
-import com.sun.org.apache.xml.internal.resolver.readers.TR9401CatalogReader;
 import org.jnetpcap.PcapAddr;
 import org.jnetpcap.PcapIf;
 import org.jnetpcap.packet.format.FormatUtils;
-import org.jnetstream.protocol.ProtocolInfo;
-import sun.nio.cs.ext.ISCII91;
-
-import javax.sound.midi.Soundbank;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;

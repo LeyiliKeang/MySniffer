@@ -6,9 +6,7 @@ import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.common.util.PcapUtils;
 import com.leyilikeang.ui.JumpToFrame;
 import com.leyilikeang.ui.MainFrame;
-import com.sun.media.sound.SoftMainMixer;
 import org.jnetpcap.PcapDumper;
-import sun.applet.Main;
 
 import java.io.File;
 

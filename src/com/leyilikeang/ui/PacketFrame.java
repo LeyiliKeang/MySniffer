@@ -1,24 +1,13 @@
 package com.leyilikeang.ui;
 
-import com.leyilikeang.common.util.FileUtils;
 import com.leyilikeang.common.util.MyFileFilter;
 import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.service.FileService;
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
-import com.sun.xml.internal.fastinfoset.tools.StAX2SAXReader;
-import javafx.scene.control.Tab;
-import jdk.nashorn.internal.scripts.JD;
-import sun.security.krb5.internal.PAForUserEnc;
-
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
-import java.io.PipedReader;
 
 /**
  * @author likang

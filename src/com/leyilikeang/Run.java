@@ -1,9 +1,6 @@
 package com.leyilikeang;
 
-import com.leyilikeang.ui.DevsFrame;
 import com.leyilikeang.ui.MainFrame;
-import sun.awt.image.ToolkitImage;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -14,25 +11,6 @@ import java.awt.*;
 public class Run {
 
     public static void main(String[] args) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    System.out.print("最大内存：");
-                    System.out.println(Runtime.getRuntime().maxMemory() / Math.pow(2, 20));
-                    System.out.print("可用内存");
-                    System.out.println(Runtime.getRuntime().freeMemory() / Math.pow(2, 20));
-                    System.out.print("现在的内存");
-                    System.out.println(Runtime.getRuntime().totalMemory() / Math.pow(2, 20));
-                    System.out.println();
-                    try {
-                        Thread.sleep(10000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             UIManager.put("Tree.paintLines", false);

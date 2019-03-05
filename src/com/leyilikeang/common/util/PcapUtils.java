@@ -1,20 +1,11 @@
 package com.leyilikeang.common.util;
 
-import com.sun.corba.se.impl.orbutil.CorbaResourceUtil;
-import com.sun.media.sound.AbstractMidiDeviceProvider;
-import com.sun.xml.internal.messaging.saaj.soap.JpegDataContentHandler;
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapBpfProgram;
 import org.jnetpcap.PcapIf;
 import org.jnetpcap.packet.JMemoryPacket;
 import org.jnetpcap.packet.JPacket;
-import org.jnetpcap.packet.format.FormatUtils;
 import org.jnetpcap.protocol.JProtocol;
-import org.jnetpcap.protocol.lan.Ethernet;
-import org.omg.PortableInterceptor.AdapterManagerIdHelper;
-
-import javax.swing.*;
-import javax.xml.crypto.KeySelector;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -147,7 +138,7 @@ public class PcapUtils {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
+                    // 发送ARP请求包
 //                    String destinationIp = ConvertUtils.ipToHex(prefixIp + i);
 //                    String arpRequest = request;
 //                    arpRequest += destinationIp;
@@ -174,18 +165,6 @@ public class PcapUtils {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
-
-//                    String destinationIp = ConvertUtils.ipToHex(prefixIp + i);
-//                    String arpRequest = request;
-//                    arpRequest += destinationIp;
-//                    JPacket packet = new JMemoryPacket(JProtocol.ETHERNET_ID, arpRequest);
-//                    packet.scan(Ethernet.ID);
-//                    for (int j = 0; j < 4; j++) {
-//                        if (pcap.sendPacket(packet) != Pcap.OK) {
-//                            System.out.println(pcap.getErr());
-//                        }
-//                    }
                 }
             }
         }).start();
@@ -202,18 +181,6 @@ public class PcapUtils {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
-
-//                    String destinationIp = ConvertUtils.ipToHex(prefixIp + i);
-//                    String arpRequest = request;
-//                    arpRequest += destinationIp;
-//                    JPacket packet = new JMemoryPacket(JProtocol.ETHERNET_ID, arpRequest);
-//                    packet.scan(Ethernet.ID);
-//                    for (int j = 0; j < 4; j++) {
-//                        if (pcap.sendPacket(packet) != Pcap.OK) {
-//                            System.out.println(pcap.getErr());
-//                        }
-//                    }
                 }
             }
         }).start();
@@ -230,18 +197,6 @@ public class PcapUtils {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
-
-//                    String destinationIp = ConvertUtils.ipToHex(prefixIp + i);
-//                    String arpRequest = request;
-//                    arpRequest += destinationIp;
-//                    JPacket packet = new JMemoryPacket(JProtocol.ETHERNET_ID, arpRequest);
-//                    packet.scan(Ethernet.ID);
-//                    for (int j = 0; j < 4; j++) {
-//                        if (pcap.sendPacket(packet) != Pcap.OK) {
-//                            System.out.println(pcap.getErr());
-//                        }
-//                    }
                 }
             }
         }).start();

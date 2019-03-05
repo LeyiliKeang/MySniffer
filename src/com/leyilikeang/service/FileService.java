@@ -6,14 +6,9 @@ import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.common.util.PcapUtils;
 import com.leyilikeang.ui.JumpToFrame;
 import com.leyilikeang.ui.MainFrame;
-import com.leyilikeang.ui.PacketFrame;
 import org.jnetpcap.Pcap;
-import org.jnetpcap.PcapBpfProgram;
 import org.jnetpcap.PcapDumper;
 import org.jnetpcap.packet.PcapPacket;
-import org.jnetstream.capture.CapturePacket;
-import sun.applet.Main;
-
 import javax.swing.*;
 import java.io.File;
 

@@ -1,22 +1,17 @@
 package com.leyilikeang.ui;
 
-import com.leyilikeang.common.packethandler.MyPacketHandler;
 import com.leyilikeang.common.util.FileUtils;
 import com.leyilikeang.common.util.MenuUtils;
 import com.leyilikeang.common.util.PacketUtils;
-import com.leyilikeang.common.util.PcapUtils;
 import com.leyilikeang.service.CaptureService;
 import com.leyilikeang.service.FileService;
-
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.text.DecimalFormat;
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * @author likang
