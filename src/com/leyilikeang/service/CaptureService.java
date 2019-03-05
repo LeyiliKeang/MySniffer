@@ -19,6 +19,8 @@ import java.io.File;
 public class CaptureService {
     public static boolean isStart = false;
 
+    public static boolean isOpen = false;
+
     public void capture(final MainFrame mainFrame) {
         final MyPacketHandler<PcapDumper> packetHandler = new MyPacketHandler<PcapDumper>(mainFrame);
 

@@ -14,6 +14,25 @@ import java.awt.*;
 public class Run {
 
     public static void main(String[] args) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    System.out.print("最大内存：");
+                    System.out.println(Runtime.getRuntime().maxMemory() / Math.pow(2, 20));
+                    System.out.print("可用内存");
+                    System.out.println(Runtime.getRuntime().freeMemory() / Math.pow(2, 20));
+                    System.out.print("现在的内存");
+                    System.out.println(Runtime.getRuntime().totalMemory() / Math.pow(2, 20));
+                    System.out.println();
+                    try {
+                        Thread.sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             UIManager.put("Tree.paintLines", false);
@@ -29,13 +48,6 @@ public class Run {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-//                JFrame devsFrame = new JFrame("选择网卡设备");
-//                devsFrame.setContentPane(new DevsFrame(devsFrame).getContentPane());
-//                devsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//                devsFrame.pack();
-//                devsFrame.setLocationRelativeTo(null);
-//                devsFrame.setVisible(true);
-
                 JFrame mainFrame = new JFrame("MySniffer");
                 mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("imgs/images.png"));
                 MainFrame main = new MainFrame(mainFrame);

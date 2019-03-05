@@ -49,7 +49,7 @@ public class PcapDumperExample {
         /***************************************************************************
          * 创建一个和pcap关联的pcapdumper
          ***************************************************************************/
-        String ofile = "tmp-capture-file.cap";
+        String ofile = "";
         PcapDumper dumper = pcap.dumpOpen(ofile); // output file
 
         /***************************************************************************

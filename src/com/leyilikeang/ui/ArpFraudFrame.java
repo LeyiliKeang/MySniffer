@@ -1,17 +1,27 @@
 package com.leyilikeang.ui;
 
+import com.leyilikeang.common.example.my.ArpFraud;
+import com.leyilikeang.common.util.ConvertUtils;
 import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.common.util.PcapUtils;
+import org.jnetpcap.Pcap;
 
+import javax.sql.rowset.serial.SQLOutputImpl;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.ComponentView;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.SQLOutput;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author likang
@@ -45,6 +55,22 @@ public class ArpFraudFrame {
         refreshButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                refresh();
+                refreshButton.setEnabled(false);
+                EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < 5; i++) {
+                            try {
+                                Thread.sleep(2000);
+                            } catch (InterruptedException e1) {
+                                e1.printStackTrace();
+                            }
+                            load();
+                        }
+                        refreshButton.setEnabled(true);
+                    }
+                });
 
             }
         });
@@ -52,7 +78,30 @@ public class ArpFraudFrame {
         spoofButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String destinationIp;
+                String destinationMac;
+                if (arpTable.getSelectedRow() != -1) {
+                    String ip = (String) arpTable.getValueAt(arpTable.getSelectedRow(), 0);
+                    String mac = (String) arpTable.getValueAt(arpTable.getSelectedRow(), 1);
+                    destinationIp = ConvertUtils.ipToHex(ip);
+                    destinationMac = mac.replace("-", " ");
+                } else {
+                    return;
+                }
+                String sourceIp = ipTextField.getText().trim();
 
+                String realMac = null;
+                for (int i = 0; i < defaultTableModel.getRowCount(); i++) {
+                    if (sourceIp.equals((String) arpTable.getValueAt(i, 0))) {
+                        String mac = (String) arpTable.getValueAt(i, 1);
+                        realMac = mac.replace("-", " ");
+                        break;
+                    }
+                }
+
+                sourceIp = ConvertUtils.ipToHex(sourceIp);
+                String sourceMac = macTextField.getText().toLowerCase().trim().replace("-", " ");
+                PcapUtils.arpResponse(sourceIp, sourceMac, destinationIp, destinationMac, realMac);
             }
         });
 
@@ -60,7 +109,7 @@ public class ArpFraudFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (localCheckBox.isSelected()) {
-                    macTextField.setText("");
+                    macTextField.setText(PcapUtils.ipMacMap.get(PcapUtils.index).get("MAC"));
                     macTextField.setEnabled(false);
                 } else {
                     macTextField.setEnabled(true);
@@ -69,7 +118,8 @@ public class ArpFraudFrame {
         });
     }
 
-    public void load() {
+    private void load() {
+        defaultTableModel.setRowCount(0);
         String cmdStr = "arp -a";
         Runtime run = Runtime.getRuntime();
         try {
@@ -87,7 +137,12 @@ public class ArpFraudFrame {
             int index = str.indexOf("接口: " + ip);
             int startIndex = str.indexOf("类型", index + 1);
             int endIndex = str.indexOf("接口", index + 1);
-            String string = str.substring(startIndex + 2, endIndex);
+            String string;
+            if (endIndex == -1) {
+                string = str.substring(startIndex + 2);
+            } else {
+                string = str.substring(startIndex + 2, endIndex);
+            }
             String[] splitString = string.split("\n");
             ArrayList<String> ipMacList = new ArrayList<String>();
             for (String s : splitString) {
@@ -108,6 +163,10 @@ public class ArpFraudFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void refresh() {
+        PcapUtils.arpRequest();
     }
 
     public JPanel getContentPane() {

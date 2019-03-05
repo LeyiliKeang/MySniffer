@@ -1,6 +1,10 @@
 package com.leyilikeang.common.util;
 
+import org.jnetpcap.Pcap;
+import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.util.PcapPacketArrayList;
+
+import java.util.ArrayList;
 
 /**
  * @author likang
@@ -39,6 +43,8 @@ public class PacketUtils {
     public static String destinationMacAddress;
 
     public static String protocolType;
+
+    public static Integer per = 0;
 
     public static PcapPacketArrayList savePackets = new PcapPacketArrayList();
 

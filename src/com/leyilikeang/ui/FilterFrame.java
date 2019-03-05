@@ -67,9 +67,9 @@ public class FilterFrame {
                     TimerTask task1 = new TimerTask() {
                         @Override
                         public void run() {
-                            String str = String.format("%.2f", (double) MyPacketHandler.per / 1024);
+                            String str = String.format("%.2f", (double) PacketUtils.per / 1024);
                             mainFrame.getRateLabel().setText("流量：" + str + "Kb/s");
-                            MyPacketHandler.per = 0;
+                            PacketUtils.per = 0;
                         }
                     };
                     // 使用ScheduledExecutorService代替Timer

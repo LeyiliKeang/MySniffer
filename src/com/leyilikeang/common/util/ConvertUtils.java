@@ -21,4 +21,17 @@ public class ConvertUtils {
         }
         return macByte;
     }
+
+    public static String ipToHex(String ip) {
+        StringBuilder sb = new StringBuilder();
+        String[] ipChip = ip.split("\\.");
+        for (String s : ipChip) {
+            String hex = Integer.toString(Integer.parseInt(s), 16);
+            if (hex.length() == 1) {
+                hex = "0" + hex;
+            }
+            sb.append(hex).append(" ");
+        }
+        return sb.toString().trim();
+    }
 }

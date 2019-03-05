@@ -22,7 +22,7 @@ public class SavePacket {
 
     public static void main(String[] args) {
         final List<PcapPacket> packets = new ArrayList<PcapPacket>();
-        final String file = "D:/tmp-capture-file.cap";
+        final String file = "";
         System.out.printf("Opening file for reading: %s%n", file);
         Pcap pcap = PcapUtils.readOffline(file);
         PcapPacketHandler packetHandler = new PcapPacketHandler() {

@@ -19,7 +19,7 @@ import org.jnetpcap.protocol.network.Ip4;
 public class OutputHeaderInfo {
 
     public static void main(String[] args) {
-        final String FILE_NAME = "tmp-capture-file.cap";
+        final String FILE_NAME = "";
         StringBuilder errbuf = new StringBuilder(); // For any error msgs
 
         /***************************************************************************

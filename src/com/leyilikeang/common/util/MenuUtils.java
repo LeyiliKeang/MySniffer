@@ -272,7 +272,7 @@ public class MenuUtils {
 
         JMenuItem stopCapture = new JMenuItem("停止");
         stopCapture.setEnabled(false);
-        if (CaptureService.isStart) {
+        if (CaptureService.isStart && !CaptureService.isOpen) {
             stopCapture.setEnabled(true);
         }
         stopCapture.addActionListener(new ActionListener() {

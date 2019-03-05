@@ -68,12 +68,14 @@ public class FileService {
             @Override
             public void run() {
                 CaptureService.isStart = true;
+                CaptureService.isOpen = true;
                 if (JumpToFrame.isOpen) {
                     mainFrame.getJumpToDialog().setVisible(false);
                 }
-                pcap.loop(-1, packetHandler, "likang");
+                pcap.loop(-1, packetHandler, null);
                 pcap.close();
                 CaptureService.isStart = false;
+                CaptureService.isOpen = false;
                 if (JumpToFrame.isOpen) {
                     mainFrame.getJumpToDialog().setVisible(true);
                 }

