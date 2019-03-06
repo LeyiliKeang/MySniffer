@@ -172,7 +172,7 @@ public class MenuUtils {
     public static JPopupMenu getLookOverMenu(final MainFrame mainFrame) {
         JPopupMenu popupMenu = new JPopupMenu();
 
-        final JMenuItem jumpToMenuItem = new JMenuItem("跳转");
+        JMenuItem jumpToMenuItem = new JMenuItem("跳转");
         if (CaptureService.isStart || MainFrame.isDevs || mainFrame.getJumpToDialog().isVisible()) {
             jumpToMenuItem.setEnabled(false);
         }
@@ -308,17 +308,22 @@ public class MenuUtils {
 
         JMenuItem arpMenuItem = new JMenuItem("ARP欺骗");
         arpMenuItem.setEnabled(false);
-        if (PcapUtils.index != null && MainFrame.isReady) {
+        if (PcapUtils.index != null && MainFrame.isReady && !mainFrame.getArpFraudDialog().isVisible()) {
             arpMenuItem.setEnabled(true);
+
         }
         arpMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JDialog dialog = new JDialog(mainFrame.getMainFrame(), "ARP欺骗", true);
-                dialog.setContentPane(new ArpFraudFrame().getContentPane());
-                dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                arpMenuItem.setEnabled(false);
+                ArpFraudFrame.isOpen = true;
+                Dialog dialog = mainFrame.getArpFraudDialog();
+                dialog.setResizable(false);
                 dialog.pack();
-                dialog.setLocationRelativeTo(mainFrame.getMainFrame());
+                mainFrame.getArpFraudFrame().load();
+                Rectangle rectangle = mainFrame.getMainFrame().getBounds();
+                dialog.setBounds(rectangle.x + 13, rectangle.y + rectangle.height - dialog.getHeight() - 40,
+                        dialog.getWidth(), dialog.getHeight());
                 dialog.setVisible(true);
             }
         });

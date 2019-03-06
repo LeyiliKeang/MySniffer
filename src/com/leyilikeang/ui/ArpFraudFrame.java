@@ -2,6 +2,11 @@ package com.leyilikeang.ui;
 
 import com.leyilikeang.common.util.ConvertUtils;
 import com.leyilikeang.common.util.PcapUtils;
+import org.jnetpcap.Pcap;
+import org.jnetpcap.PcapIf;
+
+import javax.management.JMException;
+import javax.sql.rowset.JdbcRowSet;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -12,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author likang
@@ -29,7 +35,10 @@ public class ArpFraudFrame {
 
     private DefaultTableModel defaultTableModel;
 
-    public ArpFraudFrame() {
+    public static boolean isOpen = false;
+
+    public ArpFraudFrame(MainFrame mainFrame) {
+        mainFrame.setArpFraudFrame(this);
         defaultTableModel = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -40,25 +49,26 @@ public class ArpFraudFrame {
         arpTable.setModel(defaultTableModel);
         arpTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         arpTableScrollPane.setViewportView(arpTable);
-        load();
 
         refreshButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 refresh();
                 refreshButton.setEnabled(false);
+                spoofButton.setEnabled(false);
                 EventQueue.invokeLater(new Runnable() {
                     @Override
                     public void run() {
                         for (int i = 0; i < 5; i++) {
                             try {
                                 Thread.sleep(2000);
-                            } catch (InterruptedException e1) {
-                                e1.printStackTrace();
+                            } catch (InterruptedException ex) {
+                                ex.printStackTrace();
                             }
                             load();
                         }
                         refreshButton.setEnabled(true);
+                        spoofButton.setEnabled(true);
                     }
                 });
 
@@ -70,15 +80,19 @@ public class ArpFraudFrame {
             public void actionPerformed(ActionEvent e) {
                 String destinationIp;
                 String destinationMac;
+                HashMap<String, String> map = new HashMap<String, String>(4);
                 if (arpTable.getSelectedRow() != -1) {
                     String ip = (String) arpTable.getValueAt(arpTable.getSelectedRow(), 0);
                     String mac = (String) arpTable.getValueAt(arpTable.getSelectedRow(), 1);
+                    map.put("destinationIp", ip);
+                    map.put("destinationMac", mac);
                     destinationIp = ConvertUtils.ipToHex(ip);
                     destinationMac = mac.replace("-", " ");
                 } else {
                     return;
                 }
                 String sourceIp = ipTextField.getText().trim();
+                map.put("sourceIp", sourceIp);
 
                 String realMac = null;
                 for (int i = 0; i < defaultTableModel.getRowCount(); i++) {
@@ -90,8 +104,31 @@ public class ArpFraudFrame {
                 }
 
                 sourceIp = ConvertUtils.ipToHex(sourceIp);
-                String sourceMac = macTextField.getText().toLowerCase().trim().replace("-", " ");
-                PcapUtils.arpResponse(sourceIp, sourceMac, destinationIp, destinationMac, realMac);
+                String mac = macTextField.getText().toLowerCase().trim();
+                map.put("sourceMac", mac);
+                String sourceMac = mac.replace("-", " ");
+
+                PcapIf device = PcapUtils.alldevs.get(PcapUtils.index);
+                int snaplen = 64 * 1024;
+                int flags = Pcap.MODE_PROMISCUOUS;
+                int timeout = 10 * 1000;
+                Pcap pcap = Pcap.openLive(device.getName(), snaplen, flags, timeout, PcapUtils.errbuf);
+                PcapUtils.arpResponse(pcap, sourceIp, sourceMac, destinationIp, destinationMac, realMac);
+
+                EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        JDialog dialog = new JDialog(mainFrame.getMainFrame(), "统计", false);
+                        dialog.setContentPane(new ArpFraudInfoFrame(dialog, pcap, map).getContentPane());
+                        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                        dialog.pack();
+                        Rectangle rectangle = mainFrame.getMainFrame().getBounds();
+                        dialog.setBounds(rectangle.x + rectangle.width - 410,
+                                rectangle.y + 31,
+                                dialog.getWidth(), dialog.getHeight());
+                        dialog.setVisible(true);
+                    }
+                });
             }
         });
 
@@ -108,7 +145,7 @@ public class ArpFraudFrame {
         });
     }
 
-    private void load() {
+    public void load() {
         defaultTableModel.setRowCount(0);
         String cmdStr = "arp -a";
         Runtime run = Runtime.getRuntime();

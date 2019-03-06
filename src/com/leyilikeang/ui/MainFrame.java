@@ -1,10 +1,13 @@
 package com.leyilikeang.ui;
 
+import com.leyilikeang.common.example.my.ArpFraud;
 import com.leyilikeang.common.util.FileUtils;
 import com.leyilikeang.common.util.MenuUtils;
 import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.service.CaptureService;
 import com.leyilikeang.service.FileService;
+
+import javax.management.JMException;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -46,7 +49,11 @@ public class MainFrame {
 
     private JDialog jumpToDialog;
 
+    private JDialog arpFraudDialog;
+
     private StatisticsFrame statisticsFrame;
+
+    private ArpFraudFrame arpFraudFrame;
 
     private JumpToFrame jumpToFrame;
 
@@ -84,6 +91,17 @@ public class MainFrame {
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
                 JumpToFrame.isOpen = false;
+            }
+        });
+
+        arpFraudDialog = new JDialog(mainFrame, "ARP欺骗", false);
+        arpFraudDialog.setContentPane(new ArpFraudFrame(this).getContentPane());
+        arpFraudDialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+        arpFraudDialog.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                ArpFraudFrame.isOpen = false;
             }
         });
     }
@@ -296,6 +314,9 @@ public class MainFrame {
         if (StatisticsFrame.isOpen) {
             statisticsDialog.setVisible(true);
         }
+        if (ArpFraudFrame.isOpen) {
+            arpFraudDialog.setVisible(true);
+        }
     }
 
     public void devs() {
@@ -310,6 +331,9 @@ public class MainFrame {
         }
         if (jumpToDialog.isVisible()) {
             jumpToDialog.setVisible(false);
+        }
+        if (arpFraudDialog.isVisible()) {
+            arpFraudDialog.setVisible(false);
         }
         devsFrame.recent();
         devsFrame.refreshDevs();
@@ -363,11 +387,23 @@ public class MainFrame {
         return statisticsFrame;
     }
 
+    public void setArpFraudFrame(ArpFraudFrame arpFraudFrame) {
+        this.arpFraudFrame = arpFraudFrame;
+    }
+
+    public ArpFraudFrame getArpFraudFrame() {
+        return arpFraudFrame;
+    }
+
     public JDialog getStatisticsDialog() {
         return statisticsDialog;
     }
 
     public JDialog getJumpToDialog() {
         return jumpToDialog;
+    }
+
+    public JDialog getArpFraudDialog() {
+        return arpFraudDialog;
     }
 }

