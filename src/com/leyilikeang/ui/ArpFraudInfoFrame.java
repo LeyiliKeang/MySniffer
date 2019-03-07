@@ -94,6 +94,7 @@ public class ArpFraudInfoFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                infoLabel.setText(infoLabel.getText() + "并进行转发");
                 if (forwardCheckBox.isSelected()) {
                     new Thread(new Runnable() {
                         @Override
@@ -103,7 +104,9 @@ public class ArpFraudInfoFrame {
                         }
                     }).start();
                 } else {
+                    infoLabel.setText("正在ARP欺骗" + destinationIp);
                     forwardPcap.close();
+                    forwardPcap = null;
                 }
             }
         });
