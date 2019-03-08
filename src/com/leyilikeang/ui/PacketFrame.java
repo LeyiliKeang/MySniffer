@@ -20,7 +20,7 @@ public class PacketFrame {
     private JButton saveButton;
     private JButton cancelButton;
 
-    public PacketFrame(final MainFrame mainFrame, final JDialog dialog) {
+    public PacketFrame(MainFrame mainFrame, JDialog dialog) {
         packetTable.setModel(mainFrame.getDefaultTableModel());
         packetTableScrollPane.setViewportView(packetTable);
 

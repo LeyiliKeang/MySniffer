@@ -29,6 +29,8 @@ public class PcapUtils {
     public static List<PcapIf> alldevs;
     public static StringBuilder errbuf = new StringBuilder();
     public static HashMap<Integer, HashMap<String, String>> ipMacMap = new HashMap<Integer, HashMap<String, String>>();
+    public static String gatewayIp;
+    public static String gatewayMac;
 
     public static List<PcapIf> getAllDevs() {
         alldevs = new ArrayList<PcapIf>();
@@ -114,7 +116,7 @@ public class PcapUtils {
         sourceIp = ConvertUtils.ipToHex(sourceIp);
         String destinationMac = "ff ff ff ff ff ff";
 
-        final String request = destinationMac + sourceMac
+        String request = destinationMac + sourceMac
                 + ConstantUtils.Ethernet.ETHER_TYPE_ARP.getValue()
                 + ConstantUtils.Arp.HARDWARE_TYPE_ETHER.getValue()
                 + ConstantUtils.Arp.UPPER_PROTOCOL_TYPE_IP.getValue()
@@ -223,14 +225,14 @@ public class PcapUtils {
         String responseToMe;
         if (realMac == null) {
             responseToMe = sourceMac + destinationMac
-                + ConstantUtils.Ethernet.ETHER_TYPE_ARP.getValue()
-                + ConstantUtils.Arp.HARDWARE_TYPE_ETHER.getValue()
-                + ConstantUtils.Arp.UPPER_PROTOCOL_TYPE_IP.getValue()
-                + ConstantUtils.Arp.MAC_LENGTH.getValue()
-                + ConstantUtils.Arp.IP_LENGTH.getValue()
-                + ConstantUtils.Arp.OPCODE_RESPONSE.getValue()
-                + destinationMac + destinationIp + sourceMac
-                + ConvertUtils.ipToHex(PcapUtils.ipMacMap.get(index).get("IP"));
+                    + ConstantUtils.Ethernet.ETHER_TYPE_ARP.getValue()
+                    + ConstantUtils.Arp.HARDWARE_TYPE_ETHER.getValue()
+                    + ConstantUtils.Arp.UPPER_PROTOCOL_TYPE_IP.getValue()
+                    + ConstantUtils.Arp.MAC_LENGTH.getValue()
+                    + ConstantUtils.Arp.IP_LENGTH.getValue()
+                    + ConstantUtils.Arp.OPCODE_RESPONSE.getValue()
+                    + destinationMac + destinationIp + sourceMac
+                    + ConvertUtils.ipToHex(PcapUtils.ipMacMap.get(index).get("IP"));
         } else {
             responseToMe = sourceMac + realMac
                     + ConstantUtils.Ethernet.ETHER_TYPE_ARP.getValue()
@@ -243,8 +245,8 @@ public class PcapUtils {
                     + ConvertUtils.ipToHex(PcapUtils.ipMacMap.get(index).get("IP"));
         }
 
-        final JPacket responseToOtherPacket = new JMemoryPacket(JProtocol.ETHERNET_ID, responseToOther);
-        final JPacket responseToMePacket = new JMemoryPacket(JProtocol.ETHERNET_ID, responseToMe);
+        JPacket responseToOtherPacket = new JMemoryPacket(JProtocol.ETHERNET_ID, responseToOther);
+        JPacket responseToMePacket = new JMemoryPacket(JProtocol.ETHERNET_ID, responseToMe);
 
         System.out.println(responseToOtherPacket.toString());
         System.out.println(responseToMePacket.toString());
@@ -254,10 +256,10 @@ public class PcapUtils {
             public void run() {
                 while (true) {
                     if (pcap.sendPacket(responseToOtherPacket) != Pcap.OK) {
-                        System.out.println(PcapUtils.pcap.getErr());
+//                        System.out.println(PcapUtils.pcap.getErr());
                     }
                     if (pcap.sendPacket(responseToMePacket) != Pcap.OK) {
-                        System.out.println(PcapUtils.pcap.getErr());
+//                        System.out.println(PcapUtils.pcap.getErr());
                     }
                     try {
                         Thread.sleep(1000);
@@ -270,14 +272,14 @@ public class PcapUtils {
     }
 
     public static void forward(Pcap pcap, String sourceIp, String sourceMac) {
-        String gatewayMac = "c4 36 55 92 c0 05";
+        String gatewayMac = PcapUtils.gatewayMac.replace("-", " ");
         String localMac = PcapUtils.ipMacMap.get(index).get("MAC").toLowerCase().replace("-", " ");
         PcapPacketHandler pcapPacketHandler = new PcapPacketHandler() {
 
             @Override
             public void nextPacket(PcapPacket pcapPacket, Object o) {
 
-                final JPacket packet = new JMemoryPacket(Ethernet.ID, pcapPacket);
+                JPacket packet = new JMemoryPacket(Ethernet.ID, pcapPacket);
                 Ethernet ethernet = packet.getHeader(new Ethernet());
                 Ip4 ip4 = new Ip4();
                 if (packet.hasHeader(ip4)) {

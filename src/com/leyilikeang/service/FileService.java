@@ -37,11 +37,11 @@ public class FileService {
     }
 
     // TODO : 打开时检查是否有过滤，赋值expression
-    public void open(final MainFrame mainFrame, String expression) {
+    public void open(MainFrame mainFrame, String expression) {
         if (MainFrame.isDevs) {
             mainFrame.ready();
         }
-        final Pcap pcap = PcapUtils.readOffline(FileUtils.openFile);
+        Pcap pcap = PcapUtils.readOffline(FileUtils.openFile);
         if (!expression.equals("")) {
             if (PcapUtils.filter(expression, pcap)) {
                 System.out.println("筛选器加载成功");
@@ -58,7 +58,7 @@ public class FileService {
             mainFrame.getApplyButton().setText("取消");
             mainFrame.getExpressionComboBox().setEnabled(false);
         }
-        final MyPacketHandler packetHandler = new MyPacketHandler(mainFrame);
+        MyPacketHandler packetHandler = new MyPacketHandler(mainFrame);
         new Thread(new Runnable() {
             @Override
             public void run() {

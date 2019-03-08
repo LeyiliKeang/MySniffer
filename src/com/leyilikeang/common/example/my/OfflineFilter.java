@@ -17,10 +17,10 @@ import java.util.ArrayList;
 public class OfflineFilter {
 
     public static void main(String[] args) {
-        final ArrayList<PcapPacket> packets = new ArrayList<PcapPacket>();
-        final String file = "";
+        ArrayList<PcapPacket> packets = new ArrayList<PcapPacket>();
+        String file = "";
         System.out.printf("Opening file for reading: %s%n", file);
-        final Pcap pcap = PcapUtils.readOffline(file);
+        Pcap pcap = PcapUtils.readOffline(file);
         PcapPacketHandler packetHandler = new PcapPacketHandler() {
             @Override
             public void nextPacket(PcapPacket pcapPacket, Object o) {

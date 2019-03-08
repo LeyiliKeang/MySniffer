@@ -126,8 +126,8 @@ public class MainFrame {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (packetTable.getSelectedRow() != -1) {
-                    final String hexDump = PacketUtils.allPackets.get(packetTable.getSelectedRow()).toHexdump();
-                    final String toString = PacketUtils.allPackets.get(packetTable.getSelectedRow()).toString();
+                    String hexDump = PacketUtils.allPackets.get(packetTable.getSelectedRow()).toHexdump();
+                    String toString = PacketUtils.allPackets.get(packetTable.getSelectedRow()).toString();
                     EventQueue.invokeLater(new Runnable() {
                         @Override
                         public void run() {

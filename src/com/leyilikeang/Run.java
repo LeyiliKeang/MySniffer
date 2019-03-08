@@ -2,13 +2,15 @@ package com.leyilikeang;
 
 import com.leyilikeang.common.util.PcapUtils;
 import com.leyilikeang.ui.MainFrame;
+import net.sf.image4j.codec.ico.ICODecoder;
+import sun.awt.image.ToolkitImage;
+
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author likang
@@ -33,7 +35,18 @@ public class Run {
             @Override
             public void run() {
                 JFrame mainFrame = new JFrame("MySniffer");
-                mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("imgs/images.png"));
+
+//                List<BufferedImage> images = null;
+//                try {
+//                    images = ICODecoder.read(new File("imgs/icon.ico"));
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                if (images != null) {
+//                    mainFrame.setIconImage(images.get(0));
+//                }
+
+                mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("imgs/icon.png"));
                 MainFrame main = new MainFrame(mainFrame);
                 main.getDevsFrame().setMainFrame(main);
                 mainFrame.setContentPane(main.getContentPane());

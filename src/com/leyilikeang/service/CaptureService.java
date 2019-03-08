@@ -19,10 +19,10 @@ public class CaptureService {
 
     public static boolean isOpen = false;
 
-    public void capture(final MainFrame mainFrame) {
-        final MyPacketHandler<PcapDumper> packetHandler = new MyPacketHandler<PcapDumper>(mainFrame);
+    public void capture(MainFrame mainFrame) {
+        MyPacketHandler<PcapDumper> packetHandler = new MyPacketHandler<PcapDumper>(mainFrame);
 
-        final PcapDumper dumper = PcapUtils.pcap.dumpOpen(FileUtils.tempFile);
+        PcapDumper dumper = PcapUtils.pcap.dumpOpen(FileUtils.tempFile);
 
         new Thread(new Runnable() {
             @Override

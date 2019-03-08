@@ -55,9 +55,9 @@ public class DevsFrame {
         listScrollPane.setViewportView(recentList);
         recent();
 
-        final List<PcapIf> devs = PcapUtils.getAllDevs();
+        List<PcapIf> devs = PcapUtils.getAllDevs();
         DefaultMutableTreeNode top = new DefaultMutableTreeNode();
-        final DefaultTreeModel defaultTreeModel = new DefaultTreeModel(top);
+        DefaultTreeModel defaultTreeModel = new DefaultTreeModel(top);
         devTree.setCellRenderer(new DefaultTreeCellRenderer() {
 
             @Override
@@ -76,7 +76,7 @@ public class DevsFrame {
             }
         });
 
-        final Map<DefaultMutableTreeNode, Integer> treeNodeMap = new HashMap<DefaultMutableTreeNode, Integer>();
+        Map<DefaultMutableTreeNode, Integer> treeNodeMap = new HashMap<DefaultMutableTreeNode, Integer>();
 
         devTree.addTreeSelectionListener(new TreeSelectionListener() {
             @Override
@@ -140,6 +140,7 @@ public class DevsFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 PcapUtils.index = index;
+                getGateway();
                 PcapUtils.useDev();
                 mainFrame.ready();
                 mainFrame.getCaptureButton().setEnabled(true);
@@ -187,6 +188,33 @@ public class DevsFrame {
                 }
             }
         });
+    }
+
+    private void getGateway() {
+        String cmd = "ipconfig";
+        Runtime run = Runtime.getRuntime();
+        try {
+            Process process = run.exec(cmd);
+            InputStream in = process.getInputStream();
+            InputStreamReader reader = new InputStreamReader(in, "GBK");
+            BufferedReader br = new BufferedReader(reader);
+            String message;
+            String ip = PcapUtils.ipMacMap.get(PcapUtils.index).get("IP");
+            int count = 0;
+            while ((message = br.readLine()) != null) {
+                if (count == 2) {
+                    PcapUtils.gatewayIp = message.substring(message.indexOf(":") + 1).trim();
+                    break;
+                }
+                if (message.endsWith(ip) || count == 1) {
+                    count++;
+                } else {
+                    continue;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void recent() {

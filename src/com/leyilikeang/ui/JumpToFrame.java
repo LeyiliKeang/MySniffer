@@ -24,7 +24,7 @@ public class JumpToFrame {
 
     private MainFrame mainFrame;
 
-    public JumpToFrame(final MainFrame mainFrame) {
+    public JumpToFrame(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         mainFrame.setJumpToFrame(this);
         jumpToButton.addActionListener(new ActionListener() {

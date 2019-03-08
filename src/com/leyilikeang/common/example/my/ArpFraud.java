@@ -70,10 +70,10 @@ public class ArpFraud {
                 + ConstantUtils.Arp.OPCODE_RESPONSE.getValue()
                 + sourceMac + sourceIp + destinationMac + destinationIp;
 
-        final JPacket toGatewayPacket = new JMemoryPacket(JProtocol.ETHERNET_ID, responseToGateway);
-        final JPacket toHostPacket = new JMemoryPacket(JProtocol.ETHERNET_ID, responseToHost);
-        final JPacket toMePacket = new JMemoryPacket(JProtocol.ETHERNET_ID, responseToMe);
-        final JPacket toMePacket2 = new JMemoryPacket(JProtocol.ETHERNET_ID, responseToMe2);
+        JPacket toGatewayPacket = new JMemoryPacket(JProtocol.ETHERNET_ID, responseToGateway);
+        JPacket toHostPacket = new JMemoryPacket(JProtocol.ETHERNET_ID, responseToHost);
+        JPacket toMePacket = new JMemoryPacket(JProtocol.ETHERNET_ID, responseToMe);
+        JPacket toMePacket2 = new JMemoryPacket(JProtocol.ETHERNET_ID, responseToMe2);
 
         System.out.println(toGatewayPacket);
         System.out.println(toHostPacket);

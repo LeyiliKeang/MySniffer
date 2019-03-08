@@ -185,6 +185,9 @@ public class ArpFraudFrame {
                 }
             }
             for (int i = 0; i < ipMacList.size(); i += 3) {
+                if (ipMacList.get(i).equals(PcapUtils.gatewayIp)) {
+                    PcapUtils.gatewayMac = ipMacList.get(i + 1);
+                }
                 this.defaultTableModel.addRow(new Object[]{ipMacList.get(i), ipMacList.get(i + 1)});
             }
         } catch (IOException e) {

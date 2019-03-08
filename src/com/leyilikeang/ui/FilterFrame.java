@@ -2,6 +2,7 @@ package com.leyilikeang.ui;
 
 import com.leyilikeang.common.util.PacketUtils;
 import com.leyilikeang.common.util.PcapUtils;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,7 +29,7 @@ public class FilterFrame {
     private JButton cancelButton;
     private JComboBox expressionComboBox;
 
-    public FilterFrame(final MainFrame mainFrame, final JDialog dialog) {
+    public FilterFrame(MainFrame mainFrame, JDialog dialog) {
         expressionComboBox.setSelectedIndex(-1);
         startButton.addActionListener(new ActionListener() {
             @Override
@@ -50,7 +51,7 @@ public class FilterFrame {
                     mainFrame.getDefaultTableModel().setRowCount(0);
                     mainFrame.getCaptureService().capture(mainFrame);
 
-                    final long time = System.currentTimeMillis();
+                    long time = System.currentTimeMillis();
                     TimerTask task = new TimerTask() {
                         @Override
                         public void run() {

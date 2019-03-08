@@ -63,8 +63,8 @@ public class MainFrame extends JFrame {
         packetTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                final String hexdump = packetList.get(packetTable.getSelectedRow()).toHexdump();
-                final String toString = packetList.get(packetTable.getSelectedRow()).toString();
+                String hexdump = packetList.get(packetTable.getSelectedRow()).toHexdump();
+                String toString = packetList.get(packetTable.getSelectedRow()).toString();
                 EventQueue.invokeLater(new Runnable() {
                     @Override
                     public void run() {
@@ -77,7 +77,7 @@ public class MainFrame extends JFrame {
 
         startButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(final ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 EventQueue.invokeLater(new Runnable() {
                     @Override
                     public void run() {

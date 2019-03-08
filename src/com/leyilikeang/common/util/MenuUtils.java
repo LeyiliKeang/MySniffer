@@ -31,7 +31,7 @@ public class MenuUtils {
      *
      * @return 文件菜单
      */
-    public static JPopupMenu getFileMenu(final MainFrame mainFrame) {
+    public static JPopupMenu getFileMenu(MainFrame mainFrame) {
         JPopupMenu popupMenu = new JPopupMenu();
 
         JMenuItem openMenuItem = new JMenuItem("打开");
@@ -169,7 +169,7 @@ public class MenuUtils {
      *
      * @return 查看菜单
      */
-    public static JPopupMenu getLookOverMenu(final MainFrame mainFrame) {
+    public static JPopupMenu getLookOverMenu(MainFrame mainFrame) {
         JPopupMenu popupMenu = new JPopupMenu();
 
         JMenuItem jumpToMenuItem = new JMenuItem("跳转");
@@ -194,7 +194,7 @@ public class MenuUtils {
         });
         popupMenu.add(jumpToMenuItem);
 
-        final JMenuItem statisticsMenuItem = new JMenuItem("统计");
+        JMenuItem statisticsMenuItem = new JMenuItem("统计");
         if (MainFrame.isDevs || mainFrame.getStatisticsDialog().isVisible()) {
             statisticsMenuItem.setEnabled(false);
         }
@@ -229,7 +229,7 @@ public class MenuUtils {
      * @param mainFrame 切换网卡时，弹出的网卡设备选择对话框将居中于此frame
      * @return 捕获菜单
      */
-    public static JPopupMenu getCapMenu(final MainFrame mainFrame) {
+    public static JPopupMenu getCapMenu(MainFrame mainFrame) {
         JPopupMenu popupMenu = new JPopupMenu();
 
         JMenuItem ruleMenuItem = new JMenuItem("切换网卡");
@@ -290,7 +290,7 @@ public class MenuUtils {
      *
      * @return 工具菜单
      */
-    public static JPopupMenu getToolsMenu(final MainFrame mainFrame) {
+    public static JPopupMenu getToolsMenu(MainFrame mainFrame) {
         JPopupMenu popupMenu = new JPopupMenu();
 
         JMenuItem scanMenuItem = new JMenuItem("扫描");
