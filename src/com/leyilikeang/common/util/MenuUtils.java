@@ -102,7 +102,7 @@ public class MenuUtils {
                                 ex.printStackTrace();
                             }
                             FileService fileService = new FileService();
-                            fileService.save(path, true);
+                            fileService.save(path, true);          // 将数据包文件保存到选定路径
                         }
                     }
                 });

@@ -156,7 +156,6 @@ public class FilterFrame {
             }
         }
         System.out.println(protocolExpression);
-
         String expression = "";
         if (sourceExpression.equals("") && !destinationExpression.equals("")) {
             expression = destinationExpression;

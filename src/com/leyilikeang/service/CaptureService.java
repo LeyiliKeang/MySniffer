@@ -27,11 +27,11 @@ public class CaptureService {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                isStart = true;
+                isStart = true; // 设置捕获是否开始标识
                 if (JumpToFrame.isOpen) {
                     mainFrame.getJumpToDialog().setVisible(false);
                 }
-                PcapUtils.pcap.loop(-1, packetHandler, dumper);
+                PcapUtils.pcap.loop(-1, packetHandler, dumper); // 执行捕获，-1代表无限捕获
                 File file = new File(FileUtils.tempFile);
                 dumper.close();
                 if (JumpToFrame.isOpen) {
@@ -43,7 +43,7 @@ public class CaptureService {
 
     public void stop() {
         isStart = false;
-        PcapUtils.pcap.close();
+        PcapUtils.pcap.close(); // 关闭数据包捕获捕获
         PcapUtils.useDev();
         PacketUtils.protocolType = null;
     }

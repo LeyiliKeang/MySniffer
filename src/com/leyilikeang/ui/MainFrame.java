@@ -69,6 +69,8 @@ public class MainFrame {
 
     public static boolean isFilter = false;
 
+//    private static Point location = new Point();
+
     public MainFrame(JFrame mainFrame) {
         this();
         this.mainFrame = mainFrame;
@@ -104,6 +106,22 @@ public class MainFrame {
                 ArpFraudFrame.isOpen = false;
             }
         });
+
+//        mainFrame.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mousePressed(MouseEvent e) {
+//                location.x = e.getX();
+//                location.y = e.getY();
+//            }
+//        });
+//
+//        mainFrame.addMouseMotionListener(new MouseMotionAdapter() {
+//            @Override
+//            public void mouseDragged(MouseEvent e) {
+//                Point p = mainFrame.getLocation();
+//                mainFrame.setLocation(p.x + e.getX() - location.x, p.y + e.getY() - location.y);
+//            }
+//        });
     }
 
     public MainFrame() {
@@ -337,6 +355,8 @@ public class MainFrame {
         }
         devsFrame.recent();
         devsFrame.refreshDevs();
+        countLabel.setText("数量：0");
+        timeLabel.setText("用时：00.00.000");
     }
 
     public CaptureService getCaptureService() {

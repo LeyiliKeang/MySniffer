@@ -46,7 +46,7 @@ public class PacketFrame {
                             }
                             String path = fileChooser.getSelectedFile().getPath();
                             FileService fileService = new FileService();
-                            fileService.save(path, false);
+                            fileService.save(path, false);    // 将数据包文件保存到选定路径
                             dialog.dispose();
                         }
                     }

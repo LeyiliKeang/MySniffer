@@ -33,10 +33,11 @@ public class PcapUtils {
     public static String gatewayMac;
 
     public static List<PcapIf> getAllDevs() {
-        alldevs = new ArrayList<PcapIf>();
+        alldevs = new ArrayList<PcapIf>();  // 用于存放网卡设备的列表
 
-        int r = Pcap.findAllDevs(alldevs, errbuf);
+        int r = Pcap.findAllDevs(alldevs, errbuf);  // 搜索本机网卡设备
         if (r == Pcap.NOT_OK || alldevs.isEmpty()) {
+            // 没有可用设备时输出错误信息
             System.err.printf("Can't read list of devices, error is %s", errbuf.toString());
             return null;
         }
@@ -45,13 +46,14 @@ public class PcapUtils {
     }
 
     public static void useDev() {
-        PcapIf device = alldevs.get(index);
+        PcapIf device = alldevs.get(index); // 在网卡设备列表中选择一个设备
 
-        int snaplen = 64 * 1024;
-        int flags = Pcap.MODE_PROMISCUOUS;
-        int timeout = 10 * 1000;
-        pcap = Pcap.openLive(device.getName(), snaplen, flags, timeout, errbuf);
+        int snaplen = 64 * 1024;    // 截获65536字节以内的数据包
+        int flags = Pcap.MODE_PROMISCUOUS;  // 将网卡工作模式设置为混杂模式
+        int timeout = 10 * 1000;    // 超时时间设置为10s
+        pcap = Pcap.openLive(device.getName(), snaplen, flags, timeout, errbuf);    // 获取Pcap对象
         if (pcap == null) {
+            // 未获取成功输出错误信息
             System.err.printf("Error while opening device for capture: "
                     + errbuf.toString());
             return;
@@ -128,12 +130,12 @@ public class PcapUtils {
 //                + "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00";
 
 
-        PcapIf device = alldevs.get(index);
-
-        int snaplen = 64 * 1024;
-        int flags = Pcap.MODE_PROMISCUOUS;
-        int timeout = 10 * 1000;
-        Pcap pcap = Pcap.openLive(device.getName(), snaplen, flags, timeout, errbuf);
+//        PcapIf device = alldevs.get(index);
+//
+//        int snaplen = 64 * 1024;
+//        int flags = Pcap.MODE_PROMISCUOUS;
+//        int timeout = 10 * 1000;
+//        Pcap pcap = Pcap.openLive(device.getName(), snaplen, flags, timeout, errbuf);
 
         new Thread(new Runnable() {
             @Override
@@ -150,8 +152,9 @@ public class PcapUtils {
                     // 发送ARP请求包
 //                    String destinationIp = ConvertUtils.ipToHex(prefixIp + i);
 //                    String arpRequest = request;
-//                    arpRequest += destinationIp;
+//                    arpRequest += destinationIp + "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00";
 //                    JPacket packet = new JMemoryPacket(JProtocol.ETHERNET_ID, arpRequest);
+//                    packet.recalculateAllChecksums();
 //                    packet.scan(Ethernet.ID);
 //                    for (int j = 0; j < 4; j++) {
 //                        if (pcap.sendPacket(packet) != Pcap.OK) {
